@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Mail, MapPin, Download, ExternalLink } from "lucide-react";
+import { Mail, MapPin, Download, ExternalLink, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -39,6 +39,9 @@ const Contact = () => {
             </span>
             <a href="https://orcid.org/0009-0004-0791-6051" target="_blank" rel="noreferrer" className="flex items-center gap-3 hover:text-primary">
               <ExternalLink className="h-4 w-4 text-primary" /> ORCID
+            </a>
+            <a href="https://www.linkedin.com/in/seamzaman/" target="_blank" rel="noreferrer" className="flex items-center gap-3 hover:text-primary">
+              <Linkedin className="h-4 w-4 text-primary" /> LinkedIn
             </a>
           </div>
 
