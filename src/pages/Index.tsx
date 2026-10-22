@@ -1,18 +1,79 @@
 import { motion } from "framer-motion";
-import { ArrowRight, GraduationCap, BookOpen, Lightbulb } from "lucide-react";
-import { Link } from "react-router-dom";
+import { ArrowRight, GraduationCap, BookOpen, Lightbulb, Mail, MapPin, Download, ExternalLink, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import cv from "@/assets/Seam_Zaman_CV.pdf.asset.json";
+
+const EMAIL = "sszama@utu.fi";
+
+const timeline = [
+  { period: "Jan 2026 – present", title: "Doctoral Researcher, Information Systems Science", org: "Turku School of Economics, University of Turku", desc: "Doctoral Programme in Technology. Supervisors: Prof. Matti Mäntymäki and Matti Minkkinen. Target defence: 2030." },
+  { period: "Oct – Dec 2025", title: "Project Researcher", org: "Dept. of Management and Entrepreneurship, University of Turku", desc: "Built an API-based tool collecting dialogue data on AI governance tensions and gathered organisational AI governance policies." },
+  { period: "May – Jul 2024", title: "Learning Analytics Intern", org: "Oulu Business School, University of Oulu", desc: "Co-authored the report Advancement of Digitalization in Education and structured a MOOC on Digicampus." },
+  { period: "2020 – 2022", title: "Marketing Analyst", org: "Course Platoon, Dhaka", desc: "Market research and analytics supporting strategy and customer acquisition." },
+];
+
+const education = [
+  { period: "2026 – 2030", title: "Doctoral studies, Information Systems", org: "University of Turku" },
+  { period: "2023 – 2025", title: "MSc Business Analytics", org: "Oulu Business School, University of Oulu" },
+  { period: "2017 – 2022", title: "BBA in Finance", org: "University of Dhaka, Bangladesh" },
+];
+
+const skills = ["Structural Equation Modelling", "Factor Analysis", "Machine Learning", "Systematic Literature Review (PRISMA)", "Qualitative Content Analysis", "Design Science Research", "Human–AI Interaction", "Python", "R", "SPSS", "Power BI", "Tableau"];
+
+const projects = [
+  {
+    title: "How AI governance research addresses the failure of human overseers: a systematic literature review",
+    desc: "A systematic literature review on how the potential failure of human overseers is addressed in existing literature review on AI goverance. (In progress)",
+    tags: ["AI Governance", "Systematic Review", "Human Oversight"],
+  },
+  {
+    title: "Understanding Nature-Positive Business Models",
+    desc: "Gomes, J. F., Yaraghi, N., Zaman, S., & Ahokangas, P. (2025). Proceedings of the Smart Service Summit 2025 (in press).",
+    tags: ["Publication", "Qualitative Study", "Sustainability"],
+  },
+  {
+    title: "Predicting Nurses' Stress During COVID-19",
+    desc: "Team study using physiological signals, time-window segmentation and gradient-boosted classification with leave-one-group-out cross-validation.",
+    tags: ["Machine Learning", "Python"],
+  },
+  {
+    title: "Reputation and Customer Trust at Osuuskauppa Arina",
+    desc: "Designed and ran the member survey, then applied factor analysis and structural equation modelling in R.",
+    tags: ["SEM", "Survey Research", "R"],
+  },
+  {
+    title: "Brand Image and Purchasing Behaviour",
+    desc: "Master's thesis (grade 5/5) applying SEM and machine-learning models to 3,600 customer survey responses.",
+    tags: ["Thesis", "SEM", "Machine Learning"],
+  },
+];
+
+const highlights = [
+  { icon: GraduationCap, title: "AI Governance", desc: "Studying how firms design oversight, roles and controls for decisions delegated to AI systems." },
+  { icon: BookOpen, title: "Systematic Reviews", desc: "Running a PRISMA-based review of organisational AI governance mechanisms with a reproducible protocol." },
+  { icon: Lightbulb, title: "Data & Analytics", desc: "Structural equation modelling, machine learning and survey research in R and Python." },
+];
+
+const fadeUp = {
+  initial: { opacity: 0, y: 20 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.5 },
+} as const;
+
+const SectionHeading = ({ kicker, children }: { kicker: string; children: React.ReactNode }) => (
+  <motion.div {...fadeUp} className="mb-12">
+    <p className="text-primary text-xs font-medium tracking-widest uppercase mb-2">{kicker}</p>
+    <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">{children}</h2>
+  </motion.div>
+);
 
 const Index = () => {
   return (
     <div>
       {/* Hero */}
-      <section className="hero-bg min-h-[90vh] flex items-center relative overflow-hidden">
-        {/* Decorative circles */}
-        <div className="absolute top-20 right-20 w-72 h-72 rounded-full bg-primary/10 blur-3xl animate-float" />
-        <div className="absolute bottom-20 left-10 w-48 h-48 rounded-full bg-primary/5 blur-2xl animate-float" style={{ animationDelay: "3s" }} />
-
-        <div className="container relative z-10">
+      <section id="home" className="min-h-[85vh] flex items-center">
+        <div className="container">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -22,21 +83,20 @@ const Index = () => {
             <p className="text-primary font-medium text-sm tracking-widest uppercase mb-4">
               Doctoral Researcher · University of Turku
             </p>
-            <h1 className="text-5xl md:text-7xl font-display font-bold text-primary-foreground leading-tight mb-6">
-              Hi, I'm{" "}
-              <span className="text-gradient">Seam Zaman</span>
+            <h1 className="text-5xl md:text-7xl font-display font-bold text-foreground leading-tight mb-6">
+              Hi, I'm <span className="text-gradient">Seam Zaman</span>
             </h1>
-            <p className="text-lg text-primary-foreground/70 max-w-lg mb-8 leading-relaxed">
+            <p className="text-lg text-muted-foreground max-w-lg mb-8 leading-relaxed">
               I research how organisations govern AI: which decisions are delegated to AI systems, how humans oversee them, and how authority is taken back when needed.
             </p>
             <div className="flex gap-4">
               <Button asChild className="glow">
-                <Link to="/projects">
+                <a href="#research">
                   View Research <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
+                </a>
               </Button>
-              <Button asChild variant="outline" className="border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10">
-                <Link to="/contact">Get in Touch</Link>
+              <Button asChild variant="outline">
+                <a href="#contact">Get in Touch</a>
               </Button>
             </div>
           </motion.div>
@@ -44,45 +104,149 @@ const Index = () => {
       </section>
 
       {/* Highlights */}
-      <section className="py-24">
+      <section className="py-20 border-t border-border">
         <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
-              What I Do
-            </h2>
-            <p className="text-muted-foreground max-w-md mx-auto">
-              Information Systems research at the Turku School of Economics.
-            </p>
-          </motion.div>
-
           <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { icon: GraduationCap, title: "AI Governance", desc: "Studying how firms design oversight, roles and controls for decisions delegated to AI systems." },
-              { icon: BookOpen, title: "Systematic Reviews", desc: "Running a PRISMA-based review of organisational AI governance mechanisms with a reproducible protocol." },
-              { icon: Lightbulb, title: "Data & Analytics", desc: "Structural equation modelling, machine learning and survey research in R and Python." },
-            ].map((item, i) => (
+            {highlights.map((item, i) => (
               <motion.div
                 key={item.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.15 }}
-                className="bg-card rounded-xl p-8 border border-border hover:glow transition-shadow duration-300"
+                {...fadeUp}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="p-6"
               >
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-5">
-                  <item.icon className="h-6 w-6 text-primary" />
-                </div>
-                <h3 className="font-display font-semibold text-lg text-card-foreground mb-2">{item.title}</h3>
+                <item.icon className="h-6 w-6 text-primary mb-4" />
+                <h3 className="font-display font-semibold text-lg text-foreground mb-2">{item.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* About */}
+      <section id="about" className="py-24 border-t border-border scroll-mt-16">
+        <div className="container max-w-3xl">
+          <SectionHeading kicker="About Me">
+            Governing <span className="text-gradient">AI in Organisations</span>
+          </SectionHeading>
+
+          <motion.div {...fadeUp} className="space-y-6 text-muted-foreground leading-relaxed">
+            <p>
+              I'm S. M. Seam-uz Zaman (shortly Seam Zaman), a doctoral researcher in Information Systems Science at the Turku School of
+              Economics, University of Turku. My dissertation examines how organisations govern the authority they
+              delegate to AI systems: which decisions are handed to AI, how human oversight works in practice, and how
+              authority is reclaimed when a system must be overridden.
+            </p>
+            <p>
+              The work builds on a systematic literature review of organisational AI governance mechanisms and draws on
+              socio-technical and design science perspectives. As AI moves from advisory tools to agentic systems,
+              firms need oversight that meets regulation without losing the efficiency that motivated delegation.
+            </p>
+          </motion.div>
+
+          <motion.h3 {...fadeUp} className="font-display font-semibold text-xl text-foreground mt-14 mb-6">Experience</motion.h3>
+          <div className="space-y-6 border-l border-border pl-6">
+            {timeline.map((t) => (
+              <motion.div key={t.title} {...fadeUp}>
+                <p className="text-xs text-primary font-medium">{t.period}</p>
+                <h4 className="font-display font-semibold text-foreground">{t.title}</h4>
+                <p className="text-sm text-muted-foreground italic">{t.org}</p>
+                <p className="text-sm text-muted-foreground mt-1">{t.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.h3 {...fadeUp} className="font-display font-semibold text-xl text-foreground mt-14 mb-6">Education</motion.h3>
+          <div className="space-y-4 border-l border-border pl-6">
+            {education.map((e) => (
+              <motion.div key={e.title} {...fadeUp}>
+                <p className="text-xs text-primary font-medium">{e.period}</p>
+                <h4 className="font-display font-semibold text-foreground">{e.title}</h4>
+                <p className="text-sm text-muted-foreground italic">{e.org}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.h3 {...fadeUp} className="font-display font-semibold text-xl text-foreground mt-14 mb-4">Funding & Awards</motion.h3>
+          <motion.ul {...fadeUp} className="list-disc pl-5 space-y-2 text-sm text-muted-foreground">
+            <li>Doctoral research funding for 2026 from three research projects led by Prof. Matti Mäntymäki.</li>
+            <li>UTUGS doctoral researcher funding, University of Turku Graduate School (24 months).</li>
+            <li>University of Oulu two-year tuition scholarship, 2023–2025.</li>
+          </motion.ul>
+
+          <motion.h3 {...fadeUp} className="font-display font-semibold text-xl text-foreground mt-14 mb-4">Skills & Methods</motion.h3>
+          <motion.div {...fadeUp} className="flex flex-wrap gap-3">
+            {skills.map((skill) => (
+              <span key={skill} className="px-4 py-2 rounded-full text-sm font-medium bg-primary/10 text-primary border border-primary/20">
+                {skill}
+              </span>
+            ))}
+          </motion.div>
+
+          <motion.h3 {...fadeUp} className="font-display font-semibold text-xl text-foreground mt-14 mb-4">Languages</motion.h3>
+          <motion.p {...fadeUp} className="text-sm text-muted-foreground">Bengali (native) · English (fluent, IELTS 7.0) · Finnish (A2)</motion.p>
+        </div>
+      </section>
+
+      {/* Research */}
+      <section id="research" className="py-24 border-t border-border scroll-mt-16">
+        <div className="container max-w-3xl">
+          <SectionHeading kicker="Research">
+            Research & <span className="text-gradient">Publications</span>
+          </SectionHeading>
+
+          <div className="space-y-8">
+            {projects.map((project, i) => (
+              <motion.div
+                key={project.title}
+                {...fadeUp}
+                transition={{ duration: 0.5, delay: i * 0.05 }}
+                className="border-b border-border pb-8 last:border-0"
+              >
+                <h3 className="font-display font-semibold text-lg text-foreground mb-2">{project.title}</h3>
+                <p className="text-sm text-muted-foreground mb-3 leading-relaxed">{project.desc}</p>
+                <div className="flex flex-wrap gap-2">
+                  {project.tags.map((tag) => (
+                    <span key={tag} className="text-xs px-3 py-1 rounded-full bg-secondary text-secondary-foreground">{tag}</span>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact */}
+      <section id="contact" className="py-24 border-t border-border scroll-mt-16">
+        <div className="container max-w-3xl">
+          <SectionHeading kicker="Contact">
+            Let's <span className="text-gradient">Connect</span>
+          </SectionHeading>
+
+          <motion.p {...fadeUp} className="text-muted-foreground mb-10">
+            Interested in AI governance research or collaboration? Get in touch.
+          </motion.p>
+
+          <motion.div {...fadeUp} className="flex flex-col sm:flex-row flex-wrap gap-6 mb-10 text-sm text-muted-foreground">
+            <a href={`mailto:${EMAIL}`} className="flex items-center gap-3 hover:text-primary">
+              <Mail className="h-4 w-4 text-primary" /> {EMAIL}
+            </a>
+            <span className="flex items-center gap-3">
+              <MapPin className="h-4 w-4 text-primary" /> Turku, Finland
+            </span>
+            <a href="https://orcid.org/0009-0004-0791-6051" target="_blank" rel="noreferrer" className="flex items-center gap-3 hover:text-primary">
+              <ExternalLink className="h-4 w-4 text-primary" /> ORCID
+            </a>
+            <a href="https://www.linkedin.com/in/seamzaman/" target="_blank" rel="noreferrer" className="flex items-center gap-3 hover:text-primary">
+              <Linkedin className="h-4 w-4 text-primary" /> LinkedIn
+            </a>
+          </motion.div>
+
+          <motion.div {...fadeUp}>
+            <Button asChild variant="outline">
+              <a href={cv.url} download="Seam_Zaman_CV.pdf"><Download className="mr-2 h-4 w-4" /> Download CV</a>
+            </Button>
+          </motion.div>
         </div>
       </section>
     </div>
