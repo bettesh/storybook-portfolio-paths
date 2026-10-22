@@ -71,7 +71,7 @@ const About = () => (
         <h2 className="font-display font-semibold text-xl text-foreground mt-14 mb-4">Skills & Methods</h2>
         <div className="flex flex-wrap gap-3">
           {skills.map((skill) => (
-            <span key={skill} className="px-3.5 py-1.5 rounded-full text-xs tracking-wide text-muted-foreground border border-border">
+            <span key={skill} className="px-4 py-2 rounded-full text-sm font-medium bg-primary/10 text-primary border border-primary/20">
               {skill}
             </span>
           ))}

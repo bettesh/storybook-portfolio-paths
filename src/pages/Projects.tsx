@@ -38,7 +38,7 @@ const Projects = () => (
         </h2>
       </motion.div>
 
-      <div className="grid">
+      <div className="grid gap-6">
         {projects.map((project, i) => (
           <motion.div
             key={project.title}
@@ -46,13 +46,13 @@ const Projects = () => (
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: i * 0.1 }}
-            className="border-t border-border py-8"
+            className="bg-card border border-border rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300"
           >
             <h3 className="font-display font-medium text-lg text-foreground mb-3">{project.title}</h3>
             <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{project.desc}</p>
             <div className="flex flex-wrap gap-2">
               {project.tags.map((tag) => (
-                <span key={tag} className="text-[11px] uppercase tracking-widest text-muted-foreground">{tag}</span>
+                <span key={tag} className="text-xs px-3 py-1 rounded-full bg-primary/10 text-primary">{tag}</span>
               ))}
             </div>
           </motion.div>
