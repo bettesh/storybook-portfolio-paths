@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, GraduationCap, BookOpen, Lightbulb, Mail, MapPin, Download, ExternalLink, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import cv from "@/assets/Seam_Zaman_CV.pdf.asset.json";
@@ -73,6 +73,8 @@ const SectionHeading = ({ kicker, children }: { kicker: string; children: React.
 );
 
 const Index = () => {
+  const reduceMotion = useReducedMotion();
+
   return (
     <div>
       {/* Hero */}
@@ -270,13 +272,35 @@ const Index = () => {
           </SectionHeading>
 
           <motion.div {...fadeUp} className="relative mb-6 sm:mb-8 lg:hidden">
-            <div aria-hidden className="absolute inset-x-8 top-8 bottom-2 bg-primary/15 blur-[40px]" />
-            <img
-              src={portrait}
-              alt="Portrait of Seam Zaman"
-              draggable={false}
-              className="relative w-[120px] max-w-full select-none object-contain sm:w-[150px]"
-            />
+            <motion.div
+              initial={{ opacity: 0, x: -18, rotate: -4 }}
+              whileInView={{ opacity: 1, x: 0, rotate: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              className="relative inline-block"
+            >
+              <div aria-hidden className="absolute inset-x-0 top-4 bottom-8 bg-primary/30 blur-[45px]" />
+              <motion.div
+                animate={reduceMotion ? undefined : { y: [0, -6, 0] }}
+                transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+                className="relative"
+              >
+                <a
+                  href={`mailto:${EMAIL}`}
+                  className="group inline-flex flex-col items-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  <img
+                    src={portrait}
+                    alt="Portrait of Seam Zaman"
+                    draggable={false}
+                    className="w-[120px] max-w-full select-none object-contain transition-transform duration-500 ease-out group-hover:scale-[1.05] sm:w-[150px]"
+                  />
+                  <span className="-mt-3 sm:-mt-4 inline-flex items-center gap-2 border border-primary/50 bg-background/75 px-3 py-1.5 text-[11px] sm:text-xs font-bold uppercase tracking-normal text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                    Say hello <ArrowRight className="h-3.5 w-3.5" />
+                  </span>
+                </a>
+              </motion.div>
+            </motion.div>
           </motion.div>
 
           <motion.p {...fadeUp} className="text-muted-foreground mb-10">
