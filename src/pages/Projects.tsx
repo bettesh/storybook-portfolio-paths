@@ -1,26 +1,30 @@
 import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
 
 const projects = [
   {
-    title: "Research Project Alpha",
-    desc: "A comprehensive study exploring novel methodologies in data-driven research, resulting in published findings.",
-    tags: ["Research", "Data Analysis", "Python"],
+    title: "Governing Delegated Authority to AI",
+    desc: "Doctoral research on how firms design rules, roles and controls that decide which decisions go to AI, how humans oversee them, and how authority is reclaimed.",
+    tags: ["AI Governance", "Systematic Review", "Design Science"],
   },
   {
-    title: "Academic Publication Beta",
-    desc: "Co-authored paper examining emerging trends and their implications for future academic discourse.",
-    tags: ["Publication", "Peer Review"],
+    title: "Understanding Nature-Positive Business Models",
+    desc: "Gomes, J. F., Yaraghi, N., Zaman, S., & Ahokangas, P. (2025). Proceedings of the Smart Service Summit 2025 (in press).",
+    tags: ["Publication", "Qualitative Study", "Sustainability"],
   },
   {
-    title: "Innovation Lab Gamma",
-    desc: "Led a cross-disciplinary team to develop a prototype translating theoretical models into practical tools.",
-    tags: ["Innovation", "Collaboration", "Prototyping"],
+    title: "Predicting Nurses' Stress During COVID-19",
+    desc: "Team study using physiological signals, time-window segmentation and gradient-boosted classification with leave-one-group-out cross-validation.",
+    tags: ["Machine Learning", "Python"],
   },
   {
-    title: "Teaching Initiative Delta",
-    desc: "Designed and implemented a curriculum module that improved student engagement and learning outcomes.",
-    tags: ["Teaching", "Curriculum Design"],
+    title: "Reputation and Customer Trust at Osuuskauppa Arina",
+    desc: "Designed and ran the member survey, then applied factor analysis and structural equation modelling in R.",
+    tags: ["SEM", "Survey Research", "R"],
+  },
+  {
+    title: "Brand Image and Purchasing Behaviour",
+    desc: "Master's thesis (grade 5/5) applying SEM and machine-learning models to 3,600 customer survey responses.",
+    tags: ["Thesis", "SEM", "Machine Learning"],
   },
 ];
 
@@ -28,9 +32,9 @@ const Projects = () => (
   <section className="py-24">
     <div className="container max-w-4xl">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-        <p className="text-primary text-sm font-medium tracking-widest uppercase mb-2">Portfolio</p>
+        <p className="text-primary text-sm font-medium tracking-widest uppercase mb-2">Research</p>
         <h1 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-12">
-          Selected <span className="text-gradient">Projects</span>
+          Research & <span className="text-gradient">Publications</span>
         </h1>
       </motion.div>
 
@@ -42,20 +46,13 @@ const Projects = () => (
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: i * 0.1 }}
-            className="group bg-card border border-border rounded-xl p-6 hover:glow transition-shadow duration-300 cursor-pointer"
+            className="bg-card border border-border rounded-xl p-6 hover:glow transition-shadow duration-300"
           >
-            <div className="flex items-start justify-between mb-3">
-              <h3 className="font-display font-semibold text-lg text-card-foreground group-hover:text-primary transition-colors">
-                {project.title}
-              </h3>
-              <ExternalLink className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
+            <h3 className="font-display font-semibold text-lg text-card-foreground mb-3">{project.title}</h3>
             <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{project.desc}</p>
             <div className="flex flex-wrap gap-2">
               {project.tags.map((tag) => (
-                <span key={tag} className="text-xs px-3 py-1 rounded-full bg-secondary text-secondary-foreground">
-                  {tag}
-                </span>
+                <span key={tag} className="text-xs px-3 py-1 rounded-full bg-secondary text-secondary-foreground">{tag}</span>
               ))}
             </div>
           </motion.div>

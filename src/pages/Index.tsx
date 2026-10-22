@@ -20,19 +20,19 @@ const Index = () => {
             className="max-w-2xl"
           >
             <p className="text-primary font-medium text-sm tracking-widest uppercase mb-4">
-              Doctoral Student & Researcher
+              Doctoral Researcher · University of Turku
             </p>
             <h1 className="text-5xl md:text-7xl font-display font-bold text-primary-foreground leading-tight mb-6">
               Hi, I'm{" "}
               <span className="text-gradient">Seam Zaman</span>
             </h1>
             <p className="text-lg text-primary-foreground/70 max-w-lg mb-8 leading-relaxed">
-              Passionate about pushing the boundaries of knowledge through research, innovation, and academic excellence.
+              I research how organisations govern AI: which decisions are delegated to AI systems, how humans oversee them, and how authority is taken back when needed.
             </p>
             <div className="flex gap-4">
               <Button asChild className="glow">
                 <Link to="/projects">
-                  View Projects <ArrowRight className="ml-2 h-4 w-4" />
+                  View Research <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
               <Button asChild variant="outline" className="border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10">
@@ -57,15 +57,15 @@ const Index = () => {
               What I Do
             </h2>
             <p className="text-muted-foreground max-w-md mx-auto">
-              Bridging theory and practice through rigorous research and creative problem-solving.
+              Information Systems research at the Turku School of Economics.
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { icon: GraduationCap, title: "Academic Research", desc: "Conducting cutting-edge research in my doctoral program, contributing to the academic community." },
-              { icon: BookOpen, title: "Publications", desc: "Publishing findings in peer-reviewed journals and presenting at international conferences." },
-              { icon: Lightbulb, title: "Innovation", desc: "Transforming research insights into practical solutions that make a real-world impact." },
+              { icon: GraduationCap, title: "AI Governance", desc: "Studying how firms design oversight, roles and controls for decisions delegated to AI systems." },
+              { icon: BookOpen, title: "Systematic Reviews", desc: "Running a PRISMA-based review of organisational AI governance mechanisms with a reproducible protocol." },
+              { icon: Lightbulb, title: "Data & Analytics", desc: "Structural equation modelling, machine learning and survey research in R and Python." },
             ].map((item, i) => (
               <motion.div
                 key={item.title}
