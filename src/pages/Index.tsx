@@ -105,7 +105,7 @@ const Index = () => {
                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
                 className="origin-left"
               >
-                <h1 className="text-[2.75rem] min-[360px]:text-5xl sm:text-6xl md:text-8xl font-display font-bold uppercase tracking-normal text-foreground leading-[1.02] md:leading-[0.95] mb-6 sm:mb-8">
+                <h1 className="text-[2.75rem] min-[360px]:text-5xl sm:text-6xl md:text-8xl lg:tracking-[0.03em] font-display font-bold uppercase tracking-normal text-foreground leading-[1.02] md:leading-[0.95] mb-6 sm:mb-8">
                   Hi, I'm <span className="text-gradient block">Seam Zaman</span>
                 </h1>
               </motion.div>
@@ -123,7 +123,7 @@ const Index = () => {
                 whileInView={{ opacity: 1, x: 0, rotate: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.9, ease: "easeOut" }}
-                className="relative flex h-full w-full items-end justify-end"
+                className="absolute inset-0 flex items-end justify-end"
               >
                 <motion.div
                   animate={reduceMotion ? undefined : { y: [0, -7, 0], scale: [1, 1.012, 1] }}
