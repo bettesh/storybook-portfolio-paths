@@ -92,7 +92,7 @@ const segAnim = (i: number) => ({
   initial: { scaleY: 0 },
   whileInView: { scaleY: 1 },
   viewport: { once: true, amount: 0.4 },
-  transition: { duration: 0.28, delay: 0.1 + i * 0.2, ease: "easeOut" },
+  transition: { duration: 0.32, delay: 0.1 + i * 0.2, ease: "easeInOut" },
 } as const);
 
 const Timeline = ({ items }: { items: readonly TimelineItem[] }) => {
@@ -106,19 +106,20 @@ const Timeline = ({ items }: { items: readonly TimelineItem[] }) => {
             className="relative pl-7 sm:pl-10"
             {...(reduceMotion ? {} : itemAnim(i))}
           >
+            {i < items.length - 1 && (
+              <motion.span
+                aria-hidden
+                className="absolute left-[4px] top-[9px] -bottom-[34px] w-0.5 origin-top bg-primary sm:left-[6px] sm:top-[11px] sm:-bottom-[38px]"
+                {...(reduceMotion ? {} : segAnim(i))}
+              />
+            )}
             <motion.span
               aria-hidden
               className="absolute left-0 top-1 h-2.5 w-2.5 rounded-full border-2 border-primary bg-background sm:h-3.5 sm:w-3.5"
               style={{ boxShadow: "0 0 14px hsl(var(--primary) / 0.55)" }}
               {...(reduceMotion ? {} : dotAnim(i))}
             />
-            {i < items.length - 1 && (
-              <motion.span
-                aria-hidden
-                className="absolute left-[4px] top-[9px] -bottom-8 w-0.5 origin-top bg-primary sm:left-[6px] sm:top-[11px] sm:-bottom-9"
-                {...(reduceMotion ? {} : segAnim(i))}
-              />
-            )}
+
             <p className="text-xs text-primary font-medium">{item.period}</p>
             <h4 className="font-display font-semibold text-foreground">{item.title}</h4>
             <p className="text-sm text-muted-foreground italic">{item.org}</p>
