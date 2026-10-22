@@ -132,16 +132,6 @@ const Index = () => {
                     draggable={false}
                     className="relative h-auto max-h-full w-full select-none object-contain object-bottom"
                   />
-                  <motion.span
-                    initial={{ opacity: 0, y: 10, scale: 0.92 }}
-                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.75 }}
-                    className="absolute left-0 top-[13%] inline-flex items-center border border-primary/50 bg-background/85 px-3 py-1.5 text-[11px] font-bold uppercase tracking-normal text-primary"
-                  >
-                    Hi, I'm Seam Zaman
-                    <span aria-hidden className="absolute -right-[6px] top-1/2 h-2.5 w-2.5 -translate-y-1/2 rotate-45 border-r border-t border-primary/50 bg-background/85" />
-                  </motion.span>
                 </motion.div>
               </motion.div>
             </motion.div>
