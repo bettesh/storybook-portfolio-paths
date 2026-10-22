@@ -132,16 +132,22 @@ const Index = () => {
                     draggable={false}
                     className="relative h-auto max-h-full w-full select-none object-contain object-bottom"
                   />
-                  <motion.span
-                    initial={{ opacity: 0, y: 10, scale: 0.92 }}
-                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.75 }}
-                    className="absolute left-0 top-[13%] inline-flex items-center border border-primary/50 bg-background/85 px-3 py-1.5 text-[11px] font-bold uppercase tracking-normal text-primary"
+                  <motion.svg
+                    aria-hidden
+                    viewBox="0 0 120 130"
+                    fill="none"
+                    className="pointer-events-none absolute right-full top-[9%] -mr-2 w-24 text-primary"
                   >
-                    Hi, I'm Seam Zaman
-                    <span aria-hidden className="absolute -right-[6px] top-1/2 h-2.5 w-2.5 -translate-y-1/2 rotate-45 border-r border-t border-primary/50 bg-background/85" />
-                  </motion.span>
+                    <motion.path
+                      d="M112 10 C72 -2 34 12 30 40 C27 60 44 66 36 84 C30 98 14 102 10 94 C8 104 18 112 26 106"
+                      stroke="currentColor"
+                      strokeWidth={3}
+                      strokeLinecap="round"
+                      initial={reduceMotion ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
+                      animate={{ pathLength: 1, opacity: 1 }}
+                      transition={{ duration: 1.4, delay: 1, ease: "easeInOut" }}
+                    />
+                  </motion.svg>
                 </motion.div>
               </motion.div>
             </motion.div>
