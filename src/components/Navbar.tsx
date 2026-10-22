@@ -50,7 +50,7 @@ const Navbar = () => {
     >
       <div className="container flex items-center justify-between h-16">
         <a href="#home" onClick={() => setOpen(false)} className="inline-flex min-h-11 items-center font-display text-xl font-bold tracking-normal text-foreground">
-          Seam<span className="text-gradient">.</span>
+          Seam Zaman<span className="text-gradient">.</span>
         </a>
 
         {/* Desktop */}
