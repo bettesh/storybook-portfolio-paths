@@ -23,9 +23,9 @@ const Contact = () => {
       <div className="container max-w-2xl">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
           <p className="text-primary text-sm font-medium tracking-widest uppercase mb-2">Contact</p>
-          <h1 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-4">
+          <h2 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-4">
             Let's <span className="text-gradient">Connect</span>
-          </h1>
+          </h2>
           <p className="text-muted-foreground mb-10">
             Interested in AI governance research or collaboration? Get in touch.
           </p>

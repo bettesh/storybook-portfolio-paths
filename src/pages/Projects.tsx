@@ -33,9 +33,9 @@ const Projects = () => (
     <div className="container max-w-4xl">
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
         <p className="text-primary text-sm font-medium tracking-widest uppercase mb-2">Research</p>
-        <h1 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-12">
+        <h2 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-12">
           Research & <span className="text-gradient">Publications</span>
-        </h1>
+        </h2>
       </motion.div>
 
       <div className="grid gap-6">
