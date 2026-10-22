@@ -114,6 +114,22 @@ const Index = () => {
               className="relative hidden justify-center lg:col-start-2 lg:row-start-1 lg:row-span-3 lg:flex lg:self-stretch"
             >
               <div aria-hidden className="absolute inset-x-10 top-14 bottom-24 bg-primary/25 blur-[80px]" />
+              <motion.svg
+                aria-hidden
+                viewBox="0 0 260 420"
+                fill="none"
+                className="pointer-events-none absolute left-[-120px] top-[30%] w-[260px] text-primary"
+              >
+                <motion.path
+                  d="M14 40 C100 10 180 70 192 150 C202 220 140 255 172 315 C192 352 218 382 240 404"
+                  stroke="currentColor"
+                  strokeWidth={3.5}
+                  strokeLinecap="round"
+                  initial={reduceMotion ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
+                  animate={{ pathLength: 1, opacity: 1 }}
+                  transition={{ duration: 1.4, delay: 1, ease: "easeInOut" }}
+                />
+              </motion.svg>
               <motion.div
                 initial={{ opacity: 0, x: 30, rotate: 2.5 }}
                 whileInView={{ opacity: 1, x: 0, rotate: 0 }}
@@ -132,22 +148,6 @@ const Index = () => {
                     draggable={false}
                     className="relative h-auto max-h-full w-full select-none object-contain object-bottom"
                   />
-                  <motion.svg
-                    aria-hidden
-                    viewBox="0 0 120 130"
-                    fill="none"
-                    className="pointer-events-none absolute right-full top-[9%] -mr-2 w-24 text-primary"
-                  >
-                    <motion.path
-                      d="M112 10 C72 -2 34 12 30 40 C27 60 44 66 36 84 C30 98 14 102 10 94 C8 104 18 112 26 106"
-                      stroke="currentColor"
-                      strokeWidth={3}
-                      strokeLinecap="round"
-                      initial={reduceMotion ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
-                      animate={{ pathLength: 1, opacity: 1 }}
-                      transition={{ duration: 1.4, delay: 1, ease: "easeInOut" }}
-                    />
-                  </motion.svg>
                 </motion.div>
               </motion.div>
             </motion.div>
