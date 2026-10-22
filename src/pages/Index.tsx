@@ -109,7 +109,7 @@ const Index = () => {
                   Hi, I'm
                   <span className="flex items-center">
                     <span className="inline-block text-gradient">Seam Zaman</span>
-                    <span aria-hidden className="relative -mr-14 ml-4 hidden h-[3px] flex-1 bg-primary/40 lg:block">
+                    <span aria-hidden className="relative -mr-14 ml-4 hidden h-[3px] flex-1 bg-primary/40 min-[1120px]:block">
                       <span className="absolute -right-[3px] top-1/2 h-2 w-2 -translate-y-1/2 rotate-45 bg-primary" />
                     </span>
                   </span>
