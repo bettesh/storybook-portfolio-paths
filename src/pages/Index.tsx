@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, GraduationCap, BookOpen, Lightbulb, Mail, MapPin, Download, ExternalLink, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import cv from "@/assets/Seam_Zaman_CV.pdf.asset.json";
+import portrait from "@/assets/seam-portrait.png";
 
 const EMAIL = "sszama@utu.fi";
 
