@@ -267,15 +267,8 @@ const Index = () => {
 
 
           <motion.h3 {...fadeUp} className="font-display font-semibold text-xl text-foreground mt-10 sm:mt-14 mb-5 sm:mb-6">Education</motion.h3>
-          <div className="space-y-4 border-l-2 border-primary pl-4 sm:pl-6">
-            {education.map((e) => (
-              <motion.div key={e.title} {...fadeUp}>
-                <p className="text-xs text-primary font-medium">{e.period}</p>
-                <h4 className="font-display font-semibold text-foreground">{e.title}</h4>
-                <p className="text-sm text-muted-foreground italic">{e.org}</p>
-              </motion.div>
-            ))}
-          </div>
+          <Timeline items={education} />
+
 
           <motion.h3 {...fadeUp} className="font-display font-semibold text-xl text-foreground mt-10 sm:mt-14 mb-4">Funding & Awards</motion.h3>
           <motion.ul {...fadeUp} className="list-disc pl-5 space-y-2 text-sm text-muted-foreground">
