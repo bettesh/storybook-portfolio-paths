@@ -121,7 +121,7 @@ const Index = () => {
                 className="pointer-events-none absolute left-[-120px] top-[30%] w-[260px] text-primary"
               >
                 <motion.path
-                  d="M14 40 C100 10 180 70 192 150 C202 220 140 255 172 315 C192 352 218 382 240 404"
+                  d="M14 40 C100 10 180 70 192 150 C202 220 140 255 172 315 C196 356 228 394 254 416 C260 421 264 418 262 410"
                   stroke="currentColor"
                   strokeWidth={3.5}
                   strokeLinecap="round"
