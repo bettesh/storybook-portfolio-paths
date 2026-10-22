@@ -2,9 +2,9 @@ import { motion } from "framer-motion";
 
 const projects = [
   {
-    title: "Governing Delegated Authority to AI",
-    desc: "Doctoral research on how firms design rules, roles and controls that decide which decisions go to AI, how humans oversee them, and how authority is reclaimed.",
-    tags: ["AI Governance", "Systematic Review", "Design Science"],
+    title: "How AI governance research addresses the failure of human overseers: a systematic literature review",
+    desc: "A systematic literature review on how the potential failure of human overseers is addressed in existing literature review on AI goverance. (In progress)",
+    tags: ["AI Governance", "Systematic Review", "Human Oversight"],
   },
   {
     title: "Understanding Nature-Positive Business Models",
