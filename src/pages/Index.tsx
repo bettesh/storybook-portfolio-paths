@@ -269,13 +269,13 @@ const Index = () => {
             Let's <span className="text-gradient">Connect</span>
           </SectionHeading>
 
-          <motion.div {...fadeUp} className="relative mb-8 sm:mb-10 lg:hidden">
-            <div aria-hidden className="absolute inset-x-6 top-10 bottom-4 bg-primary/20 blur-[50px]" />
+          <motion.div {...fadeUp} className="relative mb-6 sm:mb-8 lg:hidden">
+            <div aria-hidden className="absolute inset-x-8 top-8 bottom-2 bg-primary/15 blur-[40px]" />
             <img
               src={portrait}
               alt="Portrait of Seam Zaman"
               draggable={false}
-              className="relative w-[180px] max-w-full select-none object-contain sm:w-[220px]"
+              className="relative w-[120px] max-w-full select-none object-contain sm:w-[150px]"
             />
           </motion.div>
 
