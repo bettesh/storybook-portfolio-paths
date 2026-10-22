@@ -95,16 +95,26 @@ const Index = () => {
               </p>
             </motion.div>
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.05 }}
-              className="max-w-2xl lg:col-start-1 lg:row-start-2"
+              initial={{ opacity: 0, x: -26, rotate: -0.8 }}
+              animate={{ opacity: 1, x: 0, rotate: 0 }}
+              transition={{ duration: 0.9, ease: "easeOut" }}
+              className="lg:col-start-1 lg:row-start-2"
             >
-              <h1 className="text-[2.75rem] min-[360px]:text-5xl sm:text-6xl md:text-8xl font-display font-bold uppercase tracking-normal text-foreground leading-[1.02] md:leading-[0.95] mb-6 sm:mb-8">
-
-
-                Hi, I'm <span className="text-gradient block">Seam Zaman</span>
-              </h1>
+              <motion.div
+                animate={reduceMotion ? undefined : { y: [0, -7, 0], scale: [1, 1.012, 1] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                className="origin-left"
+              >
+                <h1 className="text-[2.75rem] min-[360px]:text-5xl sm:text-6xl md:text-8xl font-display font-bold uppercase tracking-normal text-foreground leading-[1.02] md:leading-[0.95] mb-6 sm:mb-8">
+                  Hi, I'm
+                  <span className="flex items-center">
+                    <span className="inline-block text-gradient">Seam Zaman</span>
+                    <span aria-hidden className="relative -mr-14 ml-4 hidden h-[3px] flex-1 bg-primary/40 lg:block">
+                      <span className="absolute -right-[3px] top-1/2 h-2 w-2 -translate-y-1/2 rotate-45 bg-primary" />
+                    </span>
+                  </span>
+                </h1>
+              </motion.div>
             </motion.div>
 
             <motion.div
@@ -132,16 +142,6 @@ const Index = () => {
                     draggable={false}
                     className="relative h-auto max-h-full w-full select-none object-contain object-bottom"
                   />
-                  <motion.span
-                    initial={{ opacity: 0, y: 10, scale: 0.92 }}
-                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.75 }}
-                    className="absolute left-0 top-[13%] inline-flex items-center border border-primary/50 bg-background/85 px-3 py-1.5 text-[11px] font-bold uppercase tracking-normal text-primary"
-                  >
-                    Hi, I'm Seam Zaman
-                    <span aria-hidden className="absolute -right-[6px] top-1/2 h-2.5 w-2.5 -translate-y-1/2 rotate-45 border-r border-t border-primary/50 bg-background/85" />
-                  </motion.span>
                 </motion.div>
               </motion.div>
             </motion.div>
