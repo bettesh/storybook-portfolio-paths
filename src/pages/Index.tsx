@@ -203,16 +203,8 @@ const Index = () => {
           </motion.div>
 
           <motion.h3 {...fadeUp} className="font-display font-semibold text-xl text-foreground mt-10 sm:mt-14 mb-5 sm:mb-6">Experience</motion.h3>
-          <div className="space-y-6 border-l-2 border-primary pl-4 sm:pl-6">
-            {timeline.map((t) => (
-              <motion.div key={t.title} {...fadeUp}>
-                <p className="text-xs text-primary font-medium">{t.period}</p>
-                <h4 className="font-display font-semibold text-foreground">{t.title}</h4>
-                <p className="text-sm text-muted-foreground italic">{t.org}</p>
-                <p className="text-sm text-muted-foreground mt-1">{t.desc}</p>
-              </motion.div>
-            ))}
-          </div>
+          <Timeline items={timeline} />
+
 
           <motion.h3 {...fadeUp} className="font-display font-semibold text-xl text-foreground mt-10 sm:mt-14 mb-5 sm:mb-6">Education</motion.h3>
           <div className="space-y-4 border-l-2 border-primary pl-4 sm:pl-6">
