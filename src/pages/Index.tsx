@@ -78,20 +78,54 @@ const Index = () => {
       {/* Hero */}
       <section id="home" className="min-h-[calc(85svh-4rem)] md:min-h-[85vh] flex items-stretch py-12 sm:py-16 lg:pb-0">
         <div className="container flex w-full flex-col">
-          <div className="grid flex-1 items-center gap-10 lg:grid-cols-[minmax(0,1fr)_420px] xl:grid-cols-[minmax(0,1fr)_500px] lg:gap-14">
+          <div className="grid flex-1 grid-cols-[auto_minmax(0,1fr)] items-center gap-x-5 gap-y-0 sm:gap-x-6 lg:grid-cols-[minmax(0,1fr)_420px] lg:gap-x-14 xl:grid-cols-[minmax(0,1fr)_500px]">
+
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
-              className="max-w-2xl"
+              className="col-span-2 lg:col-span-1 lg:col-start-1 lg:row-start-1"
             >
               <p className="text-primary font-bold text-xs sm:text-sm tracking-normal uppercase mb-5 sm:mb-6 leading-relaxed">
                 Doctoral Researcher · University of Turku
               </p>
-              <h1 className="text-5xl sm:text-6xl md:text-8xl font-display font-bold uppercase tracking-normal text-foreground leading-[1.02] md:leading-[0.95] mb-6 sm:mb-8">
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.05 }}
+              className="row-start-2 col-start-2 max-w-2xl lg:col-start-1 lg:row-start-2"
+            >
+              <h1 className="text-[2.75rem] min-[360px]:text-5xl sm:text-6xl md:text-8xl font-display font-bold uppercase tracking-normal text-foreground leading-[1.02] md:leading-[0.95] mb-6 sm:mb-8">
+
                 Hi, I'm <span className="text-gradient block">Seam Zaman</span>
               </h1>
-              <p className="text-base sm:text-lg text-muted-foreground max-w-lg mb-7 sm:mb-8 leading-relaxed">
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.15 }}
+              className="relative row-start-2 col-start-1 flex w-[96px] self-end justify-center min-[360px]:w-[112px] min-[380px]:w-[124px] sm:w-[144px] lg:col-start-2 lg:row-start-1 lg:row-span-3 lg:w-auto lg:self-stretch"
+
+            >
+              <div aria-hidden className="absolute inset-x-0 top-8 bottom-2 bg-primary/20 blur-[32px] sm:blur-[48px] lg:inset-x-10 lg:top-14 lg:bottom-24 lg:bg-primary/25 lg:blur-[80px]" />
+
+              <img
+                src={portrait}
+                alt="Portrait of Seam Zaman"
+                draggable={false}
+                className="relative h-auto max-h-full w-full select-none object-contain object-bottom"
+              />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="col-span-2 row-start-3 max-w-lg lg:col-span-1 lg:col-start-1 lg:row-start-3"
+            >
+
+              <p className="text-base sm:text-lg text-muted-foreground mb-7 sm:mb-8 leading-relaxed">
                 I research how organisations govern AI: which decisions are delegated to AI systems, how humans oversee them, and how authority is taken back when needed.
               </p>
               <div className="flex flex-col min-[400px]:flex-row gap-3 sm:gap-4">
@@ -104,20 +138,6 @@ const Index = () => {
                   <a href="#contact">Get in Touch</a>
                 </Button>
               </div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.15 }}
-              className="relative mx-auto flex w-full max-w-[260px] items-end justify-center sm:max-w-[340px] lg:max-w-none lg:self-stretch"
-            >
-              <div aria-hidden className="absolute inset-x-10 top-14 bottom-24 bg-primary/25 blur-[80px]" />
-              <img
-                src={portrait}
-                alt="Portrait of Seam Zaman"
-                draggable={false}
-                className="relative h-auto max-h-full w-full select-none object-contain object-bottom"
-              />
             </motion.div>
           </div>
         </div>
