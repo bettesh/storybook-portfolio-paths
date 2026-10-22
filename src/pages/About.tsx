@@ -26,7 +26,7 @@ const About = () => (
 
         <div className="space-y-6 text-muted-foreground leading-relaxed">
           <p>
-            I'm S. M. Seam-uz Zaman, a doctoral researcher in Information Systems Science at the Turku School of
+            I'm S. M. Seam-uz Zaman (shortly Seam Zaman), a doctoral researcher in Information Systems Science at the Turku School of
             Economics, University of Turku. My dissertation examines how organisations govern the authority they
             delegate to AI systems: which decisions are handed to AI, how human oversight works in practice, and how
             authority is reclaimed when a system must be overridden.
