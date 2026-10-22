@@ -106,13 +106,7 @@ const Index = () => {
                 className="origin-left"
               >
                 <h1 className="text-[2.75rem] min-[360px]:text-5xl sm:text-6xl md:text-8xl font-display font-bold uppercase tracking-normal text-foreground leading-[1.02] md:leading-[0.95] mb-6 sm:mb-8">
-                  Hi, I'm
-                  <span className="flex items-center">
-                    <span className="inline-block text-gradient">Seam Zaman</span>
-                    <span aria-hidden className="relative -mr-14 ml-4 hidden h-[3px] flex-1 bg-primary/40 min-[1120px]:block">
-                      <span className="absolute -right-[3px] top-1/2 h-2 w-2 -translate-y-1/2 rotate-45 bg-primary" />
-                    </span>
-                  </span>
+                  Hi, I'm <span className="text-gradient block">Seam Zaman</span>
                 </h1>
               </motion.div>
             </motion.div>
@@ -123,24 +117,24 @@ const Index = () => {
               transition={{ duration: 0.8, delay: 0.15 }}
               className="relative hidden justify-center lg:col-start-2 lg:row-start-1 lg:row-span-3 lg:flex lg:self-stretch"
             >
-              <div aria-hidden className="absolute inset-x-10 top-14 bottom-24 bg-primary/25 blur-[80px]" />
+              <div aria-hidden className="absolute -left-32 right-6 top-16 bottom-20 bg-primary/25 blur-[90px]" />
               <motion.div
                 initial={{ opacity: 0, x: 30, rotate: 2.5 }}
                 whileInView={{ opacity: 1, x: 0, rotate: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.9, ease: "easeOut" }}
-                className="relative flex h-full w-full items-end justify-center"
+                className="relative flex h-full w-full items-end justify-end"
               >
                 <motion.div
                   animate={reduceMotion ? undefined : { y: [0, -7, 0], scale: [1, 1.012, 1] }}
                   transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                  className="relative flex max-h-full w-full items-end"
+                  className="relative flex h-full w-full items-end justify-end"
                 >
                   <img
                     src={portrait}
                     alt="Portrait of Seam Zaman"
                     draggable={false}
-                    className="relative h-auto max-h-full w-full select-none object-contain object-bottom"
+                    className="relative h-full w-auto max-w-none select-none object-contain object-bottom"
                   />
                 </motion.div>
               </motion.div>
