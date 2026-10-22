@@ -80,7 +80,7 @@ const Index = () => {
       {/* Hero */}
       <section id="home" className="min-h-[calc(85svh-4rem)] md:min-h-[85vh] flex items-stretch py-12 sm:py-16 lg:pb-0">
         <div className="container flex w-full flex-col">
-          <div className="grid flex-1 gap-y-0 lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-x-14 xl:grid-cols-[minmax(0,1fr)_500px]">
+          <div className="grid flex-1 gap-y-0 lg:grid-cols-[minmax(0,1fr)_420px] lg:gap-x-14 xl:grid-cols-[minmax(0,1fr)_500px]">
 
 
             <motion.div
@@ -95,20 +95,16 @@ const Index = () => {
               </p>
             </motion.div>
             <motion.div
-              initial={{ opacity: 0, x: -26, rotate: -0.8 }}
-              animate={{ opacity: 1, x: 0, rotate: 0 }}
-              transition={{ duration: 0.9, ease: "easeOut" }}
-              className="lg:col-start-1 lg:row-start-2"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.05 }}
+              className="max-w-2xl lg:col-start-1 lg:row-start-2"
             >
-              <motion.div
-                animate={reduceMotion ? undefined : { y: [0, -7, 0], scale: [1, 1.012, 1] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                className="origin-left"
-              >
-                <h1 className="text-[2.75rem] min-[360px]:text-5xl sm:text-6xl md:text-8xl lg:text-7xl min-[1150px]:text-8xl xl:text-8xl lg:tracking-[0.03em] font-display font-bold uppercase tracking-normal text-foreground leading-[1.02] md:leading-[0.95] mb-6 sm:mb-8">
-                  Hi, I'm <span className="text-gradient block">Seam Zaman</span>
-                </h1>
-              </motion.div>
+              <h1 className="text-[2.75rem] min-[360px]:text-5xl sm:text-6xl md:text-8xl font-display font-bold uppercase tracking-normal text-foreground leading-[1.02] md:leading-[0.95] mb-6 sm:mb-8">
+
+
+                Hi, I'm <span className="text-gradient block">Seam Zaman</span>
+              </h1>
             </motion.div>
 
             <motion.div
@@ -117,25 +113,35 @@ const Index = () => {
               transition={{ duration: 0.8, delay: 0.15 }}
               className="relative hidden justify-center lg:col-start-2 lg:row-start-1 lg:row-span-3 lg:flex lg:self-stretch"
             >
-              <div aria-hidden className="absolute -left-32 right-6 top-16 bottom-20 bg-primary/25 blur-[90px]" />
+              <div aria-hidden className="absolute inset-x-10 top-14 bottom-24 bg-primary/25 blur-[80px]" />
               <motion.div
                 initial={{ opacity: 0, x: 30, rotate: 2.5 }}
                 whileInView={{ opacity: 1, x: 0, rotate: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.9, ease: "easeOut" }}
-                className="absolute inset-0 flex items-end justify-end"
+                className="relative flex h-full w-full items-end justify-center"
               >
                 <motion.div
                   animate={reduceMotion ? undefined : { y: [0, -7, 0], scale: [1, 1.012, 1] }}
                   transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                  className="relative flex h-full w-full items-end justify-end"
+                  className="relative flex max-h-full w-full items-end"
                 >
                   <img
                     src={portrait}
                     alt="Portrait of Seam Zaman"
                     draggable={false}
-                    className="relative h-full w-auto max-w-none select-none object-contain object-bottom lg:mr-8"
+                    className="relative h-auto max-h-full w-full select-none object-contain object-bottom"
                   />
+                  <motion.span
+                    initial={{ opacity: 0, y: 10, scale: 0.92 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.75 }}
+                    className="absolute left-0 top-[13%] inline-flex items-center border border-primary/50 bg-background/85 px-3 py-1.5 text-[11px] font-bold uppercase tracking-normal text-primary"
+                  >
+                    Hi, I'm Seam Zaman
+                    <span aria-hidden className="absolute -right-[6px] top-1/2 h-2.5 w-2.5 -translate-y-1/2 rotate-45 border-r border-t border-primary/50 bg-background/85" />
+                  </motion.span>
                 </motion.div>
               </motion.div>
             </motion.div>
