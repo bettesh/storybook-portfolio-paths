@@ -78,32 +78,48 @@ const Index = () => {
       {/* Hero */}
       <section id="home" className="min-h-[calc(85svh-4rem)] md:min-h-[85vh] flex items-center py-12 sm:py-16">
         <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="max-w-2xl"
-          >
-            <p className="text-primary font-bold text-xs sm:text-sm tracking-normal uppercase mb-5 sm:mb-6 leading-relaxed">
-              Doctoral Researcher · University of Turku
-            </p>
-            <h1 className="text-5xl sm:text-6xl md:text-8xl font-display font-bold uppercase tracking-normal text-foreground leading-[1.02] md:leading-[0.95] mb-6 sm:mb-8">
-              Hi, I'm <span className="text-gradient block">Seam Zaman</span>
-            </h1>
-            <p className="text-base sm:text-lg text-muted-foreground max-w-lg mb-7 sm:mb-8 leading-relaxed">
-              I research how organisations govern AI: which decisions are delegated to AI systems, how humans oversee them, and how authority is taken back when needed.
-            </p>
-            <div className="flex flex-col min-[400px]:flex-row gap-3 sm:gap-4">
-              <Button asChild className="glow min-h-12 px-5">
-                <a href="#research">
-                  View Research <ArrowRight className="ml-2 h-4 w-4" />
-                </a>
-              </Button>
-              <Button asChild variant="outline" className="min-h-12 px-5">
-                <a href="#contact">Get in Touch</a>
-              </Button>
-            </div>
-          </motion.div>
+          <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_300px] xl:grid-cols-[minmax(0,1fr)_380px] lg:gap-14">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+              className="max-w-2xl"
+            >
+              <p className="text-primary font-bold text-xs sm:text-sm tracking-normal uppercase mb-5 sm:mb-6 leading-relaxed">
+                Doctoral Researcher · University of Turku
+              </p>
+              <h1 className="text-5xl sm:text-6xl md:text-8xl font-display font-bold uppercase tracking-normal text-foreground leading-[1.02] md:leading-[0.95] mb-6 sm:mb-8">
+                Hi, I'm <span className="text-gradient block">Seam Zaman</span>
+              </h1>
+              <p className="text-base sm:text-lg text-muted-foreground max-w-lg mb-7 sm:mb-8 leading-relaxed">
+                I research how organisations govern AI: which decisions are delegated to AI systems, how humans oversee them, and how authority is taken back when needed.
+              </p>
+              <div className="flex flex-col min-[400px]:flex-row gap-3 sm:gap-4">
+                <Button asChild className="glow min-h-12 px-5">
+                  <a href="#research">
+                    View Research <ArrowRight className="ml-2 h-4 w-4" />
+                  </a>
+                </Button>
+                <Button asChild variant="outline" className="min-h-12 px-5">
+                  <a href="#contact">Get in Touch</a>
+                </Button>
+              </div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.15 }}
+              className="relative mx-auto w-full max-w-[240px] sm:max-w-[300px] lg:max-w-none"
+            >
+              <div aria-hidden className="absolute inset-x-8 top-12 bottom-24 bg-primary/25 blur-[70px]" />
+              <img
+                src={portrait}
+                alt="Portrait of Seam Zaman"
+                draggable={false}
+                className="relative w-full h-auto select-none"
+              />
+            </motion.div>
+          </div>
         </div>
       </section>
 
