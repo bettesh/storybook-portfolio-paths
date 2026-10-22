@@ -29,13 +29,13 @@ const projects = [
 ];
 
 const Projects = () => (
-  <section id="research" className="py-24">
+  <section className="py-24">
     <div className="container max-w-4xl">
-      <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
         <p className="text-primary text-sm font-medium tracking-widest uppercase mb-2">Research</p>
-        <h2 className="text-4xl md:text-5xl font-display text-foreground mb-12">
-          Research & <span className="italic text-primary">Publications</span>
-        </h2>
+        <h1 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-12">
+          Research & <span className="text-gradient">Publications</span>
+        </h1>
       </motion.div>
 
       <div className="grid gap-6">
@@ -46,13 +46,13 @@ const Projects = () => (
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: i * 0.1 }}
-            className="bg-card border border-border rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300"
+            className="bg-card border border-border rounded-xl p-6 hover:glow transition-shadow duration-300"
           >
-            <h3 className="font-display font-medium text-lg text-foreground mb-3">{project.title}</h3>
+            <h3 className="font-display font-semibold text-lg text-card-foreground mb-3">{project.title}</h3>
             <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{project.desc}</p>
             <div className="flex flex-wrap gap-2">
               {project.tags.map((tag) => (
-                <span key={tag} className="text-xs px-3 py-1 rounded-full bg-primary/10 text-primary">{tag}</span>
+                <span key={tag} className="text-xs px-3 py-1 rounded-full bg-secondary text-secondary-foreground">{tag}</span>
               ))}
             </div>
           </motion.div>
