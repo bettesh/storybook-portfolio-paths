@@ -16,13 +16,13 @@ const education = [
 const skills = ["Structural Equation Modelling", "Factor Analysis", "Machine Learning", "Systematic Literature Review (PRISMA)", "Qualitative Content Analysis", "Design Science Research", "Human–AI Interaction", "Python", "R", "SPSS", "Power BI", "Tableau"];
 
 const About = () => (
-  <section className="py-24">
+  <section id="about" className="py-24">
     <div className="container max-w-3xl">
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+      <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
         <p className="text-primary text-sm font-medium tracking-widest uppercase mb-2">About Me</p>
-        <h1 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-8">
+        <h2 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-8">
           Governing <span className="text-gradient">AI in Organisations</span>
-        </h1>
+        </h2>
 
         <div className="space-y-6 text-muted-foreground leading-relaxed">
           <p>

@@ -1,13 +1,25 @@
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, GraduationCap, BookOpen, Lightbulb } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import About from "./About";
+import Projects from "./Projects";
+import Contact from "./Contact";
 
 const Index = () => {
+  const { hash } = useLocation();
+
+  useEffect(() => {
+    if (!hash) return;
+    const el = document.querySelector(hash);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [hash]);
+
   return (
     <div>
       {/* Hero */}
-      <section className="hero-bg min-h-[90vh] flex items-center relative overflow-hidden">
+      <section id="home" className="hero-bg min-h-[90vh] flex items-center relative overflow-hidden">
         {/* Decorative circles */}
         <div className="absolute top-20 right-20 w-72 h-72 rounded-full bg-primary/10 blur-3xl animate-float" />
         <div className="absolute bottom-20 left-10 w-48 h-48 rounded-full bg-primary/5 blur-2xl animate-float" style={{ animationDelay: "3s" }} />
@@ -31,12 +43,12 @@ const Index = () => {
             </p>
             <div className="flex gap-4">
               <Button asChild className="glow">
-                <Link to="/projects">
+                <a href="#research">
                   View Research <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
+                </a>
               </Button>
               <Button asChild variant="outline" className="border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10">
-                <Link to="/contact">Get in Touch</Link>
+                <a href="#contact">Get in Touch</a>
               </Button>
             </div>
           </motion.div>
@@ -85,6 +97,11 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* About, Research and Contact as stacked sections */}
+      <About />
+      <Projects />
+      <Contact />
     </div>
   );
 };
