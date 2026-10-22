@@ -62,12 +62,12 @@ const fadeUp = {
 } as const;
 
 const SectionHeading = ({ kicker, children }: { kicker: string; children: React.ReactNode }) => (
-  <motion.div {...fadeUp} className="mb-14">
-    <div className="flex items-center gap-3 mb-5">
+  <motion.div {...fadeUp} className="mb-8 sm:mb-14">
+    <div className="flex items-center gap-3 mb-4 sm:mb-5">
       <span className="h-2 w-10 bg-primary" />
-      <p className="text-primary text-sm font-bold tracking-[0.3em] uppercase">{kicker}</p>
+      <p className="text-primary text-xs sm:text-sm font-bold tracking-normal uppercase">{kicker}</p>
     </div>
-    <h2 className="text-4xl md:text-6xl font-display font-bold uppercase tracking-tight text-foreground leading-none">{children}</h2>
+    <h2 className="text-3xl sm:text-4xl md:text-6xl font-display font-bold uppercase tracking-normal text-foreground leading-none">{children}</h2>
   </motion.div>
 );
 
@@ -75,7 +75,7 @@ const Index = () => {
   return (
     <div>
       {/* Hero */}
-      <section id="home" className="min-h-[85vh] flex items-center">
+      <section id="home" className="min-h-[calc(85svh-4rem)] md:min-h-[85vh] flex items-center py-12 sm:py-16">
         <div className="container">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -83,22 +83,22 @@ const Index = () => {
             transition={{ duration: 0.7 }}
             className="max-w-2xl"
           >
-            <p className="text-primary font-bold text-sm tracking-[0.3em] uppercase mb-6">
+            <p className="text-primary font-bold text-xs sm:text-sm tracking-normal uppercase mb-5 sm:mb-6 leading-relaxed">
               Doctoral Researcher · University of Turku
             </p>
-            <h1 className="text-6xl md:text-8xl font-display font-bold uppercase tracking-tight text-foreground leading-[0.95] mb-8">
-              Hi, I'm <span className="text-gradient">Seam Zaman</span>
+            <h1 className="text-5xl sm:text-6xl md:text-8xl font-display font-bold uppercase tracking-normal text-foreground leading-[1.02] md:leading-[0.95] mb-6 sm:mb-8">
+              Hi, I'm <span className="text-gradient block">Seam Zaman</span>
             </h1>
-            <p className="text-lg text-muted-foreground max-w-lg mb-8 leading-relaxed">
+            <p className="text-base sm:text-lg text-muted-foreground max-w-lg mb-7 sm:mb-8 leading-relaxed">
               I research how organisations govern AI: which decisions are delegated to AI systems, how humans oversee them, and how authority is taken back when needed.
             </p>
-            <div className="flex gap-4">
-              <Button asChild className="glow">
+            <div className="flex flex-col min-[400px]:flex-row gap-3 sm:gap-4">
+              <Button asChild className="glow min-h-12 px-5">
                 <a href="#research">
                   View Research <ArrowRight className="ml-2 h-4 w-4" />
                 </a>
               </Button>
-              <Button asChild variant="outline">
+              <Button asChild variant="outline" className="min-h-12 px-5">
                 <a href="#contact">Get in Touch</a>
               </Button>
             </div>
@@ -107,15 +107,15 @@ const Index = () => {
       </section>
 
       {/* Highlights */}
-      <section className="py-20 border-t-2 border-border">
+      <section className="py-12 sm:py-16 md:py-20 border-t-2 border-border">
         <div className="container">
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-6 md:gap-8">
             {highlights.map((item, i) => (
               <motion.div
                 key={item.title}
                 {...fadeUp}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="p-6 border-l-2 border-primary/40"
+                className="px-5 py-2 md:p-6 border-l-2 border-primary/40"
               >
                 <item.icon className="h-7 w-7 text-primary mb-4" strokeWidth={2.5} />
                 <h3 className="font-display font-semibold text-lg text-foreground mb-2">{item.title}</h3>
@@ -127,7 +127,7 @@ const Index = () => {
       </section>
 
       {/* About */}
-      <section id="about" className="py-24 border-t-2 border-border scroll-mt-16">
+      <section id="about" className="py-14 sm:py-20 md:py-24 border-t-2 border-border">
         <div className="container max-w-3xl">
           <SectionHeading kicker="About Me">
             Governing <span className="text-gradient">AI in Organisations</span>
@@ -147,8 +147,8 @@ const Index = () => {
             </p>
           </motion.div>
 
-          <motion.h3 {...fadeUp} className="font-display font-semibold text-xl text-foreground mt-14 mb-6">Experience</motion.h3>
-          <div className="space-y-6 border-l-2 border-primary pl-6">
+          <motion.h3 {...fadeUp} className="font-display font-semibold text-xl text-foreground mt-10 sm:mt-14 mb-5 sm:mb-6">Experience</motion.h3>
+          <div className="space-y-6 border-l-2 border-primary pl-4 sm:pl-6">
             {timeline.map((t) => (
               <motion.div key={t.title} {...fadeUp}>
                 <p className="text-xs text-primary font-medium">{t.period}</p>
@@ -159,8 +159,8 @@ const Index = () => {
             ))}
           </div>
 
-          <motion.h3 {...fadeUp} className="font-display font-semibold text-xl text-foreground mt-14 mb-6">Education</motion.h3>
-          <div className="space-y-4 border-l-2 border-primary pl-6">
+          <motion.h3 {...fadeUp} className="font-display font-semibold text-xl text-foreground mt-10 sm:mt-14 mb-5 sm:mb-6">Education</motion.h3>
+          <div className="space-y-4 border-l-2 border-primary pl-4 sm:pl-6">
             {education.map((e) => (
               <motion.div key={e.title} {...fadeUp}>
                 <p className="text-xs text-primary font-medium">{e.period}</p>
@@ -170,47 +170,47 @@ const Index = () => {
             ))}
           </div>
 
-          <motion.h3 {...fadeUp} className="font-display font-semibold text-xl text-foreground mt-14 mb-4">Funding & Awards</motion.h3>
+          <motion.h3 {...fadeUp} className="font-display font-semibold text-xl text-foreground mt-10 sm:mt-14 mb-4">Funding & Awards</motion.h3>
           <motion.ul {...fadeUp} className="list-disc pl-5 space-y-2 text-sm text-muted-foreground">
             <li>Doctoral research funding for 2026 from three research projects led by Prof. Matti Mäntymäki.</li>
             <li>UTUGS doctoral researcher funding, University of Turku Graduate School (24 months).</li>
             <li>University of Oulu two-year tuition scholarship, 2023–2025.</li>
           </motion.ul>
 
-          <motion.h3 {...fadeUp} className="font-display font-semibold text-xl text-foreground mt-14 mb-4">Skills & Methods</motion.h3>
-          <motion.div {...fadeUp} className="flex flex-wrap gap-3">
+          <motion.h3 {...fadeUp} className="font-display font-semibold text-xl text-foreground mt-10 sm:mt-14 mb-4">Skills & Methods</motion.h3>
+          <motion.div {...fadeUp} className="flex flex-wrap gap-2 sm:gap-3">
             {skills.map((skill) => (
-              <span key={skill} className="px-4 py-2 text-sm font-semibold uppercase tracking-wide text-primary border border-primary/40 hover:bg-primary hover:text-primary-foreground transition-colors">
+              <span key={skill} className="max-w-full px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold uppercase tracking-normal text-primary border border-primary/40 hover:bg-primary hover:text-primary-foreground transition-colors">
                 {skill}
               </span>
             ))}
           </motion.div>
 
-          <motion.h3 {...fadeUp} className="font-display font-semibold text-xl text-foreground mt-14 mb-4">Languages</motion.h3>
+          <motion.h3 {...fadeUp} className="font-display font-semibold text-xl text-foreground mt-10 sm:mt-14 mb-4">Languages</motion.h3>
           <motion.p {...fadeUp} className="text-sm text-muted-foreground">Bengali (native) · English (fluent, IELTS 7.0) · Finnish (A2)</motion.p>
         </div>
       </section>
 
       {/* Research */}
-      <section id="research" className="py-24 border-t-2 border-border scroll-mt-16">
+      <section id="research" className="py-14 sm:py-20 md:py-24 border-t-2 border-border">
         <div className="container max-w-3xl">
           <SectionHeading kicker="Research">
             Research & <span className="text-gradient">Publications</span>
           </SectionHeading>
 
-          <div className="space-y-8">
+          <div className="space-y-7 sm:space-y-8">
             {projects.map((project, i) => (
               <motion.div
                 key={project.title}
                 {...fadeUp}
                 transition={{ duration: 0.5, delay: i * 0.05 }}
-                className="border-b-2 border-border pb-8 last:border-0"
+                className="border-b-2 border-border pb-7 sm:pb-8 last:border-0"
               >
-                <h3 className="font-display font-bold text-xl md:text-2xl text-foreground mb-3 leading-snug">{project.title}</h3>
+                <h3 className="font-display font-bold text-lg sm:text-xl md:text-2xl text-foreground mb-3 leading-snug">{project.title}</h3>
                 <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{project.desc}</p>
                 <div className="flex flex-wrap gap-2">
                   {project.tags.map((tag) => (
-                    <span key={tag} className="text-xs font-semibold uppercase tracking-wide px-3 py-1 border border-primary/40 text-primary">{tag}</span>
+                    <span key={tag} className="text-xs font-semibold uppercase tracking-normal px-3 py-1 border border-primary/40 text-primary">{tag}</span>
                   ))}
                 </div>
               </motion.div>
@@ -220,7 +220,7 @@ const Index = () => {
       </section>
 
       {/* Contact */}
-      <section id="contact" className="py-24 border-t-2 border-border scroll-mt-16">
+      <section id="contact" className="py-14 sm:py-20 md:py-24 border-t-2 border-border">
         <div className="container max-w-3xl">
           <SectionHeading kicker="Contact">
             Let's <span className="text-gradient">Connect</span>
@@ -230,23 +230,23 @@ const Index = () => {
             Interested in AI governance research or collaboration? Get in touch.
           </motion.p>
 
-          <motion.div {...fadeUp} className="flex flex-col sm:flex-row flex-wrap gap-6 mb-10 text-sm text-muted-foreground">
-            <a href={`mailto:${EMAIL}`} className="flex items-center gap-3 hover:text-primary">
+          <motion.div {...fadeUp} className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-6 mb-8 sm:mb-10 text-sm text-muted-foreground">
+            <a href={`mailto:${EMAIL}`} className="flex min-h-11 items-center gap-3 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
               <Mail className="h-4 w-4 text-primary" /> {EMAIL}
             </a>
             <span className="flex items-center gap-3">
               <MapPin className="h-4 w-4 text-primary" /> Turku, Finland
             </span>
-            <a href="https://orcid.org/0009-0004-0791-6051" target="_blank" rel="noreferrer" className="flex items-center gap-3 hover:text-primary">
+            <a href="https://orcid.org/0009-0004-0791-6051" target="_blank" rel="noreferrer" className="flex min-h-11 items-center gap-3 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
               <ExternalLink className="h-4 w-4 text-primary" /> ORCID
             </a>
-            <a href="https://www.linkedin.com/in/seamzaman/" target="_blank" rel="noreferrer" className="flex items-center gap-3 hover:text-primary">
+            <a href="https://www.linkedin.com/in/seamzaman/" target="_blank" rel="noreferrer" className="flex min-h-11 items-center gap-3 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
               <Linkedin className="h-4 w-4 text-primary" /> LinkedIn
             </a>
           </motion.div>
 
           <motion.div {...fadeUp}>
-            <Button asChild variant="outline">
+            <Button asChild variant="outline" className="min-h-12 px-5">
               <a href={cv.url} download="Seam_Zaman_CV.pdf"><Download className="mr-2 h-4 w-4" /> Download CV</a>
             </Button>
           </motion.div>
