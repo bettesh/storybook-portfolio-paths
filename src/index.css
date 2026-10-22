@@ -90,6 +90,7 @@
   }
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
   }
   body {
     @apply bg-background text-foreground;
@@ -97,7 +98,25 @@
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
+    overflow-wrap: break-word;
   }
+}
+
+@layer components {
+  .container {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
 }
 
 @layer utilities {
