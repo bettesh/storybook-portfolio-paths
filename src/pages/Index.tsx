@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { motion } from "framer-motion";
+import { GraduationCap, BookOpen, Lightbulb } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import About from "./About";
@@ -7,9 +8,9 @@ import Projects from "./Projects";
 import Contact from "./Contact";
 
 const highlights = [
-  { title: "AI Governance", desc: "Studying how firms design oversight, roles and controls for decisions delegated to AI systems." },
-  { title: "Systematic Reviews", desc: "Running a PRISMA-based review of organisational AI governance mechanisms with a reproducible protocol." },
-  { title: "Data & Analytics", desc: "Structural equation modelling, machine learning and survey research in R and Python." },
+  { icon: GraduationCap, title: "AI Governance", desc: "Studying how firms design oversight, roles and controls for decisions delegated to AI systems." },
+  { icon: BookOpen, title: "Systematic Reviews", desc: "Running a PRISMA-based review of organisational AI governance mechanisms with a reproducible protocol." },
+  { icon: Lightbulb, title: "Data & Analytics", desc: "Structural equation modelling, machine learning and survey research in R and Python." },
 ];
 
 const Index = () => {
@@ -24,8 +25,12 @@ const Index = () => {
   return (
     <div>
       {/* Hero */}
-      <section id="home" className="min-h-[90vh] flex items-center">
-        <div className="container">
+      <section id="home" className="min-h-[90vh] flex items-center relative overflow-hidden">
+        {/* Soft depth */}
+        <div className="absolute top-16 right-16 w-80 h-80 rounded-full bg-primary/10 blur-3xl" />
+        <div className="absolute bottom-16 left-8 w-56 h-56 rounded-full bg-primary/5 blur-3xl" />
+
+        <div className="container relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
@@ -62,14 +67,14 @@ const Index = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-display font-light text-foreground mb-4">
+            <h2 className="text-3xl md:text-4xl font-display text-foreground mb-4">
               What I Do
             </h2>
             <p className="text-muted-foreground max-w-md mb-16">
               Information Systems research at the Turku School of Economics.
             </p>
 
-            <div className="grid md:grid-cols-3 gap-10">
+            <div className="grid md:grid-cols-3 gap-8">
               {highlights.map((item, i) => (
                 <motion.div
                   key={item.title}
@@ -77,9 +82,12 @@ const Index = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.12 }}
-                  className="border-t border-border pt-6"
+                  className="bg-card rounded-xl p-8 border border-border shadow-sm hover:shadow-md transition-shadow duration-300"
                 >
-                  <h3 className="font-display text-lg font-medium text-foreground mb-3">{item.title}</h3>
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-5">
+                    <item.icon className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="font-display text-lg text-foreground mb-3">{item.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
                 </motion.div>
               ))}
