@@ -1,17 +1,15 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const links = [
-  { to: "/", label: "Home" },
-  { to: "/about", label: "About" },
-  { to: "/projects", label: "Projects" },
-  { to: "/contact", label: "Contact" },
+  { href: "#home", label: "Home" },
+  { href: "#about", label: "About" },
+  { href: "#research", label: "Research" },
+  { href: "#contact", label: "Contact" },
 ];
 
 const Navbar = () => {
-  const location = useLocation();
   const [open, setOpen] = useState(false);
 
   return (
@@ -22,22 +20,20 @@ const Navbar = () => {
       className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/80 border-b border-border"
     >
       <div className="container flex items-center justify-between h-16">
-        <Link to="/" className="font-display text-xl font-bold tracking-tight text-foreground">
+        <a href="#home" className="font-display text-xl font-bold tracking-tight text-foreground">
           Seam<span className="text-gradient">.</span>
-        </Link>
+        </a>
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-8">
           {links.map((link) => (
-            <Link
-              key={link.to}
-              to={link.to}
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                location.pathname === link.to ? "text-primary" : "text-muted-foreground"
-              }`}
+            <a
+              key={link.href}
+              href={link.href}
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
             >
               {link.label}
-            </Link>
+            </a>
           ))}
         </div>
 
@@ -56,16 +52,14 @@ const Navbar = () => {
         >
           <div className="container py-4 flex flex-col gap-4">
             {links.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
+              <a
+                key={link.href}
+                href={link.href}
                 onClick={() => setOpen(false)}
-                className={`text-sm font-medium ${
-                  location.pathname === link.to ? "text-primary" : "text-muted-foreground"
-                }`}
+                className="text-sm font-medium text-muted-foreground hover:text-primary"
               >
                 {link.label}
-              </Link>
+              </a>
             ))}
           </div>
         </motion.div>
