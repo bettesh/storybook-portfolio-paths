@@ -17,7 +17,7 @@ const Navbar = () => {
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/80 border-b border-border"
+      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/80 border-b-2 border-border"
     >
       <div className="container flex items-center justify-between h-16">
         <a href="#home" className="font-display text-xl font-bold tracking-tight text-foreground">
@@ -30,7 +30,7 @@ const Navbar = () => {
             <a
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+              className="text-xs font-bold uppercase tracking-widest text-muted-foreground transition-colors hover:text-primary"
             >
               {link.label}
             </a>
@@ -56,7 +56,7 @@ const Navbar = () => {
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="text-sm font-medium text-muted-foreground hover:text-primary"
+                className="text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-primary"
               >
                 {link.label}
               </a>

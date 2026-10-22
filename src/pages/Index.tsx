@@ -62,9 +62,12 @@ const fadeUp = {
 } as const;
 
 const SectionHeading = ({ kicker, children }: { kicker: string; children: React.ReactNode }) => (
-  <motion.div {...fadeUp} className="mb-12">
-    <p className="text-primary text-xs font-medium tracking-widest uppercase mb-2">{kicker}</p>
-    <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">{children}</h2>
+  <motion.div {...fadeUp} className="mb-14">
+    <div className="flex items-center gap-3 mb-5">
+      <span className="h-2 w-10 bg-primary" />
+      <p className="text-primary text-sm font-bold tracking-[0.3em] uppercase">{kicker}</p>
+    </div>
+    <h2 className="text-4xl md:text-6xl font-display font-bold uppercase tracking-tight text-foreground leading-none">{children}</h2>
   </motion.div>
 );
 
@@ -80,10 +83,10 @@ const Index = () => {
             transition={{ duration: 0.7 }}
             className="max-w-2xl"
           >
-            <p className="text-primary font-medium text-sm tracking-widest uppercase mb-4">
+            <p className="text-primary font-bold text-sm tracking-[0.3em] uppercase mb-6">
               Doctoral Researcher · University of Turku
             </p>
-            <h1 className="text-5xl md:text-7xl font-display font-bold text-foreground leading-tight mb-6">
+            <h1 className="text-6xl md:text-8xl font-display font-bold uppercase tracking-tight text-foreground leading-[0.95] mb-8">
               Hi, I'm <span className="text-gradient">Seam Zaman</span>
             </h1>
             <p className="text-lg text-muted-foreground max-w-lg mb-8 leading-relaxed">
@@ -104,7 +107,7 @@ const Index = () => {
       </section>
 
       {/* Highlights */}
-      <section className="py-20 border-t border-border">
+      <section className="py-20 border-t-2 border-border">
         <div className="container">
           <div className="grid md:grid-cols-3 gap-8">
             {highlights.map((item, i) => (
@@ -112,9 +115,9 @@ const Index = () => {
                 key={item.title}
                 {...fadeUp}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="p-6"
+                className="p-6 border-l-2 border-primary/40"
               >
-                <item.icon className="h-6 w-6 text-primary mb-4" />
+                <item.icon className="h-7 w-7 text-primary mb-4" strokeWidth={2.5} />
                 <h3 className="font-display font-semibold text-lg text-foreground mb-2">{item.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
               </motion.div>
@@ -124,7 +127,7 @@ const Index = () => {
       </section>
 
       {/* About */}
-      <section id="about" className="py-24 border-t border-border scroll-mt-16">
+      <section id="about" className="py-24 border-t-2 border-border scroll-mt-16">
         <div className="container max-w-3xl">
           <SectionHeading kicker="About Me">
             Governing <span className="text-gradient">AI in Organisations</span>
@@ -145,7 +148,7 @@ const Index = () => {
           </motion.div>
 
           <motion.h3 {...fadeUp} className="font-display font-semibold text-xl text-foreground mt-14 mb-6">Experience</motion.h3>
-          <div className="space-y-6 border-l border-border pl-6">
+          <div className="space-y-6 border-l-2 border-primary pl-6">
             {timeline.map((t) => (
               <motion.div key={t.title} {...fadeUp}>
                 <p className="text-xs text-primary font-medium">{t.period}</p>
@@ -157,7 +160,7 @@ const Index = () => {
           </div>
 
           <motion.h3 {...fadeUp} className="font-display font-semibold text-xl text-foreground mt-14 mb-6">Education</motion.h3>
-          <div className="space-y-4 border-l border-border pl-6">
+          <div className="space-y-4 border-l-2 border-primary pl-6">
             {education.map((e) => (
               <motion.div key={e.title} {...fadeUp}>
                 <p className="text-xs text-primary font-medium">{e.period}</p>
@@ -177,7 +180,7 @@ const Index = () => {
           <motion.h3 {...fadeUp} className="font-display font-semibold text-xl text-foreground mt-14 mb-4">Skills & Methods</motion.h3>
           <motion.div {...fadeUp} className="flex flex-wrap gap-3">
             {skills.map((skill) => (
-              <span key={skill} className="px-4 py-2 rounded-full text-sm font-medium bg-primary/10 text-primary border border-primary/20">
+              <span key={skill} className="px-4 py-2 text-sm font-semibold uppercase tracking-wide text-primary border border-primary/40 hover:bg-primary hover:text-primary-foreground transition-colors">
                 {skill}
               </span>
             ))}
@@ -189,7 +192,7 @@ const Index = () => {
       </section>
 
       {/* Research */}
-      <section id="research" className="py-24 border-t border-border scroll-mt-16">
+      <section id="research" className="py-24 border-t-2 border-border scroll-mt-16">
         <div className="container max-w-3xl">
           <SectionHeading kicker="Research">
             Research & <span className="text-gradient">Publications</span>
@@ -201,13 +204,13 @@ const Index = () => {
                 key={project.title}
                 {...fadeUp}
                 transition={{ duration: 0.5, delay: i * 0.05 }}
-                className="border-b border-border pb-8 last:border-0"
+                className="border-b-2 border-border pb-8 last:border-0"
               >
-                <h3 className="font-display font-semibold text-lg text-foreground mb-2">{project.title}</h3>
-                <p className="text-sm text-muted-foreground mb-3 leading-relaxed">{project.desc}</p>
+                <h3 className="font-display font-bold text-xl md:text-2xl text-foreground mb-3 leading-snug">{project.title}</h3>
+                <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{project.desc}</p>
                 <div className="flex flex-wrap gap-2">
                   {project.tags.map((tag) => (
-                    <span key={tag} className="text-xs px-3 py-1 rounded-full bg-secondary text-secondary-foreground">{tag}</span>
+                    <span key={tag} className="text-xs font-semibold uppercase tracking-wide px-3 py-1 border border-primary/40 text-primary">{tag}</span>
                   ))}
                 </div>
               </motion.div>
@@ -217,7 +220,7 @@ const Index = () => {
       </section>
 
       {/* Contact */}
-      <section id="contact" className="py-24 border-t border-border scroll-mt-16">
+      <section id="contact" className="py-24 border-t-2 border-border scroll-mt-16">
         <div className="container max-w-3xl">
           <SectionHeading kicker="Contact">
             Let's <span className="text-gradient">Connect</span>
