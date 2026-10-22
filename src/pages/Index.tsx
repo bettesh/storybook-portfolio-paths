@@ -72,6 +72,63 @@ const SectionHeading = ({ kicker, children }: { kicker: string; children: React.
   </motion.div>
 );
 
+type TimelineItem = { period: string; title: string; org: string; desc?: string };
+
+const lineAnim = {
+  initial: { scaleY: 0 },
+  whileInView: { scaleY: 1 },
+  viewport: { once: true, amount: 0.15 },
+  transition: { duration: 1.2, ease: "easeOut" },
+} as const;
+
+const itemAnim = (i: number) => ({
+  initial: { opacity: 0, x: -18 },
+  whileInView: { opacity: 1, x: 0 },
+  viewport: { once: true, amount: 0.35 },
+  transition: { duration: 0.55, delay: 0.12 + i * 0.15, ease: "easeOut" },
+} as const);
+
+const dotAnim = (i: number) => ({
+  initial: { scale: 0, opacity: 0 },
+  whileInView: { scale: 1, opacity: 1 },
+  viewport: { once: true, amount: 0.5 },
+  transition: { delay: 0.18 + i * 0.15, type: "spring", stiffness: 340, damping: 17 },
+} as const);
+
+const Timeline = ({ items }: { items: readonly TimelineItem[] }) => {
+  const reduceMotion = useReducedMotion();
+  return (
+    <div className="relative">
+      <motion.span
+        aria-hidden
+        className="absolute left-[4px] top-2 bottom-2 w-0.5 origin-top bg-primary sm:left-[6px]"
+        {...(reduceMotion ? {} : lineAnim)}
+      />
+      <div className="space-y-7 sm:space-y-8">
+        {items.map((item, i) => (
+          <motion.div
+            key={item.title}
+            className="relative pl-7 sm:pl-10"
+            {...(reduceMotion ? {} : itemAnim(i))}
+          >
+            <motion.span
+              aria-hidden
+              className="absolute left-0 top-1 h-2.5 w-2.5 rounded-full border-2 border-primary bg-background sm:h-3.5 sm:w-3.5"
+              style={{ boxShadow: "0 0 14px hsl(var(--primary) / 0.55)" }}
+              {...(reduceMotion ? {} : dotAnim(i))}
+            />
+            <p className="text-xs text-primary font-medium">{item.period}</p>
+            <h4 className="font-display font-semibold text-foreground">{item.title}</h4>
+            <p className="text-sm text-muted-foreground italic">{item.org}</p>
+            {item.desc && <p className="text-sm text-muted-foreground mt-1">{item.desc}</p>}
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+
 const Index = () => {
   const reduceMotion = useReducedMotion();
 
