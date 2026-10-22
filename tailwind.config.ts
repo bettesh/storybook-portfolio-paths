@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Fraunces", "Georgia", "serif"],
-        body: ["Inter", "sans-serif"],
+        display: ["Instrument Serif", "Georgia", "serif"],
+        body: ["Work Sans", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",

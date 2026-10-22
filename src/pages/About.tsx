@@ -20,8 +20,8 @@ const About = () => (
     <div className="container max-w-3xl">
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
         <p className="text-primary text-sm font-medium tracking-widest uppercase mb-2">About Me</p>
-        <h2 className="text-4xl md:text-5xl font-display font-light text-foreground mb-8">
-          Governing AI in Organisations
+        <h2 className="text-4xl md:text-5xl font-display text-foreground mb-8">
+          Governing <span className="italic text-primary">AI in Organisations</span>
         </h2>
 
         <div className="space-y-6 text-muted-foreground leading-relaxed">
