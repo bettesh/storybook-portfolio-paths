@@ -96,7 +96,8 @@ const Index = () => {
               transition={{ duration: 0.7, delay: 0.05 }}
               className="row-start-2 col-start-2 max-w-2xl lg:col-start-1 lg:row-start-2"
             >
-              <h1 className="text-5xl sm:text-6xl md:text-8xl font-display font-bold uppercase tracking-normal text-foreground leading-[1.02] md:leading-[0.95] mb-6 sm:mb-8">
+              <h1 className="text-[2.75rem] min-[360px]:text-5xl sm:text-6xl md:text-8xl font-display font-bold uppercase tracking-normal text-foreground leading-[1.02] md:leading-[0.95] mb-6 sm:mb-8">
+
                 Hi, I'm <span className="text-gradient block">Seam Zaman</span>
               </h1>
             </motion.div>
@@ -105,7 +106,8 @@ const Index = () => {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.15 }}
-              className="relative row-start-2 col-start-1 flex w-[112px] self-end justify-center min-[380px]:w-[124px] sm:w-[144px] lg:col-start-2 lg:row-start-1 lg:row-span-3 lg:w-auto lg:self-stretch"
+              className="relative row-start-2 col-start-1 flex w-[96px] self-end justify-center min-[360px]:w-[112px] min-[380px]:w-[124px] sm:w-[144px] lg:col-start-2 lg:row-start-1 lg:row-span-3 lg:w-auto lg:self-stretch"
+
             >
               <div aria-hidden className="absolute inset-x-0 top-8 bottom-2 bg-primary/20 blur-[32px] sm:blur-[48px] lg:inset-x-10 lg:top-14 lg:bottom-24 lg:bg-primary/25 lg:blur-[80px]" />
 
