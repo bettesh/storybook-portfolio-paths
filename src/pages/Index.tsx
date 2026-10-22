@@ -35,8 +35,8 @@ const Index = () => {
             <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-8">
               Doctoral Researcher · University of Turku
             </p>
-            <h1 className="text-5xl md:text-7xl font-display font-light leading-[1.08] text-foreground mb-8">
-              Hi, I'm <span className="italic">Seam Zaman</span>
+            <h1 className="text-6xl md:text-8xl font-display leading-[1.02] text-foreground mb-8">
+              Hi, I'm <span className="italic text-primary">Seam Zaman</span>
             </h1>
             <p className="text-lg text-muted-foreground max-w-xl leading-relaxed mb-10">
               I research how organisations govern AI: which decisions are delegated to AI systems, how humans oversee them, and how authority is taken back when needed.

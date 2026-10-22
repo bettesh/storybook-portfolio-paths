@@ -33,8 +33,8 @@ const Projects = () => (
     <div className="container max-w-4xl">
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
         <p className="text-primary text-sm font-medium tracking-widest uppercase mb-2">Research</p>
-        <h2 className="text-4xl md:text-5xl font-display font-light text-foreground mb-12">
-          Research & Publications
+        <h2 className="text-4xl md:text-5xl font-display text-foreground mb-12">
+          Research & <span className="italic text-primary">Publications</span>
         </h2>
       </motion.div>
 
