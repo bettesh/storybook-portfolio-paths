@@ -9,7 +9,7 @@ const timeline = [
 
 const education = [
   { period: "2026 – 2030", title: "Doctoral studies, Information Systems", org: "University of Turku" },
-  { period: "2023 – 2025", title: "MSc Business Analytics (GPA 4.67/5)", org: "Oulu Business School, University of Oulu" },
+  { period: "2023 – 2025", title: "MSc Business Analytics", org: "Oulu Business School, University of Oulu" },
   { period: "2017 – 2022", title: "BBA in Finance", org: "University of Dhaka, Bangladesh" },
 ];
 
