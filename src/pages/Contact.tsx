@@ -23,8 +23,8 @@ const Contact = () => {
       <div className="container max-w-2xl">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
           <p className="text-primary text-sm font-medium tracking-widest uppercase mb-2">Contact</p>
-          <h2 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-4">
-            Let's <span className="text-gradient">Connect</span>
+          <h2 className="text-4xl md:text-5xl font-display font-light text-foreground mb-4">
+            Let's Connect
           </h2>
           <p className="text-muted-foreground mb-10">
             Interested in AI governance research or collaboration? Get in touch.
@@ -53,7 +53,7 @@ const Contact = () => {
             <Input placeholder="Your Name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required />
             <Input type="email" placeholder="Your Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
             <Textarea placeholder="Your Message" rows={5} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} required />
-            <Button type="submit" className="w-full glow">Send Message</Button>
+            <Button type="submit" className="w-full">Send Message</Button>
           </form>
         </motion.div>
       </div>
