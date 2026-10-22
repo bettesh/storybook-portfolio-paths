@@ -92,7 +92,7 @@ const segAnim = (i: number) => ({
   initial: { scaleY: 0 },
   whileInView: { scaleY: 1 },
   viewport: { once: true, amount: 0.4 },
-  transition: { duration: 0.28, delay: 0.1 + i * 0.2, ease: "easeOut" },
+  transition: { duration: 0.32, delay: 0.1 + i * 0.2, ease: "easeInOut" },
 } as const);
 
 const Timeline = ({ items }: { items: readonly TimelineItem[] }) => {
