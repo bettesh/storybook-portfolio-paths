@@ -14,27 +14,37 @@ const Navbar = () => {
   const [active, setActive] = useState("home");
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActive(entry.target.id);
-        });
-      },
-      { rootMargin: "-30% 0px -60% 0px", threshold: 0 }
-    );
+    const ids = sections.map((s) => s.id);
 
-    sections.forEach(({ id }) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
+    const onScroll = () => {
+      const pos = window.scrollY + window.innerHeight * 0.35;
+      let current = ids[0];
+      ids.forEach((id) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (el.getBoundingClientRect().top + window.scrollY <= pos) current = id;
+      });
+      // At the very bottom, the last section is the one in view.
+      if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) {
+        current = ids[ids.length - 1];
+      }
+      setActive(current);
+    };
 
-    return () => observer.disconnect();
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   const goTo = (id: string) => {
     setOpen(false);
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
+
 
   return (
     <motion.nav
