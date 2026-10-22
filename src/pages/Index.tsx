@@ -76,9 +76,9 @@ const Index = () => {
   return (
     <div>
       {/* Hero */}
-      <section id="home" className="min-h-[calc(85svh-4rem)] md:min-h-[85vh] flex items-center py-12 sm:py-16">
-        <div className="container">
-          <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_380px] xl:grid-cols-[minmax(0,1fr)_470px] lg:gap-14">
+      <section id="home" className="min-h-[calc(85svh-4rem)] md:min-h-[85vh] flex items-stretch py-12 sm:py-16 lg:pb-0">
+        <div className="container flex w-full flex-col">
+          <div className="grid flex-1 items-center gap-10 lg:grid-cols-[minmax(0,1fr)_420px] xl:grid-cols-[minmax(0,1fr)_500px] lg:gap-14">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -109,14 +109,14 @@ const Index = () => {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.15 }}
-              className="relative mx-auto w-full max-w-[260px] sm:max-w-[340px] lg:max-w-none"
+              className="relative mx-auto flex w-full max-w-[260px] items-end justify-center sm:max-w-[340px] lg:max-w-none lg:self-stretch"
             >
               <div aria-hidden className="absolute inset-x-10 top-14 bottom-24 bg-primary/25 blur-[80px]" />
               <img
                 src={portrait}
                 alt="Portrait of Seam Zaman"
                 draggable={false}
-                className="relative w-full h-auto select-none"
+                className="relative h-auto max-h-full w-full select-none object-contain object-bottom"
               />
             </motion.div>
           </div>
