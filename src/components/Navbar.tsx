@@ -1,18 +1,40 @@
-import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
-const links = [
-  { to: "/", label: "Home" },
-  { to: "/about", label: "About" },
-  { to: "/projects", label: "Projects" },
-  { to: "/contact", label: "Contact" },
+const sections = [
+  { id: "home", label: "Home" },
+  { id: "about", label: "About" },
+  { id: "research", label: "Research" },
+  { id: "contact", label: "Contact" },
 ];
 
 const Navbar = () => {
-  const location = useLocation();
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState("home");
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { rootMargin: "-30% 0px -60% 0px", threshold: 0 }
+    );
+
+    sections.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const goTo = (id: string) => {
+    setOpen(false);
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
     <motion.nav
@@ -22,27 +44,30 @@ const Navbar = () => {
       className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/80 border-b border-border"
     >
       <div className="container flex items-center justify-between h-16">
-        <Link to="/" className="font-display text-xl font-bold tracking-tight text-foreground">
+        <button
+          onClick={() => goTo("home")}
+          className="font-display text-xl font-bold tracking-tight text-foreground"
+        >
           Seam<span className="text-gradient">.</span>
-        </Link>
+        </button>
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-8">
-          {links.map((link) => (
-            <Link
-              key={link.to}
-              to={link.to}
+          {sections.map((section) => (
+            <button
+              key={section.id}
+              onClick={() => goTo(section.id)}
               className={`text-sm font-medium transition-colors hover:text-primary ${
-                location.pathname === link.to ? "text-primary" : "text-muted-foreground"
+                active === section.id ? "text-primary" : "text-muted-foreground"
               }`}
             >
-              {link.label}
-            </Link>
+              {section.label}
+            </button>
           ))}
         </div>
 
         {/* Mobile toggle */}
-        <button className="md:hidden text-foreground" onClick={() => setOpen(!open)}>
+        <button className="md:hidden text-foreground" onClick={() => setOpen(!open)} aria-label="Toggle menu">
           {open ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
@@ -55,17 +80,16 @@ const Navbar = () => {
           className="md:hidden border-t border-border bg-background"
         >
           <div className="container py-4 flex flex-col gap-4">
-            {links.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                onClick={() => setOpen(false)}
-                className={`text-sm font-medium ${
-                  location.pathname === link.to ? "text-primary" : "text-muted-foreground"
+            {sections.map((section) => (
+              <button
+                key={section.id}
+                onClick={() => goTo(section.id)}
+                className={`text-left text-sm font-medium ${
+                  active === section.id ? "text-primary" : "text-muted-foreground"
                 }`}
               >
-                {link.label}
-              </Link>
+                {section.label}
+              </button>
             ))}
           </div>
         </motion.div>
