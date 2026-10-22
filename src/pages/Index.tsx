@@ -109,10 +109,12 @@ const Index = () => {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.15 }}
-              className="relative row-start-2 col-start-1 flex w-[96px] self-end justify-center min-[360px]:w-[112px] min-[380px]:w-[124px] sm:w-[144px] lg:col-start-2 lg:row-start-1 lg:row-span-3 lg:w-auto lg:self-stretch"
+              className="relative hidden justify-center lg:col-start-2 lg:row-start-1 lg:row-span-3 lg:flex lg:self-stretch"
+
 
             >
-              <div aria-hidden className="absolute inset-x-0 top-8 bottom-2 bg-primary/20 blur-[32px] sm:blur-[48px] lg:inset-x-10 lg:top-14 lg:bottom-24 lg:bg-primary/25 lg:blur-[80px]" />
+              <div aria-hidden className="absolute inset-x-10 top-14 bottom-24 bg-primary/25 blur-[80px]" />
+
 
               <img
                 src={portrait}
