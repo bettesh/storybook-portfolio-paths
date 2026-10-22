@@ -20,8 +20,8 @@ const About = () => (
     <div className="container max-w-3xl">
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
         <p className="text-primary text-sm font-medium tracking-widest uppercase mb-2">About Me</p>
-        <h2 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-8">
-          Governing <span className="text-gradient">AI in Organisations</span>
+        <h2 className="text-4xl md:text-5xl font-display font-light text-foreground mb-8">
+          Governing AI in Organisations
         </h2>
 
         <div className="space-y-6 text-muted-foreground leading-relaxed">
@@ -71,7 +71,7 @@ const About = () => (
         <h2 className="font-display font-semibold text-xl text-foreground mt-14 mb-4">Skills & Methods</h2>
         <div className="flex flex-wrap gap-3">
           {skills.map((skill) => (
-            <span key={skill} className="px-4 py-2 rounded-full text-sm font-medium bg-primary/10 text-primary border border-primary/20">
+            <span key={skill} className="px-3.5 py-1.5 rounded-full text-xs tracking-wide text-muted-foreground border border-border">
               {skill}
             </span>
           ))}

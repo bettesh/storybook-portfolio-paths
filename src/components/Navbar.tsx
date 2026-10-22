@@ -56,9 +56,9 @@ const Navbar = () => {
       <div className="container flex items-center justify-between h-16">
         <button
           onClick={() => goTo("home")}
-          className="font-display text-xl font-bold tracking-tight text-foreground"
+          className="font-display text-lg font-medium tracking-tight text-foreground"
         >
-          Seam<span className="text-gradient">.</span>
+          Seam Zaman
         </button>
 
         {/* Desktop */}
@@ -67,8 +67,8 @@ const Navbar = () => {
             <button
               key={section.id}
               onClick={() => goTo(section.id)}
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                active === section.id ? "text-primary" : "text-muted-foreground"
+              className={`text-sm tracking-wide transition-colors hover:text-foreground ${
+                active === section.id ? "text-foreground" : "text-muted-foreground"
               }`}
             >
               {section.label}
@@ -94,8 +94,8 @@ const Navbar = () => {
               <button
                 key={section.id}
                 onClick={() => goTo(section.id)}
-                className={`text-left text-sm font-medium ${
-                  active === section.id ? "text-primary" : "text-muted-foreground"
+                className={`text-left text-sm tracking-wide ${
+                  active === section.id ? "text-foreground" : "text-muted-foreground"
                 }`}
               >
                 {section.label}
