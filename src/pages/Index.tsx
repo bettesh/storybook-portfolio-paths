@@ -114,6 +114,22 @@ const Index = () => {
               className="relative hidden justify-center lg:col-start-2 lg:row-start-1 lg:row-span-3 lg:flex lg:self-stretch"
             >
               <div aria-hidden className="absolute inset-x-10 top-14 bottom-24 bg-primary/25 blur-[80px]" />
+              <motion.svg
+                aria-hidden
+                viewBox="0 0 260 420"
+                fill="none"
+                className="pointer-events-none absolute left-[-120px] top-[30%] w-[260px] text-primary"
+              >
+                <motion.path
+                  d="M14 40 C100 10 180 70 192 150 C202 220 140 255 172 315 C196 356 228 394 254 416 C260 421 264 418 262 410"
+                  stroke="currentColor"
+                  strokeWidth={3.5}
+                  strokeLinecap="round"
+                  initial={reduceMotion ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
+                  animate={{ pathLength: 1, opacity: 1 }}
+                  transition={{ duration: 1.4, delay: 1, ease: "easeInOut" }}
+                />
+              </motion.svg>
               <motion.div
                 initial={{ opacity: 0, x: 30, rotate: 2.5 }}
                 whileInView={{ opacity: 1, x: 0, rotate: 0 }}
@@ -132,16 +148,6 @@ const Index = () => {
                     draggable={false}
                     className="relative h-auto max-h-full w-full select-none object-contain object-bottom"
                   />
-                  <motion.span
-                    initial={{ opacity: 0, y: 10, scale: 0.92 }}
-                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.75 }}
-                    className="absolute left-0 top-[13%] inline-flex items-center border border-primary/50 bg-background/85 px-3 py-1.5 text-[11px] font-bold uppercase tracking-normal text-primary"
-                  >
-                    Hi, I'm Seam Zaman
-                    <span aria-hidden className="absolute -right-[6px] top-1/2 h-2.5 w-2.5 -translate-y-1/2 rotate-45 border-r border-t border-primary/50 bg-background/85" />
-                  </motion.span>
                 </motion.div>
               </motion.div>
             </motion.div>
