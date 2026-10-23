@@ -133,6 +133,31 @@ const Timeline = ({ items }: { items: readonly TimelineItem[] }) => {
 };
 
 
+const WordReveal = ({ text, delay = 0, className }: { text: string; delay?: number; className?: string }) => {
+  const reduceMotion = useReducedMotion();
+  const words = text.split(" ");
+  return (
+    <span className={className}>
+      {words.map((word, i) => (
+        <span
+          key={`${word}-${i}`}
+          className="inline-block overflow-hidden pb-[0.16em] -mb-[0.16em] align-bottom"
+        >
+          <motion.span
+            className="inline-block will-change-transform"
+            initial={reduceMotion ? false : { y: "115%" }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: delay + i * 0.1 }}
+          >
+            {word}
+            {i < words.length - 1 ? "\u00A0" : ""}
+          </motion.span>
+        </span>
+      ))}
+    </span>
+  );
+};
+
 const Index = () => {
   const reduceMotion = useReducedMotion();
 
@@ -156,15 +181,14 @@ const Index = () => {
               </p>
             </motion.div>
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.05 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4 }}
               className="max-w-2xl lg:col-start-1 lg:row-start-2"
             >
               <h1 className="text-[2.75rem] min-[360px]:text-5xl sm:text-6xl md:text-8xl font-display font-bold uppercase tracking-normal text-foreground leading-[1.02] md:leading-[0.95] mb-6 sm:mb-8">
-
-
-                Hi, I'm <span className="text-gradient block">Seam Zaman</span>
+                <WordReveal text="Hi, I'm" delay={0.15} className="block" />
+                <WordReveal text="Seam Zaman" delay={0.35} className="text-gradient block" />
               </h1>
             </motion.div>
 
