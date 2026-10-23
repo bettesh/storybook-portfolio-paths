@@ -133,7 +133,17 @@ const Timeline = ({ items }: { items: readonly TimelineItem[] }) => {
 };
 
 
-const WordReveal = ({ text, delay = 0, className }: { text: string; delay?: number; className?: string }) => {
+const WordReveal = ({
+  text,
+  delay = 0,
+  className,
+  wordClassName,
+}: {
+  text: string;
+  delay?: number;
+  className?: string;
+  wordClassName?: string;
+}) => {
   const reduceMotion = useReducedMotion();
   const words = text.split(" ");
   return (
@@ -144,7 +154,7 @@ const WordReveal = ({ text, delay = 0, className }: { text: string; delay?: numb
           className="inline-block overflow-hidden pb-[0.16em] -mb-[0.16em] align-bottom"
         >
           <motion.span
-            className="inline-block will-change-transform"
+            className={wordClassName ? `inline-block ${wordClassName}` : "inline-block"}
             initial={reduceMotion ? false : { y: "115%" }}
             animate={{ y: 0 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: delay + i * 0.1 }}
