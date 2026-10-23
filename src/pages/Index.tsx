@@ -414,7 +414,7 @@ const Index = () => {
 
           <motion.div {...fadeUp}>
             <Button asChild variant="outline" className="min-h-12 px-5">
-              <a href={cv.url} download="Seam_Zaman_CV.pdf"><Download className="mr-2 h-4 w-4" /> Download CV</a>
+              <a href="/downloads/Seam_Zaman_CV.pdf" download="Seam_Zaman_CV.pdf"><Download className="mr-2 h-4 w-4" /> Download CV</a>
             </Button>
           </motion.div>
         </div>
