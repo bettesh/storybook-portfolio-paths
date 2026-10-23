@@ -43,7 +43,7 @@ const projects: readonly Project[] = [
     category: "peer",
   },
   {
-    title: "Brand Image and Purchasing Behaviour",
+    title: "Impact of Brand Image on Customer Purchasing Behaviour",
     desc: "Master's thesis (grade 5/5) applying SEM and machine-learning models to 3,600 customer survey responses.",
     tags: ["Thesis", "SEM", "Machine Learning"],
     category: "thesis",
