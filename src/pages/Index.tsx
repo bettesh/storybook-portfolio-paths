@@ -1,7 +1,6 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, GraduationCap, BookOpen, Lightbulb, Mail, MapPin, Download, ExternalLink, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import cv from "@/assets/Seam_Zaman_CV.pdf.asset.json";
 import portrait from "@/assets/seam-portrait.webp";
 
 const EMAIL = "sszama@utu.fi";
@@ -415,7 +414,7 @@ const Index = () => {
 
           <motion.div {...fadeUp}>
             <Button asChild variant="outline" className="min-h-12 px-5">
-              <a href={cv.url} download="Seam_Zaman_CV.pdf"><Download className="mr-2 h-4 w-4" /> Download CV</a>
+              <a href="/downloads/Seam_Zaman_CV.pdf" download="Seam_Zaman_CV.pdf"><Download className="mr-2 h-4 w-4" /> Download CV</a>
             </Button>
           </motion.div>
         </div>
