@@ -198,7 +198,7 @@ const Index = () => {
             >
               <h1 className="text-[2.75rem] min-[360px]:text-5xl sm:text-6xl md:text-8xl font-display font-bold uppercase tracking-normal text-foreground leading-[1.02] md:leading-[0.95] mb-6 sm:mb-8">
                 <WordReveal text="Hi, I'm" delay={0.15} className="block" />
-                <WordReveal text="Seam Zaman" delay={0.35} className="text-gradient block" />
+                <WordReveal text="Seam Zaman" delay={0.35} className="block" wordClassName="text-gradient" />
               </h1>
             </motion.div>
 
