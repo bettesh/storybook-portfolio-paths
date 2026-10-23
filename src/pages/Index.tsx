@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, GraduationCap, BookOpen, Lightbulb, Mail, MapPin, Download, ExternalLink, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import portrait from "@/assets/seam-portrait.webp";
 
 const EMAIL = "sszama@utu.fi";
@@ -20,31 +22,43 @@ const education = [
 
 const skills = ["Structural Equation Modelling", "Factor Analysis", "Machine Learning", "Systematic Literature Review (PRISMA)", "Qualitative Content Analysis", "Design Science Research", "Human–AI Interaction", "Python", "R", "SPSS", "Power BI", "Tableau"];
 
-const projects = [
-  {
-    title: "How AI governance research addresses the failure of human overseers: a systematic literature review",
-    desc: "A systematic literature review on how the potential failure of human overseers is addressed in existing literature review on AI goverance. (In progress)",
-    tags: ["AI Governance", "Systematic Review", "Human Oversight"],
-  },
+type Project = {
+  title: string;
+  desc: string;
+  tags: string[];
+  category: "peer" | "thesis" | "course";
+};
+
+const projects: readonly Project[] = [
   {
     title: "Understanding Nature-Positive Business Models",
     desc: "Gomes, J. F., Yaraghi, N., Zaman, S., & Ahokangas, P. (2025). Proceedings of the Smart Service Summit 2025 (in press).",
     tags: ["Publication", "Qualitative Study", "Sustainability"],
+    category: "peer",
   },
   {
-    title: "Predicting Nurses' Stress During COVID-19",
-    desc: "Team study using physiological signals, time-window segmentation and gradient-boosted classification with leave-one-group-out cross-validation.",
-    tags: ["Machine Learning", "Python"],
-  },
-  {
-    title: "Reputation and Customer Trust at Osuuskauppa Arina",
-    desc: "Designed and ran the member survey, then applied factor analysis and structural equation modelling in R.",
-    tags: ["SEM", "Survey Research", "R"],
+    title: "How AI governance research addresses the failure of human overseers: a systematic literature review",
+    desc: "A systematic literature review on how the potential failure of human overseers is addressed in existing literature review on AI goverance. (In progress)",
+    tags: ["AI Governance", "Systematic Review", "Human Oversight"],
+    category: "peer",
   },
   {
     title: "Brand Image and Purchasing Behaviour",
     desc: "Master's thesis (grade 5/5) applying SEM and machine-learning models to 3,600 customer survey responses.",
     tags: ["Thesis", "SEM", "Machine Learning"],
+    category: "thesis",
+  },
+  {
+    title: "Predicting Nurses' Stress During COVID-19",
+    desc: "Team study using physiological signals, time-window segmentation and gradient-boosted classification with leave-one-group-out cross-validation.",
+    tags: ["Machine Learning", "Python"],
+    category: "course",
+  },
+  {
+    title: "Reputation and Customer Trust at Osuuskauppa Arina",
+    desc: "Designed and ran the member survey, then applied factor analysis and structural equation modelling in R.",
+    tags: ["SEM", "Survey Research", "R"],
+    category: "course",
   },
 ];
 
@@ -164,6 +178,71 @@ const WordReveal = ({
         </span>
       ))}
     </span>
+  );
+};
+
+const categoryTabs = [
+  { id: "peer", label: "Peer Reviewed" },
+  { id: "thesis", label: "Thesis" },
+  { id: "course", label: "Course Project" },
+] as const;
+
+const ResearchTabs = ({ items }: { items: readonly Project[] }) => {
+  const reduceMotion = useReducedMotion();
+  const [tab, setTab] = useState<Project["category"]>("peer");
+
+  return (
+    <Tabs value={tab} onValueChange={(v) => setTab(v as Project["category"])} className="w-full">
+      <TabsList className="flex h-auto w-full flex-wrap items-start justify-start gap-x-7 gap-y-1 rounded-none border-b-2 border-border bg-transparent p-0 sm:gap-x-12">
+        {categoryTabs.map((c) => (
+          <TabsTrigger
+            key={c.id}
+            value={c.id}
+            className="relative rounded-none border-0 bg-transparent px-0 pb-3 pt-1 font-display text-xs font-bold uppercase tracking-normal text-muted-foreground shadow-none transition-colors hover:text-foreground data-[state=active]:bg-transparent data-[state=active]:text-primary data-[state=active]:shadow-none sm:text-base"
+          >
+            {c.label}
+            <span className="ml-2 text-[0.7em] font-semibold opacity-60">
+              {items.filter((p) => p.category === c.id).length}
+            </span>
+            {tab === c.id &&
+              (reduceMotion ? (
+                <span aria-hidden className="absolute inset-x-0 -bottom-[2px] h-[2px] bg-primary" />
+              ) : (
+                <motion.span
+                  aria-hidden
+                  layoutId="research-tab-line"
+                  className="absolute inset-x-0 -bottom-[2px] h-[2px] bg-primary"
+                  style={{ boxShadow: "0 0 12px hsl(var(--primary) / 0.55)" }}
+                />
+              ))}
+          </TabsTrigger>
+        ))}
+      </TabsList>
+
+      {categoryTabs.map((c) => (
+        <TabsContent key={c.id} value={c.id} className="mt-7 focus-visible:ring-0 sm:mt-9">
+          {items
+            .filter((p) => p.category === c.id)
+            .map((project, i) => (
+              <motion.div
+                key={project.title}
+                initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.45, delay: reduceMotion ? 0 : i * 0.08, ease: "easeOut" }}
+                className="border-b-2 border-border pb-7 last:border-0 sm:pb-8"
+              >
+                <h3 className="font-display font-bold text-lg sm:text-xl md:text-2xl text-foreground mb-3 leading-snug">{project.title}</h3>
+                <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{project.desc}</p>
+                <div className="flex flex-wrap gap-2">
+                  {project.tags.map((tag) => (
+                    <span key={tag} className="text-xs font-semibold uppercase tracking-normal px-3 py-1 border border-primary/40 text-primary">{tag}</span>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+        </TabsContent>
+      ))}
+    </Tabs>
   );
 };
 
@@ -332,24 +411,7 @@ const Index = () => {
             Research & <span className="text-gradient">Publications</span>
           </SectionHeading>
 
-          <div className="space-y-7 sm:space-y-8">
-            {projects.map((project, i) => (
-              <motion.div
-                key={project.title}
-                {...fadeUp}
-                transition={{ duration: 0.5, delay: i * 0.05 }}
-                className="border-b-2 border-border pb-7 sm:pb-8 last:border-0"
-              >
-                <h3 className="font-display font-bold text-lg sm:text-xl md:text-2xl text-foreground mb-3 leading-snug">{project.title}</h3>
-                <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{project.desc}</p>
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag) => (
-                    <span key={tag} className="text-xs font-semibold uppercase tracking-normal px-3 py-1 border border-primary/40 text-primary">{tag}</span>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          <ResearchTabs items={projects} />
         </div>
       </section>
 
