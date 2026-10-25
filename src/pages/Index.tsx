@@ -398,7 +398,7 @@ const Index = () => {
       </section>
 
       {/* Highlights */}
-      <section className="py-12 sm:py-16 md:py-20 border-t-2 border-border">
+      <section className="pb-12 sm:pb-16 md:pb-20">
         <div className="container">
           <div className="grid md:grid-cols-3 gap-6 md:gap-8">
             {highlights.map((item, i) => (
