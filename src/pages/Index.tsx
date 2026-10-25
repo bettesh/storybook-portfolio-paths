@@ -70,7 +70,8 @@ const strands = [
     question: "Which decisions do organisations hand to AI, and why?",
     desc: "Mapping organisational AI governance mechanisms through a PRISMA systematic review and analysis of real AI governance policies.",
     tags: ["Systematic review", "Policy analysis"],
-    step: 1,
+    action: "sweep",
+    cta: "Watch delegation",
   },
   {
     num: "02",
@@ -78,7 +79,8 @@ const strands = [
     question: "How does human oversight work in practice, and when does it fail?",
     desc: "A systematic review of how AI governance research addresses the failure of human overseers.",
     tags: ["Systematic review", "In progress"],
-    step: 3,
+    action: "oversight",
+    cta: "See oversight shrink",
   },
   {
     num: "03",
@@ -86,8 +88,8 @@ const strands = [
     question: "How is authority taken back when a system must be overridden?",
     desc: "Socio-technical and design science work on override and accountability.",
     tags: ["Socio-technical", "Design science"],
-    step: 4,
-    override: true,
+    action: "override",
+    cta: "Try the override",
   },
 ] as const;
 
@@ -436,7 +438,7 @@ const Index = () => {
                   document.getElementById("delegation-slider")?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "nearest" });
                   window.dispatchEvent(
                     new CustomEvent<DelegationSetDetail>(DELEGATION_SET_EVENT, {
-                      detail: { step: item.step, override: "override" in item && item.override },
+                      detail: { mode: item.action },
                     }),
                   );
                 }}
@@ -456,7 +458,7 @@ const Index = () => {
                     </span>
                   ))}
                   <span className="ml-auto inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-normal text-muted-foreground transition-colors group-hover:text-primary group-focus-visible:text-primary">
-                    Show on slider <ArrowUp className="h-3 w-3" />
+                    {item.cta} <ArrowUp className="h-3 w-3" />
                   </span>
                 </div>
               </motion.button>

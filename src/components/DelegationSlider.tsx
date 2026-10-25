@@ -43,32 +43,51 @@ type ScenarioId = (typeof scenarios)[number]["id"];
 
 const MAX = scenarios[0].steps.length - 1;
 
-const Meter = ({ label, level }: { label: string; level: number }) => (
-  <div>
-    <div className="mb-1.5 flex justify-between text-[10px] sm:text-[11px] font-bold uppercase tracking-normal text-muted-foreground">
-      <span>{label}</span>
-      <span className="text-foreground">{Math.round(level * 100)}%</span>
-    </div>
-    <div className="h-1 w-full bg-secondary">
+const Meter = ({ label, level, flash = false }: { label: string; level: number; flash?: boolean }) => {
+  const reduceMotion = useReducedMotion();
+  return (
+    <div>
+      <div
+        className={`mb-1.5 flex justify-between text-[10px] sm:text-[11px] font-bold uppercase tracking-normal transition-colors ${
+          flash ? "text-primary" : "text-muted-foreground"
+        }`}
+      >
+        <span>{label}</span>
+        <span className={flash ? "text-primary" : "text-foreground"}>{Math.round(level * 100)}%</span>
+      </div>
       <motion.div
-        className="h-full origin-left bg-primary"
-        animate={{ scaleX: level }}
-        transition={{ type: "spring", stiffness: 200, damping: 26 }}
-      />
+        className="h-1 w-full bg-secondary"
+        animate={
+          flash && !reduceMotion
+            ? { boxShadow: ["0 0 0 0 hsl(45 95% 55% / 0)", "0 0 14px 2px hsl(45 95% 55% / 0.7)", "0 0 0 0 hsl(45 95% 55% / 0)"] }
+            : { boxShadow: "0 0 0 0 hsl(45 95% 55% / 0)" }
+        }
+        transition={flash ? { duration: 0.8, repeat: 2 } : { duration: 0.2 }}
+      >
+        <motion.div
+          className="h-full origin-left bg-primary"
+          animate={{ scaleX: level }}
+          transition={{ type: "spring", stiffness: 200, damping: 26 }}
+        />
+      </motion.div>
     </div>
-  </div>
-);
+  );
+};
 
 // Dispatched by the hero teaser link so the slider takes focus once it is scrolled to.
 export const DELEGATION_FOCUS_EVENT = "delegation:focus";
 // Dispatched by the research strand cards to move the slider to a matching step.
 export const DELEGATION_SET_EVENT = "delegation:set";
-export type DelegationSetDetail = { step: number; override?: boolean };
+// sweep: walk Human → AI; oversight: jump to step 3 and flash the oversight meter; override: go to AI, then override.
+export type DelegationSetDetail = { mode: "sweep" | "oversight" | "override" };
 
 const DelegationSlider = () => {
   const reduceMotion = useReducedMotion();
   const [value, onChange] = useState(0);
   const [pulse, setPulse] = useState(false);
+  const [flashOversight, setFlashOversight] = useState(false);
+  const reduceRef = useRef(reduceMotion);
+  reduceRef.current = reduceMotion;
   const rootRef = useRef<HTMLDivElement>(null);
   const inView = useInView(rootRef, { once: true, amount: 0.6 });
   const [scenarioId, setScenarioId] = useState<ScenarioId>("hiring");
@@ -99,16 +118,31 @@ const DelegationSlider = () => {
       timers.current.push(window.setTimeout(() => setPulse(false), 1600));
     };
     const set = (event: Event) => {
-      const { step, override } = (event as CustomEvent<DelegationSetDetail>).detail;
+      const { mode } = (event as CustomEvent<DelegationSetDetail>).detail;
+      const later = (fn: () => void, ms: number) => timers.current.push(window.setTimeout(fn, ms));
       timers.current.forEach(clearTimeout);
       timers.current = [];
       setRewinding(false);
       setTouched(true);
       setReclaimed(false);
-      onChange(step);
+      setFlashOversight(false);
       setPulse(true);
-      timers.current.push(window.setTimeout(() => setPulse(false), 1600));
-      if (override) timers.current.push(window.setTimeout(() => overrideRef.current(), 900));
+      later(() => setPulse(false), 1600);
+      if (mode === "sweep") {
+        if (reduceRef.current) {
+          onChange(MAX);
+          return;
+        }
+        onChange(0);
+        for (let i = 1; i <= MAX; i++) later(() => onChange(i), i * 1100);
+      } else if (mode === "oversight") {
+        onChange(3);
+        setFlashOversight(true);
+        later(() => setFlashOversight(false), 2600);
+      } else {
+        onChange(MAX);
+        later(() => overrideRef.current(), 900);
+      }
     };
     window.addEventListener(DELEGATION_FOCUS_EVENT, focus);
     window.addEventListener(DELEGATION_SET_EVENT, set);
@@ -122,6 +156,11 @@ const DelegationSlider = () => {
 
   const change = (next: number) => {
     if (rewinding) return;
+    // Manual input cancels any card-driven sweep or highlight.
+    timers.current.forEach(clearTimeout);
+    timers.current = [];
+    setPulse(false);
+    setFlashOversight(false);
     setTouched(true);
     setReclaimed(false);
     onChange(next);
@@ -276,7 +315,7 @@ const DelegationSlider = () => {
 
       <div className="mt-4 grid grid-cols-2 gap-4 sm:gap-6" aria-hidden>
         <Meter label="Speed" level={speed} />
-        <Meter label="Human oversight" level={oversight} />
+        <Meter label="Human oversight" level={oversight} flash={flashOversight} />
       </div>
     </motion.div>
   );
