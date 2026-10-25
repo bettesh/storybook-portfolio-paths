@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "framer-motion";
-import { ArrowRight, GraduationCap, BookOpen, Lightbulb, Mail, MapPin, Download, ExternalLink, Linkedin } from "lucide-react";
+import { ArrowDown, ArrowRight, GraduationCap, BookOpen, Lightbulb, Mail, MapPin, Download, ExternalLink, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import DelegationSlider from "@/components/DelegationSlider";
+import DelegationSlider, { DELEGATION_FOCUS_EVENT } from "@/components/DelegationSlider";
 import portrait from "@/assets/seam-portrait.webp";
 
 const EMAIL = "sszama@utu.fi";
@@ -249,7 +249,6 @@ const ResearchTabs = ({ items }: { items: readonly Project[] }) => {
 
 const Index = () => {
   const reduceMotion = useReducedMotion();
-  const [authority, setAuthority] = useState(0);
 
   // Cursor position over the hero, -0.5..0.5 on each axis; drives the portrait glow and tilt.
   const pointerX = useMotionValue(0);
@@ -311,10 +310,8 @@ const Index = () => {
             >
               <motion.div
                 aria-hidden
-                className="absolute inset-x-10 top-14 bottom-24 bg-primary/40 blur-[80px]"
+                className="absolute inset-x-10 top-14 bottom-24 bg-primary/25 blur-[80px]"
                 style={{ x: glowX, y: glowY }}
-                animate={{ opacity: 0.6 + authority * 0.1 }}
-                transition={{ duration: 0.4 }}
               />
               <motion.div
                 initial={{ opacity: 0, x: 30, rotate: 2.5 }}
@@ -349,7 +346,22 @@ const Index = () => {
               <p className="text-base sm:text-lg text-muted-foreground mb-7 sm:mb-8 leading-relaxed">
                 I research how organisations govern AI: which decisions are delegated to AI systems, how humans oversee them, and how authority is taken back when needed.
               </p>
-              <DelegationSlider value={authority} onChange={setAuthority} />
+              <a
+                href="#who-decides"
+                onClick={(event) => {
+                  event.preventDefault();
+                  document.getElementById("who-decides")?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+                  history.replaceState(null, "", "#who-decides");
+                  window.dispatchEvent(new Event(DELEGATION_FOCUS_EVENT));
+                }}
+                className="group mb-7 sm:mb-8 inline-flex min-h-11 items-center gap-2 text-sm sm:text-base font-semibold text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                <span>
+                  Who should decide: a human or AI?{" "}
+                  <span className="text-primary underline decoration-primary/50 underline-offset-4 group-hover:decoration-primary">Try it</span>
+                </span>
+                <ArrowDown className="h-4 w-4 text-primary transition-transform group-hover:translate-y-0.5" />
+              </a>
               <div className="flex flex-col min-[400px]:flex-row gap-3 sm:gap-4">
                 <Button asChild className="glow min-h-12 px-5">
                   <a href="#research">
@@ -360,6 +372,26 @@ const Index = () => {
                   <a href="#contact">Get in Touch</a>
                 </Button>
               </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Who decides? */}
+      <section id="who-decides" className="py-14 sm:py-20 md:py-24 border-t-2 border-border">
+        <div className="container">
+          <div className="grid gap-y-2 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:items-center lg:gap-x-16">
+            <div>
+              <SectionHeading kicker="Interactive · My research question">
+                Who <span className="text-gradient">Decides?</span>
+              </SectionHeading>
+              <motion.p {...fadeUp} className="-mt-2 sm:-mt-6 mb-8 lg:mb-0 max-w-md text-muted-foreground leading-relaxed">
+                This is the question my dissertation asks: how far should organisations delegate decisions to AI, and
+                how do they take authority back when it matters? Pick a scenario and drag the slider to see what changes.
+              </motion.p>
+            </div>
+            <motion.div {...fadeUp}>
+              <DelegationSlider />
             </motion.div>
           </div>
         </div>

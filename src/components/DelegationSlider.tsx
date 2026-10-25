@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
 import * as SliderPrimitive from "@radix-ui/react-slider";
 import { ArrowRight, RotateCcw } from "lucide-react";
 
@@ -59,8 +59,15 @@ const Meter = ({ label, level }: { label: string; level: number }) => (
   </div>
 );
 
-const DelegationSlider = ({ value, onChange }: { value: number; onChange: (value: number) => void }) => {
+// Dispatched by the hero teaser link so the slider takes focus once it is scrolled to.
+export const DELEGATION_FOCUS_EVENT = "delegation:focus";
+
+const DelegationSlider = () => {
   const reduceMotion = useReducedMotion();
+  const [value, onChange] = useState(0);
+  const [pulse, setPulse] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(rootRef, { once: true, amount: 0.6 });
   const [scenarioId, setScenarioId] = useState<ScenarioId>("hiring");
   const [reclaimed, setReclaimed] = useState(false);
   const [rewinding, setRewinding] = useState(false);
@@ -71,15 +78,26 @@ const DelegationSlider = ({ value, onChange }: { value: number; onChange: (value
 
   useEffect(() => () => timers.current.forEach(clearTimeout), []);
 
-  // Nudge the thumb once the hero has settled, until the visitor first interacts.
+  // Nudge the thumb shortly after the slider scrolls into view, until the visitor first interacts.
   useEffect(() => {
     if (touched) {
       setHint(false);
       return;
     }
-    const id = window.setTimeout(() => setHint(true), 2000);
+    if (!inView) return;
+    const id = window.setTimeout(() => setHint(true), 1200);
     return () => clearTimeout(id);
-  }, [touched]);
+  }, [touched, inView]);
+
+  useEffect(() => {
+    const focus = () => {
+      thumbRef.current?.focus({ preventScroll: true });
+      setPulse(true);
+      timers.current.push(window.setTimeout(() => setPulse(false), 1600));
+    };
+    window.addEventListener(DELEGATION_FOCUS_EVENT, focus);
+    return () => window.removeEventListener(DELEGATION_FOCUS_EVENT, focus);
+  }, []);
 
   const scenario = scenarios.find((s) => s.id === scenarioId) ?? scenarios[0];
 
@@ -112,10 +130,15 @@ const DelegationSlider = ({ value, onChange }: { value: number; onChange: (value
   const oversight = 1 - (value / MAX) * 0.9;
 
   return (
-    <div className="mb-7 sm:mb-8 border-l-2 border-primary/40 pl-4 sm:pl-5">
-      <div className="mb-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+    <motion.div
+      ref={rootRef}
+      animate={pulse && !reduceMotion ? { boxShadow: ["0 0 0 0 hsl(45 95% 55% / 0)", "0 0 0 6px hsl(45 95% 55% / 0.35)", "0 0 0 0 hsl(45 95% 55% / 0)"] } : undefined}
+      transition={{ duration: 1.2, ease: "easeOut" }}
+      className={`border-2 bg-card/40 p-5 transition-colors sm:p-7 ${pulse ? "border-primary" : "border-border"}`}
+    >
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
         <p id="delegation-label" className="text-xs font-bold uppercase tracking-normal text-primary">
-          Try it: who decides?
+          Decision authority
         </p>
         <div role="group" aria-label="Scenario" className="flex gap-1.5">
           {scenarios.map((s) => (
@@ -184,8 +207,8 @@ const DelegationSlider = ({ value, onChange }: { value: number; onChange: (value
         <span className={value === MAX ? "text-foreground" : undefined}>AI</span>
       </div>
 
-      <div className="mt-1 flex min-h-[4.5rem] flex-col items-start gap-3 min-[400px]:min-h-12 min-[400px]:flex-row min-[400px]:items-center min-[400px]:justify-between">
-        <div aria-live="polite" className="text-sm leading-snug">
+      <div className="mt-2 flex min-h-[5rem] flex-col items-start gap-3 min-[400px]:min-h-14 min-[400px]:flex-row min-[400px]:items-center min-[400px]:justify-between">
+        <div aria-live="polite" className="text-base sm:text-lg leading-snug">
           <AnimatePresence mode="wait" initial={false}>
             <motion.p
               key={reclaimed ? "reclaimed" : `${scenarioId}-${value}`}
@@ -228,11 +251,11 @@ const DelegationSlider = ({ value, onChange }: { value: number; onChange: (value
         </AnimatePresence>
       </div>
 
-      <div className="mt-2 grid grid-cols-2 gap-4 sm:gap-6" aria-hidden>
+      <div className="mt-4 grid grid-cols-2 gap-4 sm:gap-6" aria-hidden>
         <Meter label="Speed" level={speed} />
         <Meter label="Human oversight" level={oversight} />
       </div>
-    </div>
+    </motion.div>
   );
 };
 
