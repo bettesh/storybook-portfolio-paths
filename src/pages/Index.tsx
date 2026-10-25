@@ -26,7 +26,7 @@ type Project = {
   title: string;
   desc: string;
   tags: string[];
-  category: "peer" | "thesis" | "course";
+  category: "publications" | "thesis" | "course";
 };
 
 const projects: readonly Project[] = [
@@ -34,13 +34,13 @@ const projects: readonly Project[] = [
     title: "Understanding Nature-Positive Business Models",
     desc: "Gomes, J. F., Yaraghi, N., Zaman, S., & Ahokangas, P. (2025). Proceedings of the Smart Service Summit 2025 (in press).",
     tags: ["Publication", "Qualitative Study", "Sustainability"],
-    category: "peer",
+    category: "publications",
   },
   {
     title: "How AI governance research addresses the failure of human overseers: a systematic literature review",
-    desc: "A systematic literature review on how the potential failure of human overseers is addressed in existing literature review on AI goverance. (In progress)",
+    desc: "A systematic literature review of how AI governance research addresses the potential failure of human overseers. (In progress)",
     tags: ["AI Governance", "Systematic Review", "Human Oversight"],
-    category: "peer",
+    category: "publications",
   },
   {
     title: "Impact of Brand Image on Customer Purchasing Behaviour",
@@ -182,14 +182,14 @@ const WordReveal = ({
 };
 
 const categoryTabs = [
-  { id: "peer", label: "Peer Reviewed" },
+  { id: "publications", label: "Publications & Working Papers" },
   { id: "thesis", label: "Thesis" },
   { id: "course", label: "Course Project" },
 ] as const;
 
 const ResearchTabs = ({ items }: { items: readonly Project[] }) => {
   const reduceMotion = useReducedMotion();
-  const [tab, setTab] = useState<Project["category"]>("peer");
+  const [tab, setTab] = useState<Project["category"]>("publications");
 
   return (
     <Tabs value={tab} onValueChange={(v) => setTab(v as Project["category"])} className="w-full">
@@ -363,7 +363,7 @@ const Index = () => {
 
           <motion.div {...fadeUp} className="space-y-6 text-muted-foreground leading-relaxed">
             <p>
-              I'm S. M. Seam-uz Zaman (shortly Seam Zaman), a doctoral researcher in Information Systems Science at the Turku School of
+              I'm S. M. Seam-uz Zaman (Seam Zaman for short), a doctoral researcher in Information Systems Science at the Turku School of
               Economics, University of Turku. My dissertation examines how organisations govern the authority they
               delegate to AI systems: which decisions are handed to AI, how human oversight works in practice, and how
               authority is reclaimed when a system must be overridden.
@@ -463,7 +463,7 @@ const Index = () => {
             <a href={`mailto:${EMAIL}`} className="flex min-h-11 items-center gap-3 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
               <Mail className="h-4 w-4 text-primary" /> {EMAIL}
             </a>
-            <span className="flex items-center gap-3">
+            <span className="flex min-h-11 items-center gap-3">
               <MapPin className="h-4 w-4 text-primary" /> Turku, Finland
             </span>
             <a href="https://orcid.org/0009-0004-0791-6051" target="_blank" rel="noreferrer" className="flex min-h-11 items-center gap-3 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
