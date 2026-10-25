@@ -1,29 +1,91 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import * as SliderPrimitive from "@radix-ui/react-slider";
-import { RotateCcw } from "lucide-react";
+import { ArrowRight, RotateCcw } from "lucide-react";
 
-const delegationSteps = [
-  { label: "Human decides", desc: "AI stays out of it." },
-  { label: "AI advises", desc: "A human makes the call." },
-  { label: "AI decides", desc: "A human approves each decision." },
-  { label: "AI decides", desc: "A human monitors and can step in." },
-  { label: "AI acts autonomously", desc: "So who takes authority back?" },
+const scenarios = [
+  {
+    id: "hiring",
+    label: "Hiring",
+    steps: [
+      "A recruiter reads every CV.",
+      "AI ranks CVs. A recruiter picks.",
+      "AI shortlists. A recruiter signs off.",
+      "AI rejects automatically. HR audits monthly.",
+      "AI hires. Who notices if it's biased?",
+    ],
+  },
+  {
+    id: "loans",
+    label: "Loans",
+    steps: [
+      "A loan officer reviews every application.",
+      "AI scores the risk. The officer decides.",
+      "AI approves or declines. The officer signs off.",
+      "AI decides instantly. A risk team checks samples.",
+      "AI lends on its own. Who explains a rejection?",
+    ],
+  },
+  {
+    id: "healthcare",
+    label: "Healthcare",
+    steps: [
+      "A clinician triages every patient.",
+      "AI suggests a priority. The clinician decides.",
+      "AI sets the priority. A clinician confirms.",
+      "AI triages alone. Clinicians review exceptions.",
+      "AI decides who waits. Who is accountable?",
+    ],
+  },
 ] as const;
 
-const MAX = delegationSteps.length - 1;
+type ScenarioId = (typeof scenarios)[number]["id"];
+
+const MAX = scenarios[0].steps.length - 1;
+
+const Meter = ({ label, level }: { label: string; level: number }) => (
+  <div>
+    <div className="mb-1.5 flex justify-between text-[10px] sm:text-[11px] font-bold uppercase tracking-normal text-muted-foreground">
+      <span>{label}</span>
+      <span className="text-foreground">{Math.round(level * 100)}%</span>
+    </div>
+    <div className="h-1 w-full bg-secondary">
+      <motion.div
+        className="h-full origin-left bg-primary"
+        animate={{ scaleX: level }}
+        transition={{ type: "spring", stiffness: 200, damping: 26 }}
+      />
+    </div>
+  </div>
+);
 
 const DelegationSlider = ({ value, onChange }: { value: number; onChange: (value: number) => void }) => {
   const reduceMotion = useReducedMotion();
+  const [scenarioId, setScenarioId] = useState<ScenarioId>("hiring");
   const [reclaimed, setReclaimed] = useState(false);
   const [rewinding, setRewinding] = useState(false);
+  const [touched, setTouched] = useState(false);
+  const [hint, setHint] = useState(false);
   const thumbRef = useRef<HTMLSpanElement>(null);
   const timers = useRef<number[]>([]);
 
   useEffect(() => () => timers.current.forEach(clearTimeout), []);
 
+  // Nudge the thumb once the hero has settled, until the visitor first interacts.
+  useEffect(() => {
+    if (touched) {
+      setHint(false);
+      return;
+    }
+    const id = window.setTimeout(() => setHint(true), 2000);
+    return () => clearTimeout(id);
+  }, [touched]);
+
+  const scenario = scenarios.find((s) => s.id === scenarioId) ?? scenarios[0];
+
   const change = (next: number) => {
     if (rewinding) return;
+    setTouched(true);
     setReclaimed(false);
     onChange(next);
   };
@@ -46,43 +108,87 @@ const DelegationSlider = ({ value, onChange }: { value: number; onChange: (value
     timers.current.push(window.setTimeout(done, MAX * 140));
   };
 
-  const step = delegationSteps[value];
+  const speed = 0.1 + (value / MAX) * 0.9;
+  const oversight = 1 - (value / MAX) * 0.9;
 
   return (
     <div className="mb-7 sm:mb-8 border-l-2 border-primary/40 pl-4 sm:pl-5">
-      <p id="delegation-label" className="text-xs font-bold uppercase tracking-normal text-primary mb-4">
-        Try it: who decides?
-      </p>
+      <div className="mb-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+        <p id="delegation-label" className="text-xs font-bold uppercase tracking-normal text-primary">
+          Try it: who decides?
+        </p>
+        <div role="group" aria-label="Scenario" className="flex gap-1.5">
+          {scenarios.map((s) => (
+            <button
+              key={s.id}
+              type="button"
+              aria-pressed={s.id === scenarioId}
+              onClick={() => {
+                setTouched(true);
+                setReclaimed(false);
+                setScenarioId(s.id);
+              }}
+              className={`min-h-8 border px-2.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-normal transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                s.id === scenarioId
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "border-border text-muted-foreground hover:border-primary/60 hover:text-foreground"
+              }`}
+            >
+              {s.label}
+            </button>
+          ))}
+        </div>
+      </div>
 
       <div className="flex items-center gap-3 text-[11px] sm:text-xs font-bold uppercase tracking-normal text-muted-foreground">
         <span className={value === 0 ? "text-foreground" : undefined}>Human</span>
-        <SliderPrimitive.Root
-          value={[value]}
-          onValueChange={([v]) => change(v)}
-          min={0}
-          max={MAX}
-          step={1}
-          aria-labelledby="delegation-label"
-          className="relative flex h-11 w-full touch-none select-none items-center"
-        >
-          <SliderPrimitive.Track className="relative h-1.5 w-full grow overflow-hidden bg-secondary">
-            <SliderPrimitive.Range className="absolute h-full bg-primary" style={{ boxShadow: "0 0 12px hsl(var(--primary) / 0.55)" }} />
-          </SliderPrimitive.Track>
-          <SliderPrimitive.Thumb
-            ref={thumbRef}
-            aria-valuetext={`${step.label}. ${step.desc}`}
-            className="block h-5 w-5 cursor-grab border-2 border-primary bg-background transition-transform hover:scale-110 active:cursor-grabbing focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-            style={{ boxShadow: "0 0 14px hsl(var(--primary) / 0.55)" }}
-          />
-        </SliderPrimitive.Root>
+        <div className="relative w-full">
+          <SliderPrimitive.Root
+            value={[value]}
+            onValueChange={([v]) => change(v)}
+            onPointerDown={() => setTouched(true)}
+            min={0}
+            max={MAX}
+            step={1}
+            aria-labelledby="delegation-label"
+            className="relative flex h-11 w-full touch-none select-none items-center"
+          >
+            <SliderPrimitive.Track className="relative h-1.5 w-full grow overflow-hidden bg-secondary">
+              <SliderPrimitive.Range className="absolute h-full bg-primary" style={{ boxShadow: "0 0 12px hsl(var(--primary) / 0.55)" }} />
+            </SliderPrimitive.Track>
+            <SliderPrimitive.Thumb asChild aria-valuetext={scenario.steps[value]}>
+              <motion.span
+                ref={thumbRef}
+                animate={hint && !reduceMotion ? { x: [0, 14, 0, 14, 0] } : { x: 0 }}
+                transition={hint ? { duration: 1.4, ease: "easeInOut", repeat: 2, repeatDelay: 3 } : { duration: 0.2 }}
+                whileHover={reduceMotion ? undefined : { scale: 1.12 }}
+                className="block h-5 w-5 cursor-grab border-2 border-primary bg-background active:cursor-grabbing focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                style={{ boxShadow: "0 0 14px hsl(var(--primary) / 0.55)" }}
+              />
+            </SliderPrimitive.Thumb>
+          </SliderPrimitive.Root>
+          <AnimatePresence>
+            {hint && (
+              <motion.span
+                aria-hidden
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="pointer-events-none absolute left-8 top-1/2 -translate-y-1/2 pl-1 text-[10px] font-bold normal-case tracking-normal text-primary/80"
+              >
+                drag →
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </div>
         <span className={value === MAX ? "text-foreground" : undefined}>AI</span>
       </div>
 
-      <div className="mt-2 flex min-h-[4.5rem] flex-col items-start gap-3 min-[400px]:min-h-12 min-[400px]:flex-row min-[400px]:items-center min-[400px]:justify-between">
+      <div className="mt-1 flex min-h-[4.5rem] flex-col items-start gap-3 min-[400px]:min-h-12 min-[400px]:flex-row min-[400px]:items-center min-[400px]:justify-between">
         <div aria-live="polite" className="text-sm leading-snug">
           <AnimatePresence mode="wait" initial={false}>
             <motion.p
-              key={reclaimed ? "reclaimed" : value}
+              key={reclaimed ? "reclaimed" : `${scenarioId}-${value}`}
               initial={reduceMotion ? false : { opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               exit={reduceMotion ? undefined : { opacity: 0, y: -6 }}
@@ -91,13 +197,15 @@ const DelegationSlider = ({ value, onChange }: { value: number; onChange: (value
               {reclaimed ? (
                 <>
                   <span className="font-semibold text-primary">Authority reclaimed.</span>{" "}
-                  <span className="text-muted-foreground">That's the part I study.</span>
+                  <a
+                    href="#research"
+                    className="inline-flex items-center gap-1 text-foreground underline decoration-primary/60 underline-offset-4 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    See how organisations do this <ArrowRight className="h-3.5 w-3.5" />
+                  </a>
                 </>
               ) : (
-                <>
-                  <span className="font-semibold text-foreground">{step.label}.</span>{" "}
-                  <span className="text-muted-foreground">{step.desc}</span>
-                </>
+                <span className={value === MAX ? "text-foreground" : "text-muted-foreground"}>{scenario.steps[value]}</span>
               )}
             </motion.p>
           </AnimatePresence>
@@ -118,6 +226,11 @@ const DelegationSlider = ({ value, onChange }: { value: number; onChange: (value
             </motion.button>
           )}
         </AnimatePresence>
+      </div>
+
+      <div className="mt-2 grid grid-cols-2 gap-4 sm:gap-6" aria-hidden>
+        <Meter label="Speed" level={speed} />
+        <Meter label="Human oversight" level={oversight} />
       </div>
     </div>
   );
