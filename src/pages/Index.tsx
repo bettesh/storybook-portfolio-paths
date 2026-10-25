@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "framer-motion";
 import { ArrowRight, GraduationCap, BookOpen, Lightbulb, Mail, MapPin, Download, ExternalLink, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import DelegationSlider from "@/components/DelegationSlider";
 import portrait from "@/assets/seam-portrait.webp";
 
 const EMAIL = "sszama@utu.fi";
@@ -248,11 +249,33 @@ const ResearchTabs = ({ items }: { items: readonly Project[] }) => {
 
 const Index = () => {
   const reduceMotion = useReducedMotion();
+  const [authority, setAuthority] = useState(0);
+
+  // Cursor position over the hero, -0.5..0.5 on each axis; drives the portrait glow and tilt.
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
+  const smoothX = useSpring(pointerX, { stiffness: 120, damping: 20 });
+  const smoothY = useSpring(pointerY, { stiffness: 120, damping: 20 });
+  const glowX = useTransform(smoothX, [-0.5, 0.5], [-60, 60]);
+  const glowY = useTransform(smoothY, [-0.5, 0.5], [-40, 40]);
+  const tiltX = useTransform(smoothY, [-0.5, 0.5], [4, -4]);
+  const tiltY = useTransform(smoothX, [-0.5, 0.5], [-5, 5]);
+
+  const trackPointer = (event: React.PointerEvent<HTMLElement>) => {
+    if (reduceMotion || event.pointerType !== "mouse") return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    pointerX.set((event.clientX - rect.left) / rect.width - 0.5);
+    pointerY.set((event.clientY - rect.top) / rect.height - 0.5);
+  };
+  const resetPointer = () => {
+    pointerX.set(0);
+    pointerY.set(0);
+  };
 
   return (
     <div>
       {/* Hero */}
-      <section id="home" className="min-h-[calc(85svh-4rem)] md:min-h-[85vh] flex items-stretch py-12 sm:py-16 lg:pb-0">
+      <section id="home" onPointerMove={trackPointer} onPointerLeave={resetPointer} className="min-h-[calc(85svh-4rem)] md:min-h-[85vh] flex items-stretch py-12 sm:py-16 lg:pb-0">
         <div className="container flex w-full flex-col">
           <div className="grid flex-1 gap-y-0 lg:grid-cols-[minmax(0,1fr)_420px] lg:gap-x-14 xl:grid-cols-[minmax(0,1fr)_500px]">
 
@@ -286,7 +309,13 @@ const Index = () => {
               transition={{ duration: 0.8, delay: 0.15 }}
               className="relative hidden justify-center lg:col-start-2 lg:row-start-1 lg:row-span-3 lg:flex lg:self-stretch"
             >
-              <div aria-hidden className="absolute inset-x-10 top-14 bottom-24 bg-primary/25 blur-[80px]" />
+              <motion.div
+                aria-hidden
+                className="absolute inset-x-10 top-14 bottom-24 bg-primary/40 blur-[80px]"
+                style={{ x: glowX, y: glowY }}
+                animate={{ opacity: 0.6 + authority * 0.1 }}
+                transition={{ duration: 0.4 }}
+              />
               <motion.div
                 initial={{ opacity: 0, x: 30, rotate: 2.5 }}
                 whileInView={{ opacity: 1, x: 0, rotate: 0 }}
@@ -297,6 +326,7 @@ const Index = () => {
                 <motion.div
                   animate={reduceMotion ? undefined : { y: [0, -7, 0], scale: [1, 1.012, 1] }}
                   transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                  style={reduceMotion ? undefined : { rotateX: tiltX, rotateY: tiltY, transformPerspective: 900 }}
                   className="relative flex max-h-full w-full items-end"
                 >
                   <img
@@ -319,6 +349,7 @@ const Index = () => {
               <p className="text-base sm:text-lg text-muted-foreground mb-7 sm:mb-8 leading-relaxed">
                 I research how organisations govern AI: which decisions are delegated to AI systems, how humans oversee them, and how authority is taken back when needed.
               </p>
+              <DelegationSlider value={authority} onChange={setAuthority} />
               <div className="flex flex-col min-[400px]:flex-row gap-3 sm:gap-4">
                 <Button asChild className="glow min-h-12 px-5">
                   <a href="#research">
