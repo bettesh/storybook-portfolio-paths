@@ -32,15 +32,15 @@ type Project = {
 
 const projects: readonly Project[] = [
   {
-    title: "Understanding Nature-Positive Business Models",
-    desc: "Gomes, J. F., Yaraghi, N., Zaman, S., & Ahokangas, P. (2025). Proceedings of the Smart Service Summit 2025 (in press).",
-    tags: ["Publication", "Qualitative Study", "Sustainability"],
-    category: "publications",
-  },
-  {
     title: "How AI governance research addresses the failure of human overseers: a systematic literature review",
     desc: "A systematic literature review of how AI governance research addresses the potential failure of human overseers. (In progress)",
     tags: ["AI Governance", "Systematic Review", "Human Oversight"],
+    category: "publications",
+  },
+  {
+    title: "Understanding Nature-Positive Business Models",
+    desc: "Gomes, J. F., Yaraghi, N., Zaman, S., & Ahokangas, P. (2025). Proceedings of the Smart Service Summit 2025 (in press).",
+    tags: ["Publication", "Qualitative Study", "Sustainability"],
     category: "publications",
   },
   {
