@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "framer-motion";
-import { ArrowDown, ArrowRight, GraduationCap, BookOpen, Lightbulb, Mail, MapPin, Download, ExternalLink, Linkedin } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUp, Mail, MapPin, Download, ExternalLink, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import DelegationSlider, { DELEGATION_FOCUS_EVENT } from "@/components/DelegationSlider";
+import DelegationSlider, { DELEGATION_FOCUS_EVENT, DELEGATION_SET_EVENT, type DelegationSetDetail } from "@/components/DelegationSlider";
 import portrait from "@/assets/seam-portrait.webp";
 
 const EMAIL = "sszama@utu.fi";
@@ -63,11 +63,33 @@ const projects: readonly Project[] = [
   },
 ];
 
-const highlights = [
-  { icon: GraduationCap, title: "AI Governance", desc: "Studying how firms design oversight, roles and controls for decisions delegated to AI systems." },
-  { icon: BookOpen, title: "Systematic Reviews", desc: "Running a PRISMA-based review of organisational AI governance mechanisms with a reproducible protocol." },
-  { icon: Lightbulb, title: "Data & Analytics", desc: "Structural equation modelling, machine learning and survey research in R and Python." },
-];
+const strands = [
+  {
+    num: "01",
+    title: "Delegation",
+    question: "Which decisions do organisations hand to AI, and why?",
+    desc: "Mapping organisational AI governance mechanisms through a PRISMA systematic review and analysis of real AI governance policies.",
+    tags: ["Systematic review", "Policy analysis"],
+    step: 1,
+  },
+  {
+    num: "02",
+    title: "Oversight",
+    question: "How does human oversight work in practice, and when does it fail?",
+    desc: "A systematic review of how AI governance research addresses the failure of human overseers.",
+    tags: ["Systematic review", "In progress"],
+    step: 3,
+  },
+  {
+    num: "03",
+    title: "Reclaiming authority",
+    question: "How is authority taken back when a system must be overridden?",
+    desc: "Socio-technical and design science work on override and accountability.",
+    tags: ["Socio-technical", "Design science"],
+    step: 4,
+    override: true,
+  },
+] as const;
 
 const fadeUp = {
   initial: { opacity: 0, y: 20 },
@@ -397,23 +419,53 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Highlights */}
-      <section className="pb-12 sm:pb-16 md:pb-20">
+      {/* Research strands */}
+      <section className="pb-14 sm:pb-20 md:pb-24">
         <div className="container">
-          <div className="grid md:grid-cols-3 gap-6 md:gap-8">
-            {highlights.map((item, i) => (
-              <motion.div
-                key={item.title}
+          <motion.p {...fadeUp} className="mb-6 sm:mb-8 text-xs sm:text-sm font-bold uppercase tracking-normal text-muted-foreground">
+            How I'm approaching it<span className="text-primary">*</span>
+          </motion.p>
+          <div className="grid gap-8 md:grid-cols-3 md:gap-8">
+            {strands.map((item, i) => (
+              <motion.button
+                key={item.num}
+                type="button"
                 {...fadeUp}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="px-5 py-2 md:p-6 border-l-2 border-primary/40"
+                onClick={() => {
+                  document.getElementById("delegation-slider")?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "nearest" });
+                  window.dispatchEvent(
+                    new CustomEvent<DelegationSetDetail>(DELEGATION_SET_EVENT, {
+                      detail: { step: item.step, override: "override" in item && item.override },
+                    }),
+                  );
+                }}
+                className="group relative flex flex-col border-t-2 border-border pt-6 text-left transition-colors hover:border-primary focus-visible:border-primary focus-visible:outline-none"
               >
-                <item.icon className="h-7 w-7 text-primary mb-4" strokeWidth={2.5} />
-                <h3 className="font-display font-semibold text-lg text-foreground mb-2">{item.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
-              </motion.div>
+                <span aria-hidden className="absolute -top-[7px] left-0 h-3 w-3 rounded-full border-2 border-primary bg-background transition-shadow group-hover:shadow-[0_0_14px_hsl(var(--primary)/0.6)]" />
+                <div className="mb-4 flex items-baseline gap-3">
+                  <span className="font-display text-4xl sm:text-5xl font-bold leading-none text-gradient">{item.num}</span>
+                  <h3 className="font-display text-lg sm:text-xl font-semibold text-foreground">{item.title}</h3>
+                </div>
+                <p className="mb-3 font-display text-base sm:text-lg italic leading-snug text-foreground">{item.question}</p>
+                <p className="mb-4 text-sm leading-relaxed text-muted-foreground">{item.desc}</p>
+                <div className="mt-auto flex flex-wrap items-center gap-2">
+                  {item.tags.map((tag) => (
+                    <span key={tag} className="border border-primary/40 px-2.5 py-1 text-[10px] sm:text-[11px] font-semibold uppercase tracking-normal text-primary">
+                      {tag}
+                    </span>
+                  ))}
+                  <span className="ml-auto inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-normal text-muted-foreground transition-colors group-hover:text-primary group-focus-visible:text-primary">
+                    Show on slider <ArrowUp className="h-3 w-3" />
+                  </span>
+                </div>
+              </motion.button>
             ))}
           </div>
+          <motion.p {...fadeUp} className="mt-8 sm:mt-10 max-w-2xl text-xs leading-relaxed text-muted-foreground">
+            <span className="text-primary">*</span> Work in progress. This is an overview of my current understanding and
+            direction, not finalised research or findings.
+          </motion.p>
         </div>
       </section>
 

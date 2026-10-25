@@ -61,6 +61,9 @@ const Meter = ({ label, level }: { label: string; level: number }) => (
 
 // Dispatched by the hero teaser link so the slider takes focus once it is scrolled to.
 export const DELEGATION_FOCUS_EVENT = "delegation:focus";
+// Dispatched by the research strand cards to move the slider to a matching step.
+export const DELEGATION_SET_EVENT = "delegation:set";
+export type DelegationSetDetail = { step: number; override?: boolean };
 
 const DelegationSlider = () => {
   const reduceMotion = useReducedMotion();
@@ -95,8 +98,24 @@ const DelegationSlider = () => {
       setPulse(true);
       timers.current.push(window.setTimeout(() => setPulse(false), 1600));
     };
+    const set = (event: Event) => {
+      const { step, override } = (event as CustomEvent<DelegationSetDetail>).detail;
+      timers.current.forEach(clearTimeout);
+      timers.current = [];
+      setRewinding(false);
+      setTouched(true);
+      setReclaimed(false);
+      onChange(step);
+      setPulse(true);
+      timers.current.push(window.setTimeout(() => setPulse(false), 1600));
+      if (override) timers.current.push(window.setTimeout(() => overrideRef.current(), 900));
+    };
     window.addEventListener(DELEGATION_FOCUS_EVENT, focus);
-    return () => window.removeEventListener(DELEGATION_FOCUS_EVENT, focus);
+    window.addEventListener(DELEGATION_SET_EVENT, set);
+    return () => {
+      window.removeEventListener(DELEGATION_FOCUS_EVENT, focus);
+      window.removeEventListener(DELEGATION_SET_EVENT, set);
+    };
   }, []);
 
   const scenario = scenarios.find((s) => s.id === scenarioId) ?? scenarios[0];
@@ -126,12 +145,16 @@ const DelegationSlider = () => {
     timers.current.push(window.setTimeout(done, MAX * 140));
   };
 
+  const overrideRef = useRef(override);
+  overrideRef.current = override;
+
   const speed = 0.1 + (value / MAX) * 0.9;
   const oversight = 1 - (value / MAX) * 0.9;
 
   return (
     <motion.div
       ref={rootRef}
+      id="delegation-slider"
       animate={pulse && !reduceMotion ? { boxShadow: ["0 0 0 0 hsl(45 95% 55% / 0)", "0 0 0 6px hsl(45 95% 55% / 0.35)", "0 0 0 0 hsl(45 95% 55% / 0)"] } : undefined}
       transition={{ duration: 1.2, ease: "easeOut" }}
       className={`border-2 bg-card/40 p-5 transition-colors sm:p-7 ${pulse ? "border-primary" : "border-border"}`}
