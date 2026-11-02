@@ -6,36 +6,38 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 7%;
+    /* Warm off-white and warm greys, to sit well with the colour portrait. */
+    --background: 40 23% 97.6%;
+    --foreground: 24 10% 8%;
 
-    --card: 0 0% 98%;
-    --card-foreground: 0 0% 7%;
+    --card: 40 30% 99%;
+    --card-foreground: 24 10% 8%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 7%;
+    --popover: 40 23% 97.6%;
+    --popover-foreground: 24 10% 8%;
 
-    --primary: 0 0% 7%;
+    --primary: 24 10% 8%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 93%;
-    --secondary-foreground: 0 0% 7%;
+    --secondary: 35 14% 92%;
+    --secondary-foreground: 24 10% 8%;
 
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 36%;
+    --muted: 35 16% 94%;
+    --muted-foreground: 28 7% 35%;
 
-    --accent: 0 0% 7%;
+    --accent: 24 10% 8%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 88%;
-    --input: 0 0% 88%;
-    --ring: 0 0% 7%;
+    --border: 35 12% 86%;
+    --input: 35 12% 86%;
+    --ring: 24 10% 8%;
 
-    /* Accent for small details: section labels, timeline, active tab, links, contact icons. */
-    --brand: 0 0% 7%;
+    /* Accent for small details: section labels, timeline, active tab, links, contact icons.
+       Deep plum taken from the stripe on the blazer in the portrait. */
+    --brand: 340 37% 26%;
 
     --radius: 0rem;
 
