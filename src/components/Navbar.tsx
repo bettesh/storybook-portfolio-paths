@@ -49,7 +49,7 @@ const Navbar = () => {
       className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/80 border-b-2 border-border"
     >
       <div className="container flex items-center justify-between h-16">
-        <a href="#home" onClick={() => setOpen(false)} className="inline-flex min-h-11 items-center font-display text-xl font-bold tracking-normal text-foreground">
+        <a href="#home" onClick={() => setOpen(false)} className="inline-flex min-h-11 items-center font-display text-xl font-semibold tracking-tight text-foreground">
           Seam Zaman<span className="text-gradient">.</span>
         </a>
 
@@ -59,7 +59,7 @@ const Navbar = () => {
             <a
               key={link.href}
               href={link.href}
-              className="inline-flex min-h-11 items-center text-xs font-bold uppercase tracking-normal text-muted-foreground transition-colors hover:text-primary"
+              className="inline-flex min-h-11 items-center text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
               {link.label}
             </a>
@@ -87,7 +87,7 @@ const Navbar = () => {
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="flex min-h-12 items-center border-b border-border last:border-0 text-sm font-bold uppercase tracking-normal text-foreground hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="flex min-h-12 items-center border-b border-border last:border-0 text-base font-medium text-foreground hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 {link.label}
               </a>

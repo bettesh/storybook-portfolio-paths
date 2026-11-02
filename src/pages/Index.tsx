@@ -106,7 +106,7 @@ const SectionHeading = ({ kicker, children }: { kicker: string; children: React.
       <span className="h-2 w-10 bg-primary" />
       <p className="text-primary text-xs sm:text-sm font-bold tracking-normal uppercase">{kicker}</p>
     </div>
-    <h2 className="text-3xl sm:text-4xl md:text-6xl font-display font-bold uppercase tracking-normal text-foreground leading-none">{children}</h2>
+    <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-semibold tracking-tight text-foreground leading-tight">{children}</h2>
   </motion.div>
 );
 
@@ -154,7 +154,6 @@ const Timeline = ({ items }: { items: readonly TimelineItem[] }) => {
             <motion.span
               aria-hidden
               className="absolute left-0 top-1 h-2.5 w-2.5 rounded-full border-2 border-primary bg-background sm:h-3.5 sm:w-3.5"
-              style={{ boxShadow: "0 0 14px hsl(var(--primary) / 0.55)" }}
               {...(reduceMotion ? {} : dotAnim(i))}
             />
 
@@ -237,7 +236,6 @@ const ResearchTabs = ({ items }: { items: readonly Project[] }) => {
                   aria-hidden
                   layoutId="research-tab-line"
                   className="absolute inset-x-0 -bottom-[2px] h-[2px] bg-primary"
-                  style={{ boxShadow: "0 0 12px hsl(var(--primary) / 0.55)" }}
                 />
               ))}
           </TabsTrigger>
@@ -274,13 +272,11 @@ const ResearchTabs = ({ items }: { items: readonly Project[] }) => {
 const Index = () => {
   const reduceMotion = useReducedMotion();
 
-  // Cursor position over the hero, -0.5..0.5 on each axis; drives the portrait glow and tilt.
+  // Cursor position over the hero, -0.5..0.5 on each axis; drives the portrait tilt.
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
   const smoothX = useSpring(pointerX, { stiffness: 120, damping: 20 });
   const smoothY = useSpring(pointerY, { stiffness: 120, damping: 20 });
-  const glowX = useTransform(smoothX, [-0.5, 0.5], [-60, 60]);
-  const glowY = useTransform(smoothY, [-0.5, 0.5], [-40, 40]);
   const tiltX = useTransform(smoothY, [-0.5, 0.5], [4, -4]);
   const tiltY = useTransform(smoothX, [-0.5, 0.5], [-5, 5]);
 
@@ -320,7 +316,7 @@ const Index = () => {
               transition={{ duration: 0.4 }}
               className="max-w-2xl lg:col-start-1 lg:row-start-2"
             >
-              <h1 className="text-[2.75rem] min-[360px]:text-5xl sm:text-6xl md:text-8xl font-display font-bold uppercase tracking-normal text-foreground leading-[1.02] md:leading-[0.95] mb-6 sm:mb-8">
+              <h1 className="text-[2.75rem] min-[360px]:text-5xl sm:text-6xl md:text-7xl font-display font-semibold tracking-tight text-foreground leading-[1.05] mb-6 sm:mb-8">
                 <WordReveal text="Hi, I'm" delay={0.15} className="block" />
                 <WordReveal text="Seam Zaman" delay={0.35} className="block" wordClassName="text-gradient" />
               </h1>
@@ -332,11 +328,6 @@ const Index = () => {
               transition={{ duration: 0.8, delay: 0.15 }}
               className="relative hidden justify-center lg:col-start-2 lg:row-start-1 lg:row-span-3 lg:flex lg:self-stretch"
             >
-              <motion.div
-                aria-hidden
-                className="absolute inset-x-10 top-14 bottom-24 bg-primary/25 blur-[80px]"
-                style={{ x: glowX, y: glowY }}
-              />
               <motion.div
                 initial={{ opacity: 0, x: 30, rotate: 2.5 }}
                 whileInView={{ opacity: 1, x: 0, rotate: 0 }}
@@ -444,7 +435,7 @@ const Index = () => {
                 }}
                 className="group relative flex flex-col border-t-2 border-border pt-6 text-left transition-colors hover:border-primary focus-visible:border-primary focus-visible:outline-none"
               >
-                <span aria-hidden className="absolute -top-[7px] left-0 h-3 w-3 rounded-full border-2 border-primary bg-background transition-shadow group-hover:shadow-[0_0_14px_hsl(var(--primary)/0.6)]" />
+                <span aria-hidden className="absolute -top-[7px] left-0 h-3 w-3 rounded-full border-2 border-primary bg-background transition-shadow group-hover:bg-primary" />
                 <div className="mb-4 flex items-baseline gap-3">
                   <span className="font-display text-4xl sm:text-5xl font-bold leading-none text-gradient">{item.num}</span>
                   <h3 className="font-display text-lg sm:text-xl font-semibold text-foreground">{item.title}</h3>
@@ -547,7 +538,6 @@ const Index = () => {
               transition={{ duration: 0.7, ease: "easeOut" }}
               className="relative inline-block"
             >
-              <div aria-hidden className="absolute inset-x-0 top-4 bottom-8 bg-primary/30 blur-[45px]" />
               <motion.div
                 animate={reduceMotion ? undefined : { y: [0, -6, 0] }}
                 transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}

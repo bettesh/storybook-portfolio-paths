@@ -59,8 +59,8 @@ const Meter = ({ label, level, flash = false }: { label: string; level: number; 
         className="h-1 w-full bg-secondary"
         animate={
           flash && !reduceMotion
-            ? { boxShadow: ["0 0 0 0 hsl(45 95% 55% / 0)", "0 0 14px 2px hsl(45 95% 55% / 0.7)", "0 0 0 0 hsl(45 95% 55% / 0)"] }
-            : { boxShadow: "0 0 0 0 hsl(45 95% 55% / 0)" }
+            ? { opacity: [1, 0.35, 1] }
+            : { opacity: 1 }
         }
         transition={flash ? { duration: 0.8, repeat: 2 } : { duration: 0.2 }}
       >
@@ -194,7 +194,7 @@ const DelegationSlider = () => {
     <motion.div
       ref={rootRef}
       id="delegation-slider"
-      animate={pulse && !reduceMotion ? { boxShadow: ["0 0 0 0 hsl(45 95% 55% / 0)", "0 0 0 6px hsl(45 95% 55% / 0.35)", "0 0 0 0 hsl(45 95% 55% / 0)"] } : undefined}
+      animate={pulse && !reduceMotion ? { boxShadow: ["0 0 0 0 hsl(0 0% 7% / 0)", "0 0 0 6px hsl(0 0% 7% / 0.12)", "0 0 0 0 hsl(0 0% 7% / 0)"] } : undefined}
       transition={{ duration: 1.2, ease: "easeOut" }}
       className={`border-2 bg-card/40 p-5 transition-colors sm:p-7 ${pulse ? "border-primary" : "border-border"}`}
     >
@@ -239,7 +239,7 @@ const DelegationSlider = () => {
             className="relative flex h-11 w-full touch-none select-none items-center"
           >
             <SliderPrimitive.Track className="relative h-1.5 w-full grow overflow-hidden bg-secondary">
-              <SliderPrimitive.Range className="absolute h-full bg-primary" style={{ boxShadow: "0 0 12px hsl(var(--primary) / 0.55)" }} />
+              <SliderPrimitive.Range className="absolute h-full bg-primary" />
             </SliderPrimitive.Track>
             <SliderPrimitive.Thumb asChild aria-valuetext={scenario.steps[value]}>
               <motion.span
@@ -248,7 +248,6 @@ const DelegationSlider = () => {
                 transition={hint ? { duration: 1.4, ease: "easeInOut", repeat: 2, repeatDelay: 3 } : { duration: 0.2 }}
                 whileHover={reduceMotion ? undefined : { scale: 1.12 }}
                 className="block h-5 w-5 cursor-grab border-2 border-primary bg-background active:cursor-grabbing focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                style={{ boxShadow: "0 0 14px hsl(var(--primary) / 0.55)" }}
               />
             </SliderPrimitive.Thumb>
           </SliderPrimitive.Root>

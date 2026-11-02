@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&family=Inter:wght@300;400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,41 +6,41 @@
 
 @layer base {
   :root {
-    --background: 0 0% 5%;
-    --foreground: 0 0% 98%;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 7%;
 
-    --card: 0 0% 8%;
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 7%;
 
-    --popover: 0 0% 8%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 7%;
 
-    --primary: 45 95% 55%;
-    --primary-foreground: 0 0% 6%;
+    --primary: 0 0% 7%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 12%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 0 0% 93%;
+    --secondary-foreground: 0 0% 7%;
 
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 62%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 36%;
 
-    --accent: 45 95% 55%;
-    --accent-foreground: 0 0% 6%;
+    --accent: 0 0% 7%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 16%;
-    --input: 0 0% 16%;
-    --ring: 45 95% 55%;
+    --border: 0 0% 88%;
+    --input: 0 0% 88%;
+    --ring: 0 0% 7%;
 
     --radius: 0rem;
 
     --hero-gradient: linear-gradient(160deg, hsl(0 0% 5%) 0%, hsl(33 28% 8%) 55%, hsl(40 45% 12%) 100%);
-    --glow-accent: 0 0 60px hsl(45 95% 55% / 0.18);
-    --glow-accent-strong: 0 0 80px hsl(45 95% 55% / 0.28);
+    --glow-accent: none;
+    --glow-accent-strong: none;
 
-    --font-display: 'Space Grotesk', sans-serif;
+    --font-display: 'Source Serif 4', Georgia, serif;
     --font-body: 'Inter', sans-serif;
 
     --sidebar-background: 0 0% 98%;
@@ -120,9 +120,9 @@
 }
 
 @layer utilities {
+  /* Second tone in two-tone headings. Kept under the old name so markup is unchanged. */
   .text-gradient {
-    @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(45 95% 55%), hsl(30 96% 56%));
+    color: hsl(var(--muted-foreground));
   }
   .hero-bg {
     background: var(--hero-gradient);
