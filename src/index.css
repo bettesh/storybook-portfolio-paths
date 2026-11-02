@@ -92,6 +92,13 @@
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
   }
+  /* Everything is sized in rem, so raising the base size scales the whole page on large displays. */
+  @media (min-width: 1920px) {
+    html { font-size: 109.375%; }
+  }
+  @media (min-width: 2400px) {
+    html { font-size: 118.75%; }
+  }
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-body);
@@ -111,6 +118,17 @@
     .container {
       padding-left: 2rem;
       padding-right: 2rem;
+    }
+  }
+  /* Let the page use more of very wide screens (Tailwind caps it at 1400px). */
+  @media (min-width: 1920px) {
+    .container {
+      max-width: 1600px;
+    }
+  }
+  @media (min-width: 2400px) {
+    .container {
+      max-width: 1760px;
     }
   }
 }

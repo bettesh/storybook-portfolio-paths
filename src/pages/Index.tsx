@@ -296,7 +296,7 @@ const Index = () => {
       {/* Hero */}
       <section id="home" onPointerMove={trackPointer} onPointerLeave={resetPointer} className="min-h-[calc(85svh-4rem)] md:min-h-[85vh] flex items-stretch py-12 sm:py-16 lg:pb-0">
         <div className="container flex w-full flex-col">
-          <div className="grid flex-1 gap-y-0 lg:grid-cols-[minmax(0,1fr)_420px] lg:gap-x-14 xl:grid-cols-[minmax(0,1fr)_500px]">
+          <div className="grid flex-1 gap-y-0 lg:grid-cols-[minmax(0,1fr)_26.25rem] lg:gap-x-14 xl:grid-cols-[minmax(0,1fr)_31.25rem]">
 
 
             <motion.div
