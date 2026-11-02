@@ -103,8 +103,8 @@ const fadeUp = {
 const SectionHeading = ({ kicker, children }: { kicker: string; children: React.ReactNode }) => (
   <motion.div {...fadeUp} className="mb-8 sm:mb-14">
     <div className="flex items-center gap-3 mb-4 sm:mb-5">
-      <span className="h-2 w-10 bg-primary" />
-      <p className="text-primary text-xs sm:text-sm font-bold tracking-normal uppercase">{kicker}</p>
+      <span className="h-2 w-10 bg-brand" />
+      <p className="text-brand text-xs sm:text-sm font-bold tracking-normal uppercase">{kicker}</p>
     </div>
     <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-semibold tracking-tight text-foreground leading-tight">{children}</h2>
   </motion.div>
@@ -147,17 +147,17 @@ const Timeline = ({ items }: { items: readonly TimelineItem[] }) => {
             {i < items.length - 1 && (
               <motion.span
                 aria-hidden
-                className="absolute left-[4px] top-[9px] -bottom-[34px] w-0.5 origin-top bg-primary sm:left-[6px] sm:top-[11px] sm:-bottom-[38px]"
+                className="absolute left-[4px] top-[9px] -bottom-[34px] w-0.5 origin-top bg-brand sm:left-[6px] sm:top-[11px] sm:-bottom-[38px]"
                 {...(reduceMotion ? {} : segAnim(i))}
               />
             )}
             <motion.span
               aria-hidden
-              className="absolute left-0 top-1 h-2.5 w-2.5 rounded-full border-2 border-primary bg-background sm:h-3.5 sm:w-3.5"
+              className="absolute left-0 top-1 h-2.5 w-2.5 rounded-full border-2 border-brand bg-background sm:h-3.5 sm:w-3.5"
               {...(reduceMotion ? {} : dotAnim(i))}
             />
 
-            <p className="text-xs text-primary font-medium">{item.period}</p>
+            <p className="text-xs text-brand font-medium">{item.period}</p>
             <h4 className="font-display font-semibold text-foreground">{item.title}</h4>
             <p className="text-sm text-muted-foreground italic">{item.org}</p>
             {item.desc && <p className="text-sm text-muted-foreground mt-1">{item.desc}</p>}
@@ -222,7 +222,7 @@ const ResearchTabs = ({ items }: { items: readonly Project[] }) => {
           <TabsTrigger
             key={c.id}
             value={c.id}
-            className="relative rounded-none border-0 bg-transparent px-0 pb-3 pt-1 font-display text-xs font-bold uppercase tracking-normal text-muted-foreground shadow-none transition-colors hover:text-foreground data-[state=active]:bg-transparent data-[state=active]:text-primary data-[state=active]:shadow-none sm:text-base"
+            className="relative rounded-none border-0 bg-transparent px-0 pb-3 pt-1 font-display text-xs font-bold uppercase tracking-normal text-muted-foreground shadow-none transition-colors hover:text-foreground data-[state=active]:bg-transparent data-[state=active]:text-brand data-[state=active]:shadow-none sm:text-base"
           >
             {c.label}
             <span className="ml-2 text-[0.7em] font-semibold opacity-60">
@@ -230,12 +230,12 @@ const ResearchTabs = ({ items }: { items: readonly Project[] }) => {
             </span>
             {tab === c.id &&
               (reduceMotion ? (
-                <span aria-hidden className="absolute inset-x-0 -bottom-[2px] h-[2px] bg-primary" />
+                <span aria-hidden className="absolute inset-x-0 -bottom-[2px] h-[2px] bg-brand" />
               ) : (
                 <motion.span
                   aria-hidden
                   layoutId="research-tab-line"
-                  className="absolute inset-x-0 -bottom-[2px] h-[2px] bg-primary"
+                  className="absolute inset-x-0 -bottom-[2px] h-[2px] bg-brand"
                 />
               ))}
           </TabsTrigger>
@@ -306,7 +306,7 @@ const Index = () => {
               className="lg:col-start-1 lg:row-start-1"
             >
 
-              <p className="text-primary font-bold text-xs sm:text-sm tracking-normal uppercase mb-5 sm:mb-6 leading-relaxed">
+              <p className="text-brand font-bold text-xs sm:text-sm tracking-normal uppercase mb-5 sm:mb-6 leading-relaxed">
                 Doctoral Researcher · University of Turku
               </p>
             </motion.div>
@@ -373,9 +373,9 @@ const Index = () => {
               >
                 <span>
                   Who should decide: a human or AI?{" "}
-                  <span className="text-primary underline decoration-primary/50 underline-offset-4 group-hover:decoration-primary">Try it</span>
+                  <span className="text-brand underline decoration-brand/50 underline-offset-4 group-hover:decoration-brand">Try it</span>
                 </span>
-                <ArrowDown className="h-4 w-4 text-primary transition-transform group-hover:translate-y-0.5" />
+                <ArrowDown className="h-4 w-4 text-brand transition-transform group-hover:translate-y-0.5" />
               </a>
               <div className="flex flex-col min-[400px]:flex-row gap-3 sm:gap-4">
                 <Button asChild className="glow min-h-12 px-5">
@@ -416,7 +416,7 @@ const Index = () => {
       <section className="pb-14 sm:pb-20 md:pb-24">
         <div className="container">
           <motion.p {...fadeUp} className="mb-6 sm:mb-8 text-xs sm:text-sm font-bold uppercase tracking-normal text-muted-foreground">
-            How I'm approaching it<span className="text-primary">*</span>
+            How I'm approaching it<span className="text-brand">*</span>
           </motion.p>
           <div className="grid gap-8 md:grid-cols-3 md:gap-8">
             {strands.map((item, i) => (
@@ -435,7 +435,7 @@ const Index = () => {
                 }}
                 className="group relative flex flex-col border-t-2 border-border pt-6 text-left transition-colors hover:border-primary focus-visible:border-primary focus-visible:outline-none"
               >
-                <span aria-hidden className="absolute -top-[7px] left-0 h-3 w-3 rounded-full border-2 border-primary bg-background transition-shadow group-hover:bg-primary" />
+                <span aria-hidden className="absolute -top-[7px] left-0 h-3 w-3 rounded-full border-2 border-brand bg-background transition-colors group-hover:bg-brand" />
                 <div className="mb-4 flex items-baseline gap-3">
                   <span className="font-display text-4xl sm:text-5xl font-bold leading-none text-gradient">{item.num}</span>
                   <h3 className="font-display text-lg sm:text-xl font-semibold text-foreground">{item.title}</h3>
@@ -456,7 +456,7 @@ const Index = () => {
             ))}
           </div>
           <motion.p {...fadeUp} className="mt-8 sm:mt-10 max-w-2xl text-xs leading-relaxed text-muted-foreground">
-            <span className="text-primary">*</span> Work in progress. This is an overview of my current understanding and
+            <span className="text-brand">*</span> Work in progress. This is an overview of my current understanding and
             direction, not finalised research or findings.
           </motion.p>
         </div>
@@ -568,16 +568,16 @@ const Index = () => {
 
           <motion.div {...fadeUp} className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-6 mb-8 sm:mb-10 text-sm text-muted-foreground">
             <a href={`mailto:${EMAIL}`} className="flex min-h-11 items-center gap-3 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-              <Mail className="h-4 w-4 text-primary" /> {EMAIL}
+              <Mail className="h-4 w-4 text-brand" /> {EMAIL}
             </a>
             <span className="flex min-h-11 items-center gap-3">
-              <MapPin className="h-4 w-4 text-primary" /> Turku, Finland
+              <MapPin className="h-4 w-4 text-brand" /> Turku, Finland
             </span>
             <a href="https://orcid.org/0009-0004-0791-6051" target="_blank" rel="noreferrer" className="flex min-h-11 items-center gap-3 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-              <ExternalLink className="h-4 w-4 text-primary" /> ORCID
+              <ExternalLink className="h-4 w-4 text-brand" /> ORCID
             </a>
             <a href="https://www.linkedin.com/in/seamzaman/" target="_blank" rel="noreferrer" className="flex min-h-11 items-center gap-3 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-              <Linkedin className="h-4 w-4 text-primary" /> LinkedIn
+              <Linkedin className="h-4 w-4 text-brand" /> LinkedIn
             </a>
           </motion.div>
 

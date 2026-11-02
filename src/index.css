@@ -34,6 +34,9 @@
     --input: 0 0% 88%;
     --ring: 0 0% 7%;
 
+    /* Accent for small details: section labels, timeline, active tab, links, contact icons. */
+    --brand: 0 0% 7%;
+
     --radius: 0rem;
 
     --hero-gradient: linear-gradient(160deg, hsl(0 0% 5%) 0%, hsl(33 28% 8%) 55%, hsl(40 45% 12%) 100%);

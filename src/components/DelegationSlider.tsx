@@ -199,7 +199,7 @@ const DelegationSlider = () => {
       className={`border-2 bg-card/40 p-5 transition-colors sm:p-7 ${pulse ? "border-primary" : "border-border"}`}
     >
       <div className="mb-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-        <p id="delegation-label" className="text-xs font-bold uppercase tracking-normal text-primary">
+        <p id="delegation-label" className="text-xs font-bold uppercase tracking-normal text-brand">
           Decision authority
         </p>
         <div role="group" aria-label="Scenario" className="flex gap-1.5">
@@ -280,7 +280,7 @@ const DelegationSlider = () => {
             >
               {reclaimed ? (
                 <>
-                  <span className="font-semibold text-primary">Authority reclaimed.</span>{" "}
+                  <span className="font-semibold text-brand">Authority reclaimed.</span>{" "}
                   <a
                     href="#research"
                     className="inline-flex items-center gap-1 text-foreground underline decoration-primary/60 underline-offset-4 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
