@@ -508,7 +508,7 @@ const Index = () => {
           </motion.div>
 
           <motion.h3 {...fadeUp} className="font-display font-semibold text-xl text-foreground mt-10 sm:mt-14 mb-4">Languages</motion.h3>
-          <motion.p {...fadeUp} className="text-sm text-muted-foreground">Bengali (native) · English (fluent, IELTS 7.0) · Finnish (A2)</motion.p>
+          <motion.p {...fadeUp} className="text-sm text-muted-foreground">Bengali (native) · English (fluent, C1) · Finnish (A2)</motion.p>
         </div>
       </section>
 
