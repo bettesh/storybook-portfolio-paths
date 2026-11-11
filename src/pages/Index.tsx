@@ -1,8 +1,6 @@
-import { useState } from "react";
-import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowDown, ArrowRight, ArrowUp, Mail, MapPin, Download, ExternalLink, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import DelegationSlider, { DELEGATION_FOCUS_EVENT, DELEGATION_SET_EVENT, type DelegationSetDetail } from "@/components/DelegationSlider";
 import portrait from "@/assets/seam-portrait.webp";
 
@@ -21,45 +19,71 @@ const education = [
   { period: "2017 – 2022", title: "BBA in Finance", org: "University of Dhaka, Bangladesh" },
 ];
 
-const skills = ["Structural Equation Modelling", "Factor Analysis", "Machine Learning", "Systematic Literature Review (PRISMA)", "Qualitative Content Analysis", "Design Science Research", "Human–AI Interaction", "Python", "R", "SPSS", "Power BI", "Tableau"];
+const methods = [
+  "Structural equation modelling",
+  "Factor analysis",
+  "Machine learning",
+  "Systematic literature review (PRISMA)",
+  "Qualitative content analysis",
+  "Design science research",
+  "Human–AI interaction",
+];
 
-type Project = {
+const tools = ["Python", "R", "SPSS", "Power BI", "Tableau"];
+
+type Work = {
+  // Year or status, shown in the left margin.
+  when: string;
   title: string;
-  desc: string;
-  tags: string[];
-  category: "publications" | "thesis" | "course";
+  // Authors, with the site owner's name wrapped in ** to bold it.
+  authors?: string;
+  venue?: string;
+  note?: string;
 };
 
-const projects: readonly Project[] = [
+const workGroups: readonly { heading: string; items: readonly Work[] }[] = [
   {
-    title: "How AI governance research addresses the failure of human overseers: a systematic literature review",
-    desc: "A systematic literature review of how AI governance research addresses the potential failure of human overseers. (In progress)",
-    tags: ["AI Governance", "Systematic Review", "Human Oversight"],
-    category: "publications",
+    heading: "Publications & working papers",
+    items: [
+      {
+        when: "In progress",
+        title: "How AI governance research addresses the failure of human overseers: a systematic literature review",
+        note: "Working paper. A systematic literature review of how AI governance research addresses the potential failure of human overseers.",
+      },
+      {
+        when: "2025",
+        title: "Understanding nature-positive business models",
+        authors: "Gomes, J. F., Yaraghi, N., **Zaman, S.**, & Ahokangas, P.",
+        venue: "Proceedings of the Smart Service Summit 2025",
+        note: "In press.",
+      },
+    ],
   },
   {
-    title: "Understanding Nature-Positive Business Models",
-    desc: "Gomes, J. F., Yaraghi, N., Zaman, S., & Ahokangas, P. (2025). Proceedings of the Smart Service Summit 2025 (in press).",
-    tags: ["Publication", "Qualitative Study", "Sustainability"],
-    category: "publications",
+    heading: "Thesis",
+    items: [
+      {
+        when: "MSc thesis",
+        title: "Impact of brand image on customer purchasing behaviour",
+        venue: "Oulu Business School, University of Oulu",
+        note: "Grade 5/5. Structural equation modelling and machine-learning models on 3,600 customer survey responses.",
+      },
+    ],
   },
   {
-    title: "Impact of Brand Image on Customer Purchasing Behaviour",
-    desc: "Master's thesis (grade 5/5) applying SEM and machine-learning models to 3,600 customer survey responses.",
-    tags: ["Thesis", "SEM", "Machine Learning"],
-    category: "thesis",
-  },
-  {
-    title: "Predicting Nurses' Stress During COVID-19",
-    desc: "Team study using physiological signals, time-window segmentation and gradient-boosted classification with leave-one-group-out cross-validation.",
-    tags: ["Machine Learning", "Python"],
-    category: "course",
-  },
-  {
-    title: "Reputation and Customer Trust at Osuuskauppa Arina",
-    desc: "Designed and ran the member survey, then applied factor analysis and structural equation modelling in R.",
-    tags: ["SEM", "Survey Research", "R"],
-    category: "course",
+    heading: "Other work",
+    items: [
+      {
+        when: "Course project",
+        title: "Predicting nurses' stress during COVID-19",
+        note: "Team study using physiological signals, time-window segmentation and gradient-boosted classification with leave-one-group-out cross-validation.",
+      },
+      {
+        when: "Course project",
+        title: "Reputation and customer trust at Osuuskauppa Arina",
+        note: "Designed and ran the member survey, then applied factor analysis and structural equation modelling in R.",
+      },
+    ],
   },
 ];
 
@@ -112,253 +136,98 @@ const SectionHeading = ({ kicker, children }: { kicker: string; children: React.
 
 type TimelineItem = { period: string; title: string; org: string; desc?: string };
 
-const itemAnim = (i: number) => ({
-  initial: { opacity: 0, x: -18 },
-  whileInView: { opacity: 1, x: 0 },
-  viewport: { once: true, amount: 0.35 },
-  transition: { duration: 0.5, delay: 0.12 + i * 0.2, ease: "easeOut" },
-} as const);
-
-const dotAnim = (i: number) => ({
-  initial: { scale: 0, opacity: 0 },
-  whileInView: { scale: 1, opacity: 1 },
-  viewport: { once: true, amount: 0.5 },
-  transition: { delay: 0.18 + i * 0.2, type: "spring", stiffness: 340, damping: 17 },
-} as const);
-
-const segAnim = (i: number) => ({
-  initial: { scaleY: 0 },
-  whileInView: { scaleY: 1 },
-  viewport: { once: true, amount: 0.4 },
-  transition: { duration: 0.32, delay: 0.1 + i * 0.2, ease: "easeInOut" },
-} as const);
-
-const Timeline = ({ items }: { items: readonly TimelineItem[] }) => {
-  const reduceMotion = useReducedMotion();
-  return (
-    <div>
-      <div className="space-y-7 sm:space-y-8">
-        {items.map((item, i) => (
-          <motion.div
-            key={item.title}
-            className="relative pl-7 sm:pl-10"
-            {...(reduceMotion ? {} : itemAnim(i))}
-          >
-            {i < items.length - 1 && (
-              <motion.span
-                aria-hidden
-                className="absolute left-[4px] top-[9px] -bottom-[34px] w-0.5 origin-top bg-brand sm:left-[6px] sm:top-[11px] sm:-bottom-[38px]"
-                {...(reduceMotion ? {} : segAnim(i))}
-              />
-            )}
-            <motion.span
-              aria-hidden
-              className="absolute left-0 top-1 h-2.5 w-2.5 rounded-full border-2 border-brand bg-background sm:h-3.5 sm:w-3.5"
-              {...(reduceMotion ? {} : dotAnim(i))}
-            />
-
-            <p className="text-xs text-brand font-medium">{item.period}</p>
-            <h4 className="font-display font-semibold text-foreground">{item.title}</h4>
-            <p className="text-sm text-muted-foreground italic">{item.org}</p>
-            {item.desc && <p className="text-sm text-muted-foreground mt-1">{item.desc}</p>}
-          </motion.div>
-
-        ))}
-      </div>
-    </div>
-  );
-};
-
-
-const WordReveal = ({
-  text,
-  delay = 0,
-  className,
-  wordClassName,
-}: {
-  text: string;
-  delay?: number;
-  className?: string;
-  wordClassName?: string;
-}) => {
-  const reduceMotion = useReducedMotion();
-  const words = text.split(" ");
-  return (
-    <span className={className}>
-      {words.map((word, i) => (
+const Timeline = ({ items }: { items: readonly TimelineItem[] }) => (
+  <div className="space-y-7 sm:space-y-8">
+    {items.map((item, i) => (
+      <motion.div key={item.title} {...fadeUp} className="relative pl-7 sm:pl-10">
+        {i < items.length - 1 && (
+          <span
+            aria-hidden
+            className="absolute left-[4px] top-[9px] -bottom-[34px] w-0.5 bg-brand/40 sm:left-[6px] sm:top-[11px] sm:-bottom-[38px]"
+          />
+        )}
         <span
-          key={`${word}-${i}`}
-          className="inline-block overflow-hidden pb-[0.16em] -mb-[0.16em] align-bottom"
-        >
-          <motion.span
-            className={wordClassName ? `inline-block ${wordClassName}` : "inline-block"}
-            initial={reduceMotion ? false : { y: "115%" }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: delay + i * 0.1 }}
-          >
-            {word}
-            {i < words.length - 1 ? "\u00A0" : ""}
-          </motion.span>
-        </span>
-      ))}
-    </span>
-  );
-};
+          aria-hidden
+          className="absolute left-0 top-1.5 h-2.5 w-2.5 rounded-full border-2 border-brand bg-background sm:h-3.5 sm:w-3.5"
+        />
+        <p className="text-sm text-brand font-medium">{item.period}</p>
+        <h4 className="font-display text-lg font-semibold text-foreground">{item.title}</h4>
+        <p className="text-[0.9375rem] text-muted-foreground italic">{item.org}</p>
+        {item.desc && <p className="text-[0.9375rem] leading-relaxed text-muted-foreground mt-1">{item.desc}</p>}
+      </motion.div>
+    ))}
+  </div>
+);
 
-const categoryTabs = [
-  { id: "publications", label: "Publications & Working Papers" },
-  { id: "thesis", label: "Thesis" },
-  { id: "course", label: "Course Project" },
-] as const;
+// Renders "A, **B**, & C" with the ** part in bold.
+const Authors = ({ text }: { text: string }) => (
+  <>
+    {text.split("**").map((part, i) =>
+      i % 2 ? (
+        <strong key={i} className="font-semibold text-foreground">
+          {part}
+        </strong>
+      ) : (
+        part
+      ),
+    )}
+  </>
+);
 
-const ResearchTabs = ({ items }: { items: readonly Project[] }) => {
-  const reduceMotion = useReducedMotion();
-  const [tab, setTab] = useState<Project["category"]>("publications");
-
-  return (
-    <Tabs value={tab} onValueChange={(v) => setTab(v as Project["category"])} className="w-full">
-      <TabsList className="flex h-auto w-full flex-wrap items-start justify-start gap-x-7 gap-y-1 rounded-none border-b-2 border-border bg-transparent p-0 sm:gap-x-12">
-        {categoryTabs.map((c) => (
-          <TabsTrigger
-            key={c.id}
-            value={c.id}
-            className="relative rounded-none border-0 bg-transparent px-0 pb-3 pt-1 font-display text-xs font-bold uppercase tracking-normal text-muted-foreground shadow-none transition-colors hover:text-foreground data-[state=active]:bg-transparent data-[state=active]:text-brand data-[state=active]:shadow-none sm:text-base"
-          >
-            {c.label}
-            <span className="ml-2 text-[0.7em] font-semibold opacity-60">
-              {items.filter((p) => p.category === c.id).length}
-            </span>
-            {tab === c.id &&
-              (reduceMotion ? (
-                <span aria-hidden className="absolute inset-x-0 -bottom-[2px] h-[2px] bg-brand" />
-              ) : (
-                <motion.span
-                  aria-hidden
-                  layoutId="research-tab-line"
-                  className="absolute inset-x-0 -bottom-[2px] h-[2px] bg-brand"
-                />
-              ))}
-          </TabsTrigger>
-        ))}
-      </TabsList>
-
-      {categoryTabs.map((c) => (
-        <TabsContent key={c.id} value={c.id} className="mt-7 focus-visible:ring-0 sm:mt-9">
-          {items
-            .filter((p) => p.category === c.id)
-            .map((project, i) => (
-              <motion.div
-                key={project.title}
-                initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.45, delay: reduceMotion ? 0 : i * 0.08, ease: "easeOut" }}
-                className="border-b-2 border-border pb-7 last:border-0 sm:pb-8"
-              >
-                <h3 className="font-display font-bold text-lg sm:text-xl md:text-2xl text-foreground mb-3 leading-snug">{project.title}</h3>
-                <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{project.desc}</p>
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag) => (
-                    <span key={tag} className="text-xs font-semibold uppercase tracking-normal px-3 py-1 border border-primary/40 text-primary">{tag}</span>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-        </TabsContent>
-      ))}
-    </Tabs>
-  );
-};
+const WorkList = () => (
+  <div className="space-y-10 sm:space-y-12">
+    {workGroups.map((group) => (
+      <motion.div key={group.heading} {...fadeUp}>
+        <h3 className="font-display font-semibold text-xl text-foreground pb-3 border-b-2 border-border">{group.heading}</h3>
+        <ol>
+          {group.items.map((item) => (
+            <li key={item.title} className="grid gap-x-6 gap-y-1 border-b border-border py-5 last:border-0 sm:grid-cols-[7.5rem_minmax(0,1fr)] sm:py-6">
+              <p className="text-sm font-medium text-brand sm:pt-1">{item.when}</p>
+              <div>
+                <p className="font-display text-lg sm:text-xl font-semibold leading-snug text-foreground">{item.title}</p>
+                <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-muted-foreground">
+                  {item.authors && (
+                    <>
+                      <Authors text={item.authors} />{" "}
+                    </>
+                  )}
+                  {item.venue && <em>{item.venue}. </em>}
+                  {item.note}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </motion.div>
+    ))}
+  </div>
+);
 
 const Index = () => {
   const reduceMotion = useReducedMotion();
 
-  // Cursor position over the hero, -0.5..0.5 on each axis; drives the portrait tilt.
-  const pointerX = useMotionValue(0);
-  const pointerY = useMotionValue(0);
-  const smoothX = useSpring(pointerX, { stiffness: 120, damping: 20 });
-  const smoothY = useSpring(pointerY, { stiffness: 120, damping: 20 });
-  const tiltX = useTransform(smoothY, [-0.5, 0.5], [4, -4]);
-  const tiltY = useTransform(smoothX, [-0.5, 0.5], [-5, 5]);
-
-  const trackPointer = (event: React.PointerEvent<HTMLElement>) => {
-    if (reduceMotion || event.pointerType !== "mouse") return;
-    const rect = event.currentTarget.getBoundingClientRect();
-    pointerX.set((event.clientX - rect.left) / rect.width - 0.5);
-    pointerY.set((event.clientY - rect.top) / rect.height - 0.5);
-  };
-  const resetPointer = () => {
-    pointerX.set(0);
-    pointerY.set(0);
-  };
-
   return (
     <div>
       {/* Hero */}
-      <section id="home" onPointerMove={trackPointer} onPointerLeave={resetPointer} className="min-h-[calc(85svh-4rem)] md:min-h-[85vh] flex items-stretch py-12 sm:py-16 lg:pb-0">
+      <section id="home" className="min-h-[calc(85svh-4rem)] md:min-h-[85vh] flex items-stretch py-12 sm:py-16 lg:pb-0">
         <div className="container flex w-full flex-col">
-          <div className="grid flex-1 gap-y-0 lg:grid-cols-[minmax(0,1fr)_26.25rem] lg:gap-x-14 xl:grid-cols-[minmax(0,1fr)_31.25rem]">
-
-
+          <div className="grid flex-1 lg:grid-cols-[minmax(0,1fr)_26.25rem] lg:gap-x-14 xl:grid-cols-[minmax(0,1fr)_31.25rem]">
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7 }}
-              className="lg:col-start-1 lg:row-start-1"
+              transition={{ duration: 0.6 }}
+              className="max-w-2xl self-center lg:pb-16"
             >
-
-              <p className="text-brand font-bold text-xs sm:text-sm tracking-normal uppercase mb-5 sm:mb-6 leading-relaxed">
-                Doctoral Researcher · University of Turku
-              </p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4 }}
-              className="max-w-2xl lg:col-start-1 lg:row-start-2"
-            >
-              <h1 className="text-[2.75rem] min-[360px]:text-5xl sm:text-6xl md:text-7xl font-display font-semibold tracking-tight text-foreground leading-[1.05] mb-6 sm:mb-8">
-                <WordReveal text="Hi, I'm" delay={0.15} className="block" />
-                <WordReveal text="Seam Zaman" delay={0.35} className="block" wordClassName="text-gradient" />
+              <h1 className="text-5xl sm:text-6xl md:text-7xl font-display font-semibold tracking-tight text-foreground leading-[1.05]">
+                Seam Zaman
               </h1>
-            </motion.div>
+              <p className="mt-4 sm:mt-5 font-display text-xl sm:text-2xl text-foreground">Doctoral Researcher in AI Governance</p>
+              <p className="mt-1.5 text-sm sm:text-base text-muted-foreground">
+                Information Systems Science · Turku School of Economics, University of Turku
+              </p>
+              <span aria-hidden className="mt-7 sm:mt-8 block h-0.5 w-12 bg-brand" />
 
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.15 }}
-              className="relative hidden justify-center lg:col-start-2 lg:row-start-1 lg:row-span-3 lg:flex lg:self-stretch"
-            >
-              <motion.div
-                initial={{ opacity: 0, x: 30, rotate: 2.5 }}
-                whileInView={{ opacity: 1, x: 0, rotate: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.9, ease: "easeOut" }}
-                className="relative flex h-full w-full items-end justify-center"
-              >
-                <motion.div
-                  animate={reduceMotion ? undefined : { y: [0, -7, 0], scale: [1, 1.012, 1] }}
-                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                  style={reduceMotion ? undefined : { rotateX: tiltX, rotateY: tiltY, transformPerspective: 900 }}
-                  className="relative flex max-h-full w-full items-end"
-                >
-                  <img
-                    src={portrait}
-                    alt="Portrait of Seam Zaman"
-                    draggable={false}
-                    className="relative h-auto max-h-full w-full select-none object-contain object-bottom"
-                  />
-                </motion.div>
-              </motion.div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-              className="max-w-lg lg:col-start-1 lg:row-start-3"
-            >
-
-
-              <p className="text-base sm:text-lg text-muted-foreground mb-7 sm:mb-8 leading-relaxed">
+              <p className="mt-7 sm:mt-8 max-w-lg text-base sm:text-lg text-muted-foreground leading-relaxed">
                 I research how organisations govern AI: which decisions are delegated to AI systems, how humans oversee them, and how authority is taken back when needed.
               </p>
               <a
@@ -369,7 +238,7 @@ const Index = () => {
                   history.replaceState(null, "", "#who-decides");
                   window.dispatchEvent(new Event(DELEGATION_FOCUS_EVENT));
                 }}
-                className="group mb-7 sm:mb-8 inline-flex min-h-11 items-center gap-2 text-sm sm:text-base font-semibold text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="group mt-5 mb-7 sm:mb-8 inline-flex min-h-11 items-center gap-2 text-sm sm:text-base font-semibold text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 <span>
                   Who should decide: a human or AI?{" "}
@@ -378,7 +247,7 @@ const Index = () => {
                 <ArrowDown className="h-4 w-4 text-brand transition-transform group-hover:translate-y-0.5" />
               </a>
               <div className="flex flex-col min-[400px]:flex-row gap-3 sm:gap-4">
-                <Button asChild className="glow min-h-12 px-5">
+                <Button asChild className="min-h-12 px-5">
                   <a href="#research">
                     View Research <ArrowRight className="ml-2 h-4 w-4" />
                   </a>
@@ -387,6 +256,20 @@ const Index = () => {
                   <a href="#contact">Get in Touch</a>
                 </Button>
               </div>
+            </motion.div>
+
+            <motion.div
+              initial={reduceMotion ? false : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              className="relative hidden items-end justify-center lg:flex lg:self-stretch"
+            >
+              <img
+                src={portrait}
+                alt="Portrait of Seam Zaman"
+                draggable={false}
+                className="h-auto max-h-full w-full select-none object-contain object-bottom"
+              />
             </motion.div>
           </div>
         </div>
@@ -441,14 +324,10 @@ const Index = () => {
                   <h3 className="font-display text-lg sm:text-xl font-semibold text-foreground">{item.title}</h3>
                 </div>
                 <p className="mb-3 font-display text-base sm:text-lg italic leading-snug text-foreground">{item.question}</p>
-                <p className="mb-4 text-sm leading-relaxed text-muted-foreground">{item.desc}</p>
+                <p className="mb-4 text-[0.9375rem] leading-relaxed text-muted-foreground">{item.desc}</p>
                 <div className="mt-auto flex flex-wrap items-center gap-2">
-                  {item.tags.map((tag) => (
-                    <span key={tag} className="border border-primary/40 px-2.5 py-1 text-[10px] sm:text-[11px] font-semibold uppercase tracking-normal text-primary">
-                      {tag}
-                    </span>
-                  ))}
-                  <span className="ml-auto inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-normal text-muted-foreground transition-colors group-hover:text-primary group-focus-visible:text-primary">
+                  <span className="text-sm text-muted-foreground">{item.tags.join(" · ")}</span>
+                  <span className="ml-auto inline-flex items-center gap-1 text-sm font-semibold text-brand underline decoration-brand/40 underline-offset-4 group-hover:decoration-brand">
                     {item.cta} <ArrowUp className="h-3 w-3" />
                   </span>
                 </div>
@@ -459,6 +338,17 @@ const Index = () => {
             <span className="text-brand">*</span> Work in progress. This is an overview of my current understanding and
             direction, not finalised research or findings.
           </motion.p>
+        </div>
+      </section>
+
+      {/* Research */}
+      <section id="research" className="py-14 sm:py-20 md:py-24 border-t-2 border-border">
+        <div className="container max-w-3xl">
+          <SectionHeading kicker="Research">
+            Research & <span className="text-gradient">Publications</span>
+          </SectionHeading>
+
+          <WorkList />
         </div>
       </section>
 
@@ -492,34 +382,38 @@ const Index = () => {
 
 
           <motion.h3 {...fadeUp} className="font-display font-semibold text-xl text-foreground mt-10 sm:mt-14 mb-4">Funding & Awards</motion.h3>
-          <motion.ul {...fadeUp} className="list-disc pl-5 space-y-2 text-sm text-muted-foreground">
+          <motion.ul {...fadeUp} className="list-disc pl-5 space-y-2 text-[0.9375rem] leading-relaxed text-muted-foreground">
             <li>Doctoral research funding for 2026 from three research projects led by Prof. Matti Mäntymäki.</li>
             <li>UTUGS doctoral researcher funding, University of Turku Graduate School (24 months).</li>
             <li>University of Oulu two-year tuition scholarship, 2023–2025.</li>
           </motion.ul>
 
           <motion.h3 {...fadeUp} className="font-display font-semibold text-xl text-foreground mt-10 sm:mt-14 mb-4">Skills & Methods</motion.h3>
-          <motion.div {...fadeUp} className="flex flex-wrap gap-2 sm:gap-3">
-            {skills.map((skill) => (
-              <span key={skill} className="max-w-full px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold uppercase tracking-normal text-primary border border-primary/40 hover:bg-primary hover:text-primary-foreground transition-colors">
-                {skill}
-              </span>
-            ))}
-          </motion.div>
+          <motion.dl {...fadeUp} className="grid gap-x-10 gap-y-6 text-[0.9375rem] sm:grid-cols-2">
+            <div>
+              <dt className="mb-2 text-sm font-medium text-brand">Methods</dt>
+              <dd>
+                <ul className="space-y-1.5 text-muted-foreground">
+                  {methods.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </dd>
+            </div>
+            <div>
+              <dt className="mb-2 text-sm font-medium text-brand">Tools</dt>
+              <dd>
+                <ul className="space-y-1.5 text-muted-foreground">
+                  {tools.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </dd>
+            </div>
+          </motion.dl>
 
           <motion.h3 {...fadeUp} className="font-display font-semibold text-xl text-foreground mt-10 sm:mt-14 mb-4">Languages</motion.h3>
-          <motion.p {...fadeUp} className="text-sm text-muted-foreground">Bengali (native) · English (fluent, C1) · Finnish (A2)</motion.p>
-        </div>
-      </section>
-
-      {/* Research */}
-      <section id="research" className="py-14 sm:py-20 md:py-24 border-t-2 border-border">
-        <div className="container max-w-3xl">
-          <SectionHeading kicker="Research">
-            Research & <span className="text-gradient">Publications</span>
-          </SectionHeading>
-
-          <ResearchTabs items={projects} />
+          <motion.p {...fadeUp} className="text-[0.9375rem] text-muted-foreground">Bengali (native) · English (fluent, C1) · Finnish (A2)</motion.p>
         </div>
       </section>
 
@@ -531,18 +425,7 @@ const Index = () => {
           </SectionHeading>
 
           <motion.div {...fadeUp} className="relative mb-6 sm:mb-8 lg:hidden">
-            <motion.div
-              initial={{ opacity: 0, x: -18, rotate: -4 }}
-              whileInView={{ opacity: 1, x: 0, rotate: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, ease: "easeOut" }}
-              className="relative inline-block"
-            >
-              <motion.div
-                animate={reduceMotion ? undefined : { y: [0, -6, 0] }}
-                transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
-                className="relative"
-              >
+            <div className="relative inline-block">
                 <a
                   href={`mailto:${EMAIL}`}
                   className="group inline-flex flex-col items-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
@@ -557,8 +440,7 @@ const Index = () => {
                     Say hello <ArrowRight className="h-3.5 w-3.5" />
                   </span>
                 </a>
-              </motion.div>
-            </motion.div>
+            </div>
           </motion.div>
 
           <motion.p {...fadeUp} className="text-muted-foreground mb-10">
