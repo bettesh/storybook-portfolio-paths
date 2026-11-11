@@ -365,13 +365,15 @@ const Index = () => {
           </motion.ul>
 
           <motion.h3 {...fadeUp} className="font-display font-semibold text-xl text-foreground mt-10 sm:mt-14 mb-4">Skills & Methods</motion.h3>
-          <motion.dl {...fadeUp} className="grid gap-x-10 gap-y-6 text-[0.9375rem] sm:grid-cols-2">
+          <motion.dl {...fadeUp} className="grid gap-x-10 gap-y-5 text-[0.9375rem] sm:grid-cols-2 sm:gap-y-6">
             <div>
               <dt className="mb-2 text-sm font-medium text-brand">Methods</dt>
               <dd>
-                <ul className="space-y-1.5 text-muted-foreground">
+                <ul className="flex flex-wrap leading-relaxed text-muted-foreground sm:block sm:space-y-1.5">
                   {methods.map((item) => (
-                    <li key={item}>{item}</li>
+                    <li key={item} className="after:mx-2 after:content-['·'] last:after:content-none sm:after:content-none">
+                      {item}
+                    </li>
                   ))}
                 </ul>
               </dd>
@@ -379,9 +381,11 @@ const Index = () => {
             <div>
               <dt className="mb-2 text-sm font-medium text-brand">Tools</dt>
               <dd>
-                <ul className="space-y-1.5 text-muted-foreground">
+                <ul className="flex flex-wrap leading-relaxed text-muted-foreground sm:block sm:space-y-1.5">
                   {tools.map((item) => (
-                    <li key={item}>{item}</li>
+                    <li key={item} className="after:mx-2 after:content-['·'] last:after:content-none sm:after:content-none">
+                      {item}
+                    </li>
                   ))}
                 </ul>
               </dd>
