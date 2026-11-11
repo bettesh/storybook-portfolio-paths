@@ -404,7 +404,7 @@ const Index = () => {
             <li>
               Doctoral research funding for 2026 from three research projects led by{" "}
               <PersonLink href={MANTYMAKI}>Prof. Matti Mäntymäki</PersonLink>: <PersonLink href="https://ai4work.eu/">AI4Work</PersonLink>,{" "}
-              <PersonLink href="https://des.utu.fi/research-group/projects/">Responsible AI Through Governance (RAITGO)</PersonLink> and{" "}
+              <PersonLink href="https://des.utu.fi/research-group/projects/#:~:text=RAITGO">Responsible AI Through Governance (RAITGO)</PersonLink> and{" "}
               <PersonLink href="https://ai-governance.eu/flaig/">Forward-Looking AI Governance (FLAIG)</PersonLink>.
             </li>
             <li>UTUGS doctoral researcher funding, University of Turku Graduate School (24 months).</li>
