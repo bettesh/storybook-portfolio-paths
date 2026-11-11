@@ -1,17 +1,45 @@
 import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, Mail, MapPin, Download, ExternalLink, Linkedin } from "lucide-react";
+import { ArrowRight, Mail, MapPin, Download, ExternalLink, Linkedin, GraduationCap, Building2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import portrait from "@/assets/seam-portrait.webp";
 
 const EMAIL = "sszama@utu.fi";
 
+const PROFILES = [
+  { label: "Google Scholar", href: "https://scholar.google.com/citations?user=R_QWgUUAAAAJ&hl=en", icon: GraduationCap },
+  { label: "ORCID", href: "https://orcid.org/0009-0004-0791-6051", icon: ExternalLink },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/seamzaman/", icon: Linkedin },
+  { label: "University of Turku", href: "https://www.utu.fi/en/people/seam-zaman", icon: Building2 },
+] as const;
+
+const PersonLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
+  <a
+    href={href}
+    target="_blank"
+    rel="noreferrer"
+    className="text-foreground underline decoration-brand/40 underline-offset-4 hover:decoration-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+  >
+    {children}
+  </a>
+);
+
+const MANTYMAKI = "https://www.utu.fi/en/people/matti-mantymaki";
+const MINKKINEN = "https://www.utu.fi/en/people/matti-minkkinen";
+
 const timeline = [
-  { period: "Jan 2026 – present", title: "Doctoral Researcher, Information Systems Science", org: "Turku School of Economics, University of Turku", desc: "Doctoral Programme in Technology. Supervisors: Prof. Matti Mäntymäki and Matti Minkkinen. Target defence: 2030." },
+  {
+    period: "Jan 2026 – present",
+    title: "Doctoral Researcher, Information Systems Science", org: "Turku School of Economics, University of Turku", desc: (
+      <>
+        Doctoral Programme in Technology. Supervisors: <PersonLink href={MANTYMAKI}>Prof. Matti Mäntymäki</PersonLink> and{" "}
+        <PersonLink href={MINKKINEN}>Matti Minkkinen</PersonLink>. Target defence: 2030.
+      </>
+    ),
+  },
   { period: "Oct – Dec 2025", title: "Project Researcher", org: "Dept. of Management and Entrepreneurship, University of Turku", desc: "Built an API-based tool collecting dialogue data on AI governance tensions and gathered organisational AI governance policies." },
   { period: "May – Jul 2024", title: "Learning Analytics Intern", org: "Oulu Business School, University of Oulu", desc: "Co-authored the report Advancement of Digitalization in Education and structured a MOOC on Digicampus." },
-  { period: "2020 – 2022", title: "Marketing Analyst", org: "Course Platoon, Dhaka", desc: "Market research and analytics supporting strategy and customer acquisition." },
 ];
 
 const education = [
@@ -133,7 +161,7 @@ const SectionHeading = ({ kicker, children }: { kicker: string; children: React.
   </motion.div>
 );
 
-type TimelineItem = { period: string; title: string; org: string; desc?: string };
+type TimelineItem = { period: string; title: string; org: string; desc?: React.ReactNode };
 
 const Timeline = ({ items }: { items: readonly TimelineItem[] }) => (
   <div className="space-y-7 sm:space-y-8">
@@ -262,6 +290,20 @@ const Index = () => {
                   <a href="#contact">Get in Touch</a>
                 </Button>
               </div>
+              <ul className="mt-6 flex flex-wrap justify-center gap-x-5 gap-y-1 text-sm text-muted-foreground lg:justify-start">
+                {PROFILES.map(({ label, href, icon: Icon }) => (
+                  <li key={label}>
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex min-h-11 items-center gap-1.5 transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    >
+                      <Icon className="h-4 w-4 text-brand" /> {label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </motion.div>
 
             <motion.div
@@ -359,7 +401,11 @@ const Index = () => {
 
           <motion.h3 {...fadeUp} className="font-display font-semibold text-xl text-foreground mt-10 sm:mt-14 mb-4">Funding & Awards</motion.h3>
           <motion.ul {...fadeUp} className="list-disc pl-5 space-y-2 text-[0.9375rem] leading-relaxed text-muted-foreground">
-            <li>Doctoral research funding for 2026 from three research projects led by Prof. Matti Mäntymäki.</li>
+            <li>
+              Doctoral research funding for 2026 from three research projects led by{" "}
+              <PersonLink href={MANTYMAKI}>Prof. Matti Mäntymäki</PersonLink>: AI4Work, Responsible AI Through Governance
+              (RAITGO) and Forward-Looking AI Governance (FLAIG).
+            </li>
             <li>UTUGS doctoral researcher funding, University of Turku Graduate School (24 months).</li>
             <li>University of Oulu two-year tuition scholarship, 2023–2025.</li>
           </motion.ul>
@@ -392,8 +438,6 @@ const Index = () => {
             </div>
           </motion.dl>
 
-          <motion.h3 {...fadeUp} className="font-display font-semibold text-xl text-foreground mt-10 sm:mt-14 mb-4">Languages</motion.h3>
-          <motion.p {...fadeUp} className="text-[0.9375rem] text-muted-foreground">Bengali (native) · English (fluent, C1) · Finnish (A2)</motion.p>
         </div>
       </section>
 
@@ -416,12 +460,11 @@ const Index = () => {
             <span className="flex min-h-11 items-center gap-3">
               <MapPin className="h-4 w-4 text-brand" /> Turku, Finland
             </span>
-            <a href="https://orcid.org/0009-0004-0791-6051" target="_blank" rel="noreferrer" className="flex min-h-11 items-center gap-3 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-              <ExternalLink className="h-4 w-4 text-brand" /> ORCID
-            </a>
-            <a href="https://www.linkedin.com/in/seamzaman/" target="_blank" rel="noreferrer" className="flex min-h-11 items-center gap-3 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-              <Linkedin className="h-4 w-4 text-brand" /> LinkedIn
-            </a>
+            {PROFILES.map(({ label, href, icon: Icon }) => (
+              <a key={label} href={href} target="_blank" rel="noreferrer" className="flex min-h-11 items-center gap-3 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                <Icon className="h-4 w-4 text-brand" /> {label}
+              </a>
+            ))}
           </motion.div>
 
           <motion.div {...fadeUp}>
