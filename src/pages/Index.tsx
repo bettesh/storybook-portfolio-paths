@@ -238,7 +238,7 @@ const Index = () => {
               initial={reduceMotion ? false : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="max-w-2xl self-center lg:pb-16"
+              className="mx-auto max-w-2xl self-center text-center lg:mx-0 lg:pb-16 lg:text-left"
             >
               <h1 className="text-5xl sm:text-6xl md:text-7xl font-display font-semibold tracking-tight text-foreground leading-[1.05]">
                 Seam Zaman
@@ -247,12 +247,12 @@ const Index = () => {
               <p className="mt-1.5 text-sm sm:text-base text-muted-foreground">
                 Information Systems Science · Turku School of Economics, University of Turku
               </p>
-              <span aria-hidden className="mt-7 sm:mt-8 block h-0.5 w-12 bg-brand" />
+              <span aria-hidden className="mx-auto mt-7 sm:mt-8 block h-0.5 w-12 bg-brand lg:mx-0" />
 
-              <p className="mt-7 sm:mt-8 max-w-lg text-base sm:text-lg text-muted-foreground leading-relaxed">
+              <p className="mx-auto mt-7 sm:mt-8 max-w-lg text-base sm:text-lg text-muted-foreground leading-relaxed lg:mx-0">
                 I research how organisations govern AI: which decisions are delegated to AI systems, how humans oversee them, and how authority is taken back when needed.
               </p>
-              <div className="mt-7 sm:mt-8 flex flex-col min-[400px]:flex-row gap-3 sm:gap-4">
+              <div className="mt-7 sm:mt-8 flex flex-col min-[400px]:flex-row justify-center gap-3 sm:gap-4 lg:justify-start">
                 <Button asChild className="min-h-12 px-5">
                   <a href="#research">
                     View Research <ArrowRight className="ml-2 h-4 w-4" />
@@ -268,13 +268,13 @@ const Index = () => {
               initial={reduceMotion ? false : { opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="relative hidden items-end justify-center lg:flex lg:self-stretch"
+              className="relative order-first mb-6 flex items-end justify-center sm:mb-8 lg:order-none lg:mb-0 lg:self-stretch"
             >
               <img
                 src={portrait}
                 alt="Portrait of Seam Zaman"
                 draggable={false}
-                className="h-auto max-h-full w-full select-none object-contain object-bottom"
+                className="h-auto max-h-full w-48 select-none object-contain object-bottom sm:w-60 lg:w-full"
               />
             </motion.div>
           </div>
@@ -399,25 +399,6 @@ const Index = () => {
           <SectionHeading kicker="Contact">
             Let's <span className="text-gradient">Connect</span>
           </SectionHeading>
-
-          <motion.div {...fadeUp} className="relative mb-6 sm:mb-8 lg:hidden">
-            <div className="relative inline-block">
-                <a
-                  href={`mailto:${EMAIL}`}
-                  className="group inline-flex flex-col items-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                >
-                  <img
-                    src={portrait}
-                    alt="Portrait of Seam Zaman"
-                    draggable={false}
-                    className="w-[120px] max-w-full select-none object-contain transition-transform duration-500 ease-out group-hover:scale-[1.05] sm:w-[150px]"
-                  />
-                  <span className="-mt-3 sm:-mt-4 inline-flex items-center gap-2 border border-primary/50 bg-background/75 px-3 py-1.5 text-[11px] sm:text-xs font-bold uppercase tracking-normal text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                    Say hello <ArrowRight className="h-3.5 w-3.5" />
-                  </span>
-                </a>
-            </div>
-          </motion.div>
 
           <motion.p {...fadeUp} className="text-muted-foreground mb-10">
 
