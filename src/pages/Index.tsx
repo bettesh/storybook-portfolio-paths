@@ -34,7 +34,7 @@ const timeline = [
     title: "Doctoral Researcher, Information Systems Science", org: "Turku School of Economics, University of Turku", desc: (
       <>
         Doctoral Programme in Technology. Supervisors: <PersonLink href={MANTYMAKI}>Prof. Matti Mäntymäki</PersonLink> and{" "}
-        <PersonLink href={MINKKINEN}>Matti Minkkinen</PersonLink>. Target defence: 2030.
+        <PersonLink href={MINKKINEN}>Asst. Prof. Matti Minkkinen</PersonLink>. Target defence: 2030.
       </>
     ),
   },
