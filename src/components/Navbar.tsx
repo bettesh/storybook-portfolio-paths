@@ -4,10 +4,10 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const links = [
-  { href: "#home", label: "Home" },
-  { href: "#research", label: "Research" },
-  { href: "#about", label: "About" },
-  { href: "#contact", label: "Contact" },
+  { href: "/#home", label: "Home" },
+  { href: "/#research", label: "Research" },
+  { href: "/#about", label: "About" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 const Navbar = () => {
@@ -49,7 +49,7 @@ const Navbar = () => {
       className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-background/80 border-b-2 border-border"
     >
       <div className="container flex items-center justify-between h-16">
-        <a href="#home" onClick={() => setOpen(false)} className="inline-flex min-h-11 items-center font-display text-xl font-semibold tracking-tight text-foreground">
+        <a href="/#home" onClick={() => setOpen(false)} className="inline-flex min-h-11 items-center font-display text-xl font-semibold tracking-tight text-foreground">
           Seam Zaman<span className="text-gradient">.</span>
         </a>
 

@@ -1,18 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, Mail, MapPin, Download, ExternalLink, Linkedin, GraduationCap, Building2 } from "lucide-react";
+import { ArrowRight, Mail, MapPin, Download } from "lucide-react";
+import { EMAIL, PROFILES } from "@/lib/profile";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import portrait from "@/assets/seam-portrait.webp";
-
-const EMAIL = "sszama@utu.fi";
-
-const PROFILES = [
-  { label: "Google Scholar", href: "https://scholar.google.com/citations?user=R_QWgUUAAAAJ&hl=en", icon: GraduationCap },
-  { label: "ORCID", href: "https://orcid.org/0009-0004-0791-6051", icon: ExternalLink },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/seamzaman/", icon: Linkedin },
-  { label: "University of Turku", href: "https://www.utu.fi/en/people/seam-zaman", icon: Building2 },
-] as const;
 
 const PersonLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
   <a
@@ -256,6 +248,12 @@ const WorkList = () => {
 const Index = () => {
   const reduceMotion = useReducedMotion();
 
+  // The page renders after the browser's own hash scroll, so links such as /#research land at the top. Scroll once rendered.
+  useEffect(() => {
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    if (id) document.getElementById(id)?.scrollIntoView();
+  }, []);
+
   return (
     <div>
       {/* Hero */}
@@ -379,10 +377,15 @@ const Index = () => {
 
           <motion.div {...fadeUp} className="space-y-6 text-muted-foreground leading-relaxed">
             <p>
-              I'm S. M. Seam-uz Zaman (Seam Zaman for short), a doctoral researcher in Information Systems Science at the Turku School of
-              Economics, University of Turku. My dissertation examines how organisations govern the authority they
-              delegate to AI systems: which decisions are handed to AI, how human oversight works in practice, and how
-              authority is reclaimed when a system must be overridden.
+              I'm S. M. Seam-uz Zaman (Seam Zaman for short), a doctoral researcher in Information Systems Science at the
+              Turku School of Economics, University of Turku. I came to AI governance through data: after a BBA in Finance at
+              the University of Dhaka and two years as a marketing analyst, I completed an MSc in Business Analytics at the
+              University of Oulu, where I built predictive and structural equation models for real organisations. Working
+              with those models made me more interested in the decisions around them than in the models themselves: who
+              relies on them, who checks them, and who is accountable when they are wrong. I now work in the{" "}
+              <PersonLink href="https://des.utu.fi/">Digital Economy and Society (DES) research group</PersonLink>, supervised
+              by <PersonLink href={MANTYMAKI}>Prof. Matti Mäntymäki</PersonLink> and{" "}
+              <PersonLink href={MINKKINEN}>Asst. Prof. Matti Minkkinen</PersonLink>.
             </p>
             <p>
               The work builds on a systematic literature review of organisational AI governance mechanisms and draws on
@@ -449,24 +452,27 @@ const Index = () => {
             Let's <span className="text-gradient">Connect</span>
           </SectionHeading>
 
-          <motion.p {...fadeUp} className="text-muted-foreground mb-10">
-
+          <motion.p {...fadeUp} className="text-muted-foreground mb-8">
             Interested in AI governance research or collaboration? Get in touch.
           </motion.p>
 
-          <motion.div {...fadeUp} className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-6 mb-8 sm:mb-10 text-sm text-muted-foreground">
-            <a href={`mailto:${EMAIL}`} className="flex min-h-11 items-center gap-3 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-              <Mail className="h-4 w-4 text-brand" /> {EMAIL}
-            </a>
-            <span className="flex min-h-11 items-center gap-3">
-              <MapPin className="h-4 w-4 text-brand" /> Turku, Finland
-            </span>
-            {PROFILES.map(({ label, href, icon: Icon }) => (
-              <a key={label} href={href} target="_blank" rel="noreferrer" className="flex min-h-11 items-center gap-3 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-                <Icon className="h-4 w-4 text-brand" /> {label}
+          <motion.ul {...fadeUp} className="mb-8 grid gap-x-10 text-[0.9375rem] text-muted-foreground sm:mb-10 sm:grid-cols-2">
+            <li>
+              <a href={`mailto:${EMAIL}`} className="flex min-h-11 items-center gap-3 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                <Mail className="h-4 w-4 text-brand" /> {EMAIL}
               </a>
+            </li>
+            <li className="flex min-h-11 items-center gap-3">
+              <MapPin className="h-4 w-4 text-brand" /> Turku, Finland
+            </li>
+            {PROFILES.map(({ label, href, icon: Icon }) => (
+              <li key={label}>
+                <a href={href} target="_blank" rel="noreferrer" className="flex min-h-11 items-center gap-3 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                  <Icon className="h-4 w-4 text-brand" /> {label}
+                </a>
+              </li>
             ))}
-          </motion.div>
+          </motion.ul>
 
           <motion.div {...fadeUp}>
             <Button asChild variant="outline" className="min-h-12 px-5">
