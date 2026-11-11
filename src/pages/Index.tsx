@@ -1,7 +1,8 @@
+import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowDown, ArrowRight, ArrowUp, Mail, MapPin, Download, ExternalLink, Linkedin } from "lucide-react";
+import { ArrowRight, Mail, MapPin, Download, ExternalLink, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import DelegationSlider, { DELEGATION_FOCUS_EVENT, DELEGATION_SET_EVENT, type DelegationSetDetail } from "@/components/DelegationSlider";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import portrait from "@/assets/seam-portrait.webp";
 
 const EMAIL = "sszama@utu.fi";
@@ -41,13 +42,15 @@ type Work = {
   note?: string;
 };
 
-const workGroups: readonly { heading: string; items: readonly Work[] }[] = [
+const workGroups: readonly { id: string; heading: string; items: readonly Work[] }[] = [
   {
+    id: "publications",
     heading: "Publications & working papers",
     items: [
       {
         when: "In progress",
         title: "How AI governance research addresses the failure of human overseers: a systematic literature review",
+        authors: "**Zaman, S.**, Minkkinen, M., & Mäntymäki, M.",
         note: "Working paper. A systematic literature review of how AI governance research addresses the potential failure of human overseers.",
       },
       {
@@ -60,6 +63,7 @@ const workGroups: readonly { heading: string; items: readonly Work[] }[] = [
     ],
   },
   {
+    id: "thesis",
     heading: "Thesis",
     items: [
       {
@@ -71,6 +75,7 @@ const workGroups: readonly { heading: string; items: readonly Work[] }[] = [
     ],
   },
   {
+    id: "other",
     heading: "Other work",
     items: [
       {
@@ -94,8 +99,6 @@ const strands = [
     question: "Which decisions do organisations hand to AI, and why?",
     desc: "Mapping organisational AI governance mechanisms through a PRISMA systematic review and analysis of real AI governance policies.",
     tags: ["Systematic review", "Policy analysis"],
-    action: "sweep",
-    cta: "Watch delegation",
   },
   {
     num: "02",
@@ -103,8 +106,6 @@ const strands = [
     question: "How does human oversight work in practice, and when does it fail?",
     desc: "A systematic review of how AI governance research addresses the failure of human overseers.",
     tags: ["Systematic review", "In progress"],
-    action: "oversight",
-    cta: "See oversight shrink",
   },
   {
     num: "03",
@@ -112,8 +113,6 @@ const strands = [
     question: "How is authority taken back when a system must be overridden?",
     desc: "Socio-technical and design science work on override and accountability.",
     tags: ["Socio-technical", "Design science"],
-    action: "override",
-    cta: "Try the override",
   },
 ] as const;
 
@@ -174,34 +173,57 @@ const Authors = ({ text }: { text: string }) => (
   </>
 );
 
-const WorkList = () => (
-  <div className="space-y-10 sm:space-y-12">
-    {workGroups.map((group) => (
-      <motion.div key={group.heading} {...fadeUp}>
-        <h3 className="font-display font-semibold text-xl text-foreground pb-3 border-b-2 border-border">{group.heading}</h3>
-        <ol>
-          {group.items.map((item) => (
-            <li key={item.title} className="grid gap-x-6 gap-y-1 border-b border-border py-5 last:border-0 sm:grid-cols-[7.5rem_minmax(0,1fr)] sm:py-6">
-              <p className="text-sm font-medium text-brand sm:pt-1">{item.when}</p>
-              <div>
-                <p className="font-display text-lg sm:text-xl font-semibold leading-snug text-foreground">{item.title}</p>
-                <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-muted-foreground">
-                  {item.authors && (
-                    <>
-                      <Authors text={item.authors} />{" "}
-                    </>
-                  )}
-                  {item.venue && <em>{item.venue}. </em>}
-                  {item.note}
-                </p>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </motion.div>
-    ))}
-  </div>
-);
+const WorkList = () => {
+  const reduceMotion = useReducedMotion();
+  const [tab, setTab] = useState(workGroups[0].id);
+
+  return (
+    <Tabs value={tab} onValueChange={setTab} className="w-full">
+      <TabsList className="flex h-auto w-full flex-wrap items-start justify-start gap-x-8 gap-y-1 rounded-none border-b-2 border-border bg-transparent p-0 sm:gap-x-10">
+        {workGroups.map((group) => (
+          <TabsTrigger
+            key={group.id}
+            value={group.id}
+            className="relative rounded-none border-0 bg-transparent px-0 pb-3 pt-1 font-display text-base font-semibold text-muted-foreground shadow-none transition-colors hover:text-foreground data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none sm:text-lg"
+          >
+            {group.heading}
+            <span className="ml-2 font-body text-xs font-medium text-muted-foreground">{group.items.length}</span>
+            {tab === group.id &&
+              (reduceMotion ? (
+                <span aria-hidden className="absolute inset-x-0 -bottom-[2px] h-[2px] bg-brand" />
+              ) : (
+                <motion.span aria-hidden layoutId="research-tab-line" className="absolute inset-x-0 -bottom-[2px] h-[2px] bg-brand" />
+              ))}
+          </TabsTrigger>
+        ))}
+      </TabsList>
+
+      {workGroups.map((group) => (
+        <TabsContent key={group.id} value={group.id} className="mt-2 focus-visible:ring-0">
+          <ol>
+            {group.items.map((item) => (
+              <li key={item.title} className="grid gap-x-6 gap-y-1 border-b border-border py-5 last:border-0 sm:grid-cols-[7.5rem_minmax(0,1fr)] sm:py-6">
+                <p className="text-sm font-medium text-brand sm:pt-1">{item.when}</p>
+                <div>
+                  <p className="font-display text-lg sm:text-xl font-semibold leading-snug text-foreground">{item.title}</p>
+                  <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-muted-foreground">
+                    {item.authors && (
+                      <>
+                        <Authors text={item.authors} />{" "}
+                      </>
+                    )}
+                    {item.venue && <em>{item.venue}. </em>}
+                    {item.note}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </TabsContent>
+      ))}
+    </Tabs>
+  );
+};
 
 const Index = () => {
   const reduceMotion = useReducedMotion();
@@ -230,23 +252,7 @@ const Index = () => {
               <p className="mt-7 sm:mt-8 max-w-lg text-base sm:text-lg text-muted-foreground leading-relaxed">
                 I research how organisations govern AI: which decisions are delegated to AI systems, how humans oversee them, and how authority is taken back when needed.
               </p>
-              <a
-                href="#who-decides"
-                onClick={(event) => {
-                  event.preventDefault();
-                  document.getElementById("who-decides")?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
-                  history.replaceState(null, "", "#who-decides");
-                  window.dispatchEvent(new Event(DELEGATION_FOCUS_EVENT));
-                }}
-                className="group mt-5 mb-7 sm:mb-8 inline-flex min-h-11 items-center gap-2 text-sm sm:text-base font-semibold text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              >
-                <span>
-                  Who should decide: a human or AI?{" "}
-                  <span className="text-brand underline decoration-brand/50 underline-offset-4 group-hover:decoration-brand">Try it</span>
-                </span>
-                <ArrowDown className="h-4 w-4 text-brand transition-transform group-hover:translate-y-0.5" />
-              </a>
-              <div className="flex flex-col min-[400px]:flex-row gap-3 sm:gap-4">
+              <div className="mt-7 sm:mt-8 flex flex-col min-[400px]:flex-row gap-3 sm:gap-4">
                 <Button asChild className="min-h-12 px-5">
                   <a href="#research">
                     View Research <ArrowRight className="ml-2 h-4 w-4" />
@@ -275,63 +281,33 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Who decides? */}
-      <section id="who-decides" className="py-14 sm:py-20 md:py-24 border-t-2 border-border">
+      {/* Research focus */}
+      <section id="focus" className="py-14 sm:py-20 md:py-24 border-t-2 border-border">
         <div className="container">
-          <div className="grid gap-y-2 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:items-center lg:gap-x-16">
-            <div>
-              <SectionHeading kicker="Interactive · My research question">
-                Who <span className="text-gradient">Decides?</span>
-              </SectionHeading>
-              <motion.p {...fadeUp} className="-mt-2 sm:-mt-6 mb-8 lg:mb-0 max-w-md text-muted-foreground leading-relaxed">
-                This is the question my dissertation asks: how far should organisations delegate decisions to AI, and
-                how do they take authority back when it matters? Pick a scenario and drag the slider to see what changes.
-              </motion.p>
-            </div>
-            <motion.div {...fadeUp}>
-              <DelegationSlider />
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Research strands */}
-      <section className="pb-14 sm:pb-20 md:pb-24">
-        <div className="container">
-          <motion.p {...fadeUp} className="mb-6 sm:mb-8 text-xs sm:text-sm font-bold uppercase tracking-normal text-muted-foreground">
-            How I'm approaching it<span className="text-brand">*</span>
+          <SectionHeading kicker="Research focus">
+            What I <span className="text-gradient">Study</span>
+          </SectionHeading>
+          <motion.p {...fadeUp} className="-mt-2 sm:-mt-6 mb-10 sm:mb-14 max-w-2xl text-muted-foreground leading-relaxed">
+            My dissertation asks how far organisations should delegate decisions to AI, and how they take authority
+            back when it matters. I approach it through three questions.<span className="text-brand">*</span>
           </motion.p>
           <div className="grid gap-8 md:grid-cols-3 md:gap-8">
             {strands.map((item, i) => (
-              <motion.button
+              <motion.article
                 key={item.num}
-                type="button"
                 {...fadeUp}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                onClick={() => {
-                  document.getElementById("delegation-slider")?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "nearest" });
-                  window.dispatchEvent(
-                    new CustomEvent<DelegationSetDetail>(DELEGATION_SET_EVENT, {
-                      detail: { mode: item.action },
-                    }),
-                  );
-                }}
-                className="group relative flex flex-col border-t-2 border-border pt-6 text-left transition-colors hover:border-primary focus-visible:border-primary focus-visible:outline-none"
+                className="relative flex flex-col border-t-2 border-border pt-6"
               >
-                <span aria-hidden className="absolute -top-[7px] left-0 h-3 w-3 rounded-full border-2 border-brand bg-background transition-colors group-hover:bg-brand" />
+                <span aria-hidden className="absolute -top-[7px] left-0 h-3 w-3 rounded-full border-2 border-brand bg-background" />
                 <div className="mb-4 flex items-baseline gap-3">
-                  <span className="font-display text-4xl sm:text-5xl font-bold leading-none text-gradient">{item.num}</span>
+                  <span className="font-display text-4xl sm:text-5xl font-semibold leading-none text-gradient">{item.num}</span>
                   <h3 className="font-display text-lg sm:text-xl font-semibold text-foreground">{item.title}</h3>
                 </div>
                 <p className="mb-3 font-display text-base sm:text-lg italic leading-snug text-foreground">{item.question}</p>
                 <p className="mb-4 text-[0.9375rem] leading-relaxed text-muted-foreground">{item.desc}</p>
-                <div className="mt-auto flex flex-wrap items-center gap-2">
-                  <span className="text-sm text-muted-foreground">{item.tags.join(" · ")}</span>
-                  <span className="ml-auto inline-flex items-center gap-1 text-sm font-semibold text-brand underline decoration-brand/40 underline-offset-4 group-hover:decoration-brand">
-                    {item.cta} <ArrowUp className="h-3 w-3" />
-                  </span>
-                </div>
-              </motion.button>
+                <p className="mt-auto text-sm text-muted-foreground">{item.tags.join(" · ")}</p>
+              </motion.article>
             ))}
           </div>
           <motion.p {...fadeUp} className="mt-8 sm:mt-10 max-w-2xl text-xs leading-relaxed text-muted-foreground">
